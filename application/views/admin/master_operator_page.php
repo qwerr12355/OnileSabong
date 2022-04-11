@@ -289,80 +289,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                   </div>
                               </div>
                               <div class="table-responsive">
-                                  <table id="file_export" class="table table-bordered nowrap display">
+                                  <table id="tblOperator" class="table centered table-bordered nowrap display">
                                       <thead>
                                           <tr>
                                               <th>Name</th>
                                               <th>Gcash number</th>
+                                              <th>Gcash name</th>
                                               <th>Username</th>
                                               <th>Date joined</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
                                       <tbody>
-                                        <tr>
-                                          <td>Raymundo Alfeche Jr</td>
-                                          <td>09269347220</td>
-                                          <td>alfeche492</td>
-                                          <td>Aprill 9 2022</td>
-                                          <td>
-                                              <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</button>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td>Raymundo Alfeche Jr</td>
-                                          <td>09269347220</td>
-                                          <td>alfeche492</td>
-                                          <td>Aprill 9 2022</td>
-                                          <td>
-                                              <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</button>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td>Raymundo Alfeche Jr</td>
-                                          <td>09269347220</td>
-                                          <td>alfeche492</td>
-                                          <td>Aprill 9 2022</td>
-                                          <td>
-                                              <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</button>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td>Raymundo Alfeche Jr</td>
-                                          <td>09269347220</td>
-                                          <td>alfeche492</td>
-                                          <td>Aprill 9 2022</td>
-                                          <td>
-                                              <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</button>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td>Raymundo Alfeche Jr</td>
-                                          <td>09269347220</td>
-                                          <td>alfeche492</td>
-                                          <td>Aprill 9 2022</td>
-                                          <td>
-                                              <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</button>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td>Raymundo Alfeche Jr</td>
-                                          <td>09269347220</td>
-                                          <td>alfeche492</td>
-                                          <td>Aprill 9 2022</td>
-                                          <td>
-                                              <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</button>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td>Raymundo Alfeche Jr</td>
-                                          <td>09269347220</td>
-                                          <td>alfeche492</td>
-                                          <td>Aprill 9 2022</td>
-                                          <td>
-                                              <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</button>
-                                          </td>
-                                        </tr>
                                       </tbody>
                                   </table>
                               </div>
@@ -375,32 +313,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="row">
                                     <form class="col s12">
                                         <div class="row">
-                                            <div class="input-field col s12 l6">
+                                            <div class="input-field col s12 l4">
                                                 <i class="material-icons prefix">account_circle</i>
                                                 <input id="fname" type="text" class="validate">
                                                 <label for="fname">Enter Firstname Here</label>
                                             </div>
-                                            <div class="input-field col s12 l6">
+                                            <div class="input-field col s12 l4">
                                                 <i class="material-icons prefix">account_circle</i>
                                                 <input id="lname" type="text" class="validate">
                                                 <label for="lname">Enter Lastname Here</label>
                                             </div>
-                                            <div class="input-field col s12 l6">
+                                            <div class="input-field col s12 l4">
                                                 <i class="material-icons prefix">phone</i>
-                                                <input id="icon_telephone" type="number" class="validate">
-                                                <label for="icon_telephone">Gcash number</label>
+                                                <input id="gcashnumber" type="number" class="validate">
+                                                <label for="gcashnumber">Gcash number</label>
                                             </div>
-                                            <div class="input-field col s12 l6">
+                                            <div class="input-field col s12 l4">
                                                 <i class="material-icons prefix">account_circle</i>
                                                 <input id="gcashname" type="text" class="validate">
                                                 <label for="gcashname">Enter gcash name</label>
+                                            </div>
+                                            <div class="input-field col s12 l4">
+                                                <i class="material-icons prefix">account_circle</i>
+                                                <input id="username" type="text" class="validate">
+                                                <label for="username">Username</label>
+                                            </div>
+                                            <div class="input-field col s12 l4">
+                                                <i class="material-icons prefix">account_circle</i>
+                                                <input id="password" type="password" class="validate">
+                                                <label for="password">Password</label>
+                                            </div>
+                                            <div class="input-field col s12 l4">
+                                                <i class="material-icons prefix">account_circle</i>
+                                                <input id="cpassword" type="password" class="validate">
+                                                <label for="cpassword">Confirm Password</label>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat indigo white-text"><i class="far fa-save m-r-10"></i> Add</a>
+                                <button class="modal-action modal-close waves-effect waves-green btn-flat indigo white-text" id="btnAddNewOperator"><i class="far fa-save m-r-10"></i> Add</a>
                             </div>
                         </div>
                     </div>
@@ -677,6 +630,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url(); ?>assets/dist/js/custom.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/dist/js/pages/datatable/datatable-advanced.init.js"></script>
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            var operatorArray=[];
+            loadOperator();
+            $("#btnAddNewOperator").click(function functionName() {
+                $.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url(); ?>index.php/Operator/AddNewOperator",
+                  data: {
+                    "Username":$("#username").val(),
+                    "Password":$("#password").val(),
+                    "Firstname":$("#fname").val(),
+                    "Lastname":$("#lname").val(),
+                    "GcashNumber":$("#gcashnumber").val(),
+                    "GcashName":$("#gcashname").val(),
+                  },
+                  success: function(result){
+                      loadOperator();
+                  }
+                });
+            });
+            function loadOperator() {
+              $.ajax({
+                url: "<?php echo base_url(); ?>index.php/Operator/GetAllOperator",
+                type: "POST",
+                dataType:"json",
+                async:false,
+                success: function(result){
+                    operatorArray=result;
+                }
+              });
+              var _html='';
+              $('#tblOperator').dataTable().fnClearTable();
+              $('#tblOperator').dataTable().fnDestroy();
+              for (var i = 0; i < operatorArray.length; i++) {
+                _html+='<tr>'
+                            +'<td>'+ operatorArray[i].Firstname+' '+operatorArray[i].Lastname +'</td>'
+                            +'<td>'+ operatorArray[i].GcashNumber +'</td>'
+                            +'<td>'+ operatorArray[i].GcashName +'</td>'
+                            +'<td>'+ operatorArray[i].Username +'</td>'
+                            +'<td>'+ operatorArray[i].DateCreated +'</td>'
+                            +'<td><a href="<?php echo base_url(); ?>index.php/Operator" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</a></td>'
+                      +'</tr>';
+
+              }
+              $("#tblOperator tbody").html(_html);
+
+              $("#tblOperator").DataTable();
+            }
+        });
+    </script>
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->
