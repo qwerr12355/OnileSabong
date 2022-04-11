@@ -17,6 +17,15 @@ class OperatorModel extends CI_Model{
       return false;
     }
   }
+  public function getInfoByID($id)
+  {
+    $where = array('UserID' => $id );
+    $this->db->where($where);
+		$query=$this->db->get('operator');
+    if(isset($query)){
+  		return $query->row();
+    }
+  }
   public function GetAllOperator()
   {
     $this->db->select('*');

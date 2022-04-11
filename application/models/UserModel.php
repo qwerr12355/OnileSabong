@@ -17,4 +17,44 @@ class UserModel extends CI_Model{
       return false;
     }
   }
+  public function getUser($id)
+  {
+    $where = array('UserID' => $id );
+    $this->db->where($where);
+    $query=$this->db->get('users');
+    if(isset($query)){
+      return $query->row();
+    }
+  }
+  public function getOldPassword($where)
+  {
+    $this->db->where($where);
+    $query=$this->db->get('users');
+    if($query->num_rows()>0){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  public function UpdateUser($where,$data)
+  {
+    $this->db->where($where);
+    $this->db->update('users', $data);
+    if($this->db->affected_rows()>0){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  public function CheckUsernameExistince($username)
+  {
+    $where = array('Username' => $username );
+    $this->db->where($where);
+    $query=$this->db->get('users');
+    if($query->num_rows()>0){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

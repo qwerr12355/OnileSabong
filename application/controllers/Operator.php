@@ -4,8 +4,13 @@ class Operator extends CI_Controller {
 	public function index()
 	{
 		parent::__construct();
-		$this->load->model('UserModel');
-		$this->load->model('OperatorModel');
+
+	}
+	public function MoreInfo($id)
+	{
+		$info["info"]=$this->OperatorModel->getInfoByID($id);
+		$info["accountinfo"]=$this->UserModel->getUser($id);
+		$this->load->view('admin/operator_more_info_view.php',$info);
 	}
   public function AddNewOperator()
   {
