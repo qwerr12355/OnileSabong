@@ -17,6 +17,16 @@ class UserModel extends CI_Model{
       return false;
     }
   }
+  public function authentication($where)
+  {
+    $this->db->where($where);
+    $query=$this->db->get('users');
+    if($query->num_rows()>0){
+      return $query->row();
+    }else{
+      return false;
+    }
+  }
   public function getUser($id)
   {
     $where = array('UserID' => $id );

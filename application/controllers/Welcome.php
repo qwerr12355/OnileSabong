@@ -20,6 +20,16 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('admin/master_operator_page.php');
+			if(isset($_SESSION['UserTypeID'])){
+				if($_SESSION['UserTypeID']==1){
+					header("Location:".site_url()."/Admin/OperatorList");
+				}else if(	$_SESSION['UserTypeID']==2){
+					$this->session->sess_destroy();
+				}else if($_SESSION['UserTypeID']==3){
+					$this->session->sess_destroy();
+				}
+			}else{
+				$this->load->view('login_view');
+			}
 	}
 }

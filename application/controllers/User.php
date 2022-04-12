@@ -49,5 +49,35 @@ class User extends CI_Controller{
     }
     echo json_encode($datas);
   }
+  public function Authenticate()
+  {
+    $where = array(
+      'Username' => $this->input->post('Username'),
+      'Password' => $this->input->post('Password')
+    );
+    $result['error']="";
+    $users=$this->UserModel->authentication($where);
+    if($users){
+      if($users->Username==$this->input->post('Username')&&$users->Password==$this->input->post('Password')){
+        $result['UserTypeID']=$users->UserTypeID;
+        $sessiondata = array(
+          'UserID' => $users->UserID,
+          'Username' => $users->Username,
+          'UserTypeID' => $users->UserTypeID
+        );
+        $this->session->set_userdata($sessiondata);
+      }else{
+        $result['error']="Invalid Username. Check capslock.";
+      }
+    }else{
+      $result['error']="Invalid Username";
+    }
+    echo json_encode($result);
+  }
+  public function Logout()
+  {
+    $this->session->sess_destroy();
+    header("Location:".site_url()."/Welcome");
+  }
 
 }

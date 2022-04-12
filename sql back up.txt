@@ -6,3 +6,22 @@ CREATE TABLE operator(
     UserID int NOT NULL,
     FOREIGN KEY (UserID) REFERENCES users(UserID)
 )
+
+CREATE TABLE player(
+    PlayerID int PRIMARY KEY AUTO_INCREMENT,
+    Firstname varchar(255) NOT NULL,
+    Lastname varchar(255) NOT NULL,
+    Gcashnumber varchar(255) NOT NULL,
+    GcashName varchar(55) NOT NULL,
+    FacebookLink varchar(255) NOT NULL,
+    UserID int,
+    FOREIGN KEY (UserID) REFERENCES users(UserID)
+)
+
+CREATE TABLE UserPlayerRecruit(
+    UserPlayerRecruitID int PRIMARY KEY AUTO_INCREMENT,
+    UserID int NOT NULL,
+    PlayerID int NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES users(UserID),
+    FOREIGN KEY (PlayerID) REFERENCES player(PlayerID)
+)

@@ -30,7 +30,7 @@ class OperatorModel extends CI_Model{
   {
     $this->db->select('*');
     $this->db->from('users');
-    $this->db->join('operator', 'operator.UserID = users.UserID');
+    $this->db->join('operator', 'operator.UserID = users.UserID',"right");
     $query = $this->db->get();
     if($query->num_rows()>0){
       return $query->result_array();

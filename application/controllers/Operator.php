@@ -3,17 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Operator extends CI_Controller {
 	public function index()
 	{
-		$this->load->view('admin/template/header_template_view.php');
-		$this->load->view('admin/master_operator_page.php');
-		$this->load->view('admin/template/footer_template_view.php');
-	}
-	public function MoreInfo($id)
-	{
-		$info["info"]=$this->OperatorModel->getInfoByID($id);
-		$info["accountinfo"]=$this->UserModel->getUser($id);
-		$this->load->view('admin/template/header_template_view.php',$info);
-		$this->load->view('admin/operator_more_info_view.php');
-		$this->load->view('admin/template/footer_template_view.php');
 
 	}
   public function AddNewOperator()

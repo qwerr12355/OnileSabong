@@ -1,6 +1,6 @@
 /*
-	Template Name: 
-	Author: 
+	Template Name:
+	Author:
 	File: scss
 */
 @import url("font.css");
@@ -6116,7 +6116,7 @@ textarea.materialize-textarea {
   input[type=number]:not(.browser-default):focus:not([readonly]) + label,
   input[type=search]:not(.browser-default):focus:not([readonly]) + label,
   textarea.materialize-textarea:focus:not([readonly]) + label {
-    color: #5e35b1; }
+    color: #FFFFFF; }
   input:not([type]):focus.valid ~ label,
   input[type=text]:not(.browser-default):focus.valid ~ label,
   input[type=password]:not(.browser-default):focus.valid ~ label,
@@ -12914,7 +12914,7 @@ This is for the horizontal layout
 #scroll4.ps:hover > .ps__scrollbar-y-rail:hover > .ps__scrollbar-y {
   background-color: #2961ff; }
 
-/*============================================================== 
+/*==============================================================
  Scafholding
  ============================================================== */
 .z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .btn-floating, .dropdown-content, .collapsible, .sidenav,
@@ -13068,7 +13068,7 @@ html body .display-8 {
   font-size: 1.5rem; }
 
 /*******************
-Padding margin property 
+Padding margin property
 *******************/
 html body .m-t-5 {
   margin-top: 5px; }
@@ -13312,7 +13312,7 @@ html body .p-l-0 {
   padding-left: 0; }
 
 /*******************
-Flex property 
+Flex property
 *******************/
 .d-flex {
   display: flex; }
@@ -14084,7 +14084,7 @@ tr.shown td.details-control {
 
 .rtl {
   /*******************
-Padding margin property 
+Padding margin property
 *******************/
   /** * Zero */
   /* Vertical responsive layout */ }

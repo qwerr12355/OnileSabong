@@ -20,6 +20,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style media="screen">
+      .light-blue.lighten-2, .left-sidebar .sidenav ul > li.active > .collapsible-header, .left-sidebar .sidenav ul > li.active a.collapsible-hdeader {
+          background-color: #000000 !important;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -45,6 +51,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <!-- ============================================================== -->
                     <!-- Logo you can find that scss in header.scss -->
                     <!-- ============================================================== -->
+                    <ul class="left">
+                        <li class="hide-on-med-and-down">
+                            <a href="javascript: void(0);" class="nav-toggle">
+                                <span class="bars bar1"></span>
+                                <span class="bars bar2"></span>
+                                <span class="bars bar3"></span>
+                            </a>
+                        </li>
+                        <li class="hide-on-large-only">
+                            <a href="javascript: void(0);" class="sidebar-toggle">
+                                <span class="bars bar1"></span>
+                                <span class="bars bar2"></span>
+                                <span class="bars bar3"></span>
+                            </a>
+                        </li>
+                    </ul>
                     <a href="javascript:void(0)" class="brand-logo">
                         <span class="icon">
                             <img class="light-logo" src="<?php echo base_url(); ?>assets/assets/images/logo-light-icon.png">
@@ -147,7 +169,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#"><i class="material-icons">settings</i> Account Setting</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#"><i class="material-icons">power_settings_new</i> Logout</a></li>
+                                <li><a href="<?php echo site_url('User/Logout'); ?>"><i class="material-icons">power_settings_new</i> Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -177,7 +199,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li role="separator" class="divider m-t-0"></li>
                             <li><a href="#"><i class="material-icons">settings</i> Account Setting</a></li>
                             <li role="separator" class="divider m-t-0"></li>
-                            <li><a href="#"><i class="material-icons">power_settings_new</i> Logout</a></li>
+                            <li><a href="<?php echo site_url('User/Logout'); ?>"><i class="material-icons">power_settings_new</i> Logout</a></li>
                         </ul>
                     </div>
                 </li>
@@ -191,19 +213,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="collapsible-body">
                                 <ul class="collapsible" data-collapsible="accordion">
                                     <li>
-                                        <a href="<?php echo site_url('Operator'); ?>">
+                                        <a href="<?php echo site_url('Admin/OperatorList'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Operator</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0)">
+                                        <a href="<?php echo site_url('Admin/PlayerList'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Agent</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0)">
+                                        <a href="<?php echo site_url('Admin/PlayerList'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Player</span>
                                         </a>
