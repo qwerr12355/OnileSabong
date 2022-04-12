@@ -38,4 +38,14 @@ class OperatorModel extends CI_Model{
       return false;
     }
   }
+  public function updateOperator($where,$data)
+  {
+    $this->db->where($where);
+    $query=$this->db->update('operator',$data);
+    if($this->db->affected_rows()>0){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

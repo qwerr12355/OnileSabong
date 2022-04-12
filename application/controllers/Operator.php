@@ -3,14 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Operator extends CI_Controller {
 	public function index()
 	{
-		parent::__construct();
-
+		$this->load->view('admin/template/header_template_view.php');
+		$this->load->view('admin/master_operator_page.php');
+		$this->load->view('admin/template/footer_template_view.php');
 	}
 	public function MoreInfo($id)
 	{
 		$info["info"]=$this->OperatorModel->getInfoByID($id);
 		$info["accountinfo"]=$this->UserModel->getUser($id);
-		$this->load->view('admin/operator_more_info_view.php',$info);
+		$this->load->view('admin/template/header_template_view.php',$info);
+		$this->load->view('admin/operator_more_info_view.php');
+		$this->load->view('admin/template/footer_template_view.php');
+
 	}
   public function AddNewOperator()
   {
@@ -40,6 +44,20 @@ class Operator extends CI_Controller {
 		$data=$this->OperatorModel->GetAllOperator();
 		if($data){
 			echo json_encode($data);
+		}
+	}
+	public function UpdateOperator()
+	{
+		$datas = array(
+			'Firstname' => $this->input->post('Firstname'),
+			'Lastname' => $this->input->post('Lastname'),
+			'GcashNumber' => $this->input->post('GcashNumber'),
+			'GcashName' => $this->input->post('GcashName')
+		);
+		$where = array('OperatorID' => $this->input->post('OperatorID') );
+		if($this->OperatorModel->updateOperator($where,$datas)){
+			$return['success']=true;
+			echo json_encode($return);
 		}
 	}
 }

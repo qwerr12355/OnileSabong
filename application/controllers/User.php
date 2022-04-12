@@ -43,10 +43,11 @@ class User extends CI_Controller{
 
     }else{
       $updatequery=$this->UserModel->UpdateUser($where,$data);
-      if($query){
+      if($updatequery){
         $datas["success"]=true;
       }
     }
+    echo json_encode($datas);
   }
 
 }
