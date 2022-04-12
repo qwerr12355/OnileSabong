@@ -26,7 +26,7 @@
                                   </div>
                               </div>
                               <div class="table-responsive">
-                                  <table id="txtAgents" class="table centered table-bordered nowrap display">
+                                  <table id="tblPlayer" class="table centered table-bordered nowrap display">
                                       <thead>
                                           <tr>
                                               <th>Name</th>
@@ -125,6 +125,7 @@
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
+        loadPlayer();
         $("#btnAdd").click(function() {
           $.ajax({
             url:"<?php echo base_url(); ?>index.php/Player/Add",
@@ -142,12 +143,42 @@
             success: function(response) {
               if(response.error==""){
                 alert("success");
+                loadPlayer();
               }else{
                 alert(response.error);
               }
             }
           })
         });
+        var playerData=[];
+        function loadPlayer() {
+          $.ajax({
+            url: "<?php echo base_url(); ?>index.php/Player/GetAllPlayer",
+            type: "POST",
+            dataType:"json",
+            async:false,
+            success: function(result){
+                playerData=result;
+            }
+          });
+          var _html='';
+          $('#tblPlayer').dataTable().fnClearTable();
+          $('#tblPlayer').dataTable().fnDestroy();
+          for (var i = 0; i < playerData.length; i++) {
+            _html+='<tr>'
+                        +'<td>'+ playerData[i].Firstname+' '+playerData[i].Lastname +'</td>'
+                        +'<td>'+ playerData[i].Gcashnumber +'</td>'
+                        +'<td>'+ playerData[i].GcashName +'</td>'
+                        +'<td>'+ playerData[i].Username +'</td>'
+                        +'<td>'+ playerData[i].DateCreated +'</td>'
+                        +'<td><a href="<?php echo base_url(); ?>index.php/Admin/PlayerInfo/'+playerData[i].UserID+'" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</a></td>'
+                  +'</tr>';
+
+          }
+          $("#tblPlayer tbody").html(_html);
+
+          $("#tblPlayer").DataTable();
+        }
       });
 
     </script>

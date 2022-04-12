@@ -44,5 +44,24 @@ class Player extends CI_Controller{
     }
     echo json_encode($result);
   }
-
+  public function GetAllPlayer()
+  {
+    $players=$this->PlayerModel->getAllPlayer();
+    echo json_encode($players);
+  }
+  public function UpdatePlayer()
+  {
+    $where = array('PlayerID' => $this->input->post('PlayerID') );
+    $data = array(
+			'Firstname' => $this->input->post('Firstname'),
+			'Lastname' => $this->input->post('Lastname'),
+			'GcashNumber' => $this->input->post('GcashNumber'),
+			'GcashName' => $this->input->post('GcashName')
+		);
+    $updatePlayer=$this->PlayerModel->updatePlayer($where,$data);
+    if($updatePlayer){
+      $response['success']=true;
+      echo json_encode($response);
+    }
+  }
 }

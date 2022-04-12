@@ -29,4 +29,24 @@ class PlayerModel extends CI_Model{
       return false;
     }
   }
+  public function getInfoByID($id)
+  {
+    $where = array('UserID' => $id );
+    $this->db->where($where);
+		$query=$this->db->get('player');
+    if(isset($query)){
+  		return $query->row();
+    }
+
+  }
+  public function updatePlayer($where,$data)
+  {
+    $this->db->where($where);
+    $query=$this->db->update('player',$data);
+    if($this->db->affected_rows()>0){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

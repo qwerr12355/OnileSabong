@@ -34,4 +34,16 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/player_list_view.php');
 		$this->load->view('admin/template/footer_template_view.php');
 	}
+	public function PlayerInfo($id)
+	{
+		$info["info"]=$this->PlayerModel->getInfoByID($id);
+		$info["accountinfo"]=$this->UserModel->getUser($id);
+		if($_SESSION['UserTypeID']==1){
+			$this->load->view('admin/template/header_template_view.php',$info);
+			$this->load->view('admin/player_info_view.php');
+			$this->load->view('admin/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+		}
+	}
 }
