@@ -206,6 +206,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <li>
                             <a href="<?php echo site_url('Agent/Players'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">My Players</span></a>
                         </li>
+                        <li>
+                            <a class="collapsible-header has-arrow" href="#"><i class="material-icons">repeat</i><span class="hide-menu">Transaction</span></a>
+                            <div class="collapsible-body">
+                                <ul class="collapsible" data-collapsible="accordion">
+                                    <li>
+                                        <a href="<?php echo site_url('Agent/GcashToWallet'); ?>">
+                                            <i class="material-icons">grade</i>
+                                            <span class="hide-menu">GCASH to Wallet</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo site_url('Agent/AgentList'); ?>">
+                                            <i class="material-icons">grade</i>
+                                            <span class="hide-menu">Wallet to GCASH</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
                 </li>
             </ul>

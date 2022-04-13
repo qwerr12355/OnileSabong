@@ -75,4 +75,31 @@ class Agent extends CI_Controller{
 			header("Location:".site_url()."/Welcome");
 		}
   }
+  public function PlayerInfo($playerid,$userid)
+  {
+    $info["info"]=$this->PlayerModel->getInfoByID($playerid);
+		$info["accountinfo"]=$this->UserModel->getUser($userid);
+		if($_SESSION['UserTypeID']==3){
+			$this->load->view('agent/template/header_template_view.php',$info);
+			$this->load->view('agent/player_info_view.php');
+			$this->load->view('agent/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+		}
+  }
+  public function GcashToWallet()
+  {
+    if($_SESSION['UserTypeID']==3){
+			$this->load->view('agent/template/header_template_view.php');
+			$this->load->view('agent/gcash_to_wallet_view.php');
+			$this->load->view('agent/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+		}
+  }
+  public function GetMyPlayers()
+  {
+    $data=$this->PlayerModel->getPlayerByUserRecruit($_SESSION['UserID']);
+    echo json_encode($data);
+  }
 }

@@ -4,7 +4,7 @@
             <!-- ============================================================== -->
             <div class="page-titles">
                 <div class="d-flex align-items-center">
-                    <h5 class="font-medium m-b-0">Operator Dashboard</h5>
+                    <h5 class="font-medium m-b-0">Agent Dashboard</h5>
                     <div class="custom-breadcrumb ml-auto">
                         <a href="#!" class="breadcrumb">Agent Dashboard</a>
                     </div>
@@ -36,6 +36,7 @@
     <script src="<?php echo base_url(); ?>assets/assets/libs/jquery/dist/jquery.min.js"></script>
 
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
     <script type="text/javascript">
 
     </script>

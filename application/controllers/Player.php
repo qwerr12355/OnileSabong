@@ -56,12 +56,18 @@ class Player extends CI_Controller{
 			'Firstname' => $this->input->post('Firstname'),
 			'Lastname' => $this->input->post('Lastname'),
 			'Gcashnumber' => $this->input->post('Gcashnumber'),
-			'GcashName' => $this->input->post('GcashName')
+			'GcashName' => $this->input->post('GcashName'),
+      'FacebookLink' => $this->input->post('FacebookLink')
 		);
     $updatePlayer=$this->PlayerModel->updatePlayer($where,$data);
     if($updatePlayer){
       $response['success']=true;
       echo json_encode($response);
     }
+  }
+  public function GetInfoByID()
+  {
+    $playerdata=$this->PlayerModel->getInfoByID($this->input->post('PlayerID'));
+    echo json_encode($playerdata);
   }
 }

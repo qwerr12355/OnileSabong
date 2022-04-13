@@ -1,6 +1,5 @@
 
 <!-- ============================================================== -->
-<script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/assets/libs/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
 <!-- ============================================================== -->
 <!-- Apps -->

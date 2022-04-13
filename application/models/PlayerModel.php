@@ -29,11 +29,29 @@ class PlayerModel extends CI_Model{
       return false;
     }
   }
+  public function getPlayerByUserRecruit($id)
+  {
+    $this->db->select('*');
+    $this->db->from('users');
+    $this->db->join('player', 'player.UserID = users.UserID');
+    $this->db->join('userplayerrecruit', 'userplayerrecruit.PlayerID = player.PlayerID');
+    $where = array('userplayerrecruit.UserID' => $id );
+    $this->db->where($where);
+    $query = $this->db->get();
+    if($query->num_rows()>0){
+      return $query->result_array();
+    }else{
+      return false;
+    }
+  }
   public function getInfoByID($id)
   {
-    $where = array('UserID' => $id );
+    $where = array('player.PlayerID' => $id );
+    $this->db->select("*");
+    $this->db->from("users");
+    $this->db->join("player","player.UserID=users.UserID");
     $this->db->where($where);
-		$query=$this->db->get('player');
+		$query=$this->db->get();
     if(isset($query)){
   		return $query->row();
     }
