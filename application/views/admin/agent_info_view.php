@@ -4,10 +4,10 @@
             <!-- ============================================================== -->
             <div class="page-titles">
                 <div class="d-flex align-items-center">
-                    <h5 class="font-medium m-b-0">Operator Information</h5>
+                    <h5 class="font-medium m-b-0">Agent Information</h5>
                     <div class="custom-breadcrumb ml-auto">
-                        <a href="#!" class="breadcrumb">Operator</a>
-                        <a href="#!" class="breadcrumb">Operator Information</a>
+                        <a href="#!" class="breadcrumb">Agent</a>
+                        <a href="#!" class="breadcrumb">Agent Information</a>
                     </div>
                 </div>
             </div>
@@ -16,8 +16,8 @@
                 <div class="col s12">
                     <div class="card">
                         <div class="card-content">
-                                  <h5 class="card-title">Personal Information</h5>
-                                  <input type="hidden" id="txtOperatorID" value="<?php echo $info->OperatorID; ?>">
+                                  <h5 class="card-title">Agent Personal Information</h5>
+                                  <input type="hidden" id="txtAgentID" value="<?php echo $info->AgentID; ?>">
                                   <div class="row">
                                       <div class="input-field col s12 l6">
                                           <input id="txtFirstname" type="text" value="<?php echo $info->Firstname; ?>">
@@ -28,16 +28,16 @@
                                           <label for="txtLastname" class="">Last Name :</label>
                                       </div>
                                       <div class="input-field col s12 l6">
-                                          <input id="txtGcashNumber" type="number" value="<?php echo $info->GcashNumber; ?>">
+                                          <input id="txtGcashNumber" type="number" value="<?php echo $info->Gcashnumber; ?>">
                                           <label for="txtGcashNumber" class="">GCASH Number :</label>
                                       </div>
                                       <div class="input-field col s12 l6">
                                           <input id="txtGcashname" type="text" value="<?php echo $info->GcashName; ?>">
                                           <label for="txtGcashname" class="">GCASH Name :</label>
                                       </div>
-                                      <div class="input-field col s12 l6">
-                                          <input id="txtFbLink" type="text" value="<?php echo $info->FacebookLink; ?>">
-                                          <label for="txtFbLink" class="">Facebook Link :</label>
+                                      <div class="input-field col s12">
+                                          <input id="txtFBLink" type="text" value="<?php echo $info->FacebookLink; ?>">
+                                          <label for="txtFBLink" class="">Facebook Link :</label>
                                       </div>
                                       <div class="input-field col l6 s12 right">
                                         <button class="btn modal-trigger col s12 m6" href="#modal1">CHANGE ACCOUNT INFO</button>
@@ -57,17 +57,17 @@
               <div class="modal-content">
                 <h4>CHANGE ACCOUNT INFORMATION</h4>
                 <div class="row">
-                  <input type="hidden" name="" value="<?php echo $accountinfo->UserID; ?>" id="txtUserID">
+                  <input type="hidden" name="" value="<?php echo $info->UserID; ?>" id="txtUserID">
                   <div class="input-field col s12">
-                    <input type="text" name="" value="<?php echo $accountinfo->Username; ?>" id="txtUsername">
+                    <input type="text" name="" value="<?php echo $info->Username; ?>" id="txtUsername">
                     <label for="txtUsername">Username</label>
                   </div>
                   <div class="input-field col s12">
-                    <input type="password" name="" value="<?php echo $accountinfo->Password; ?>" id="txtPassword">
+                    <input type="password" name="" value="<?php echo $info->Password; ?>" id="txtPassword">
                     <label for="txtPassword">Password</label>
                   </div>
                   <div class="input-field col s12">
-                    <input type="password" name="" value="<?php echo $accountinfo->Password; ?>" id="txtConfirmPassword">
+                    <input type="password" name="" value="<?php echo $info->Password; ?>" id="txtConfirmPassword">
                     <label for="txtConfirmPassword">Confirm Password</label>
                   </div>
                   <div class="input-field col s12">
@@ -132,25 +132,25 @@
             });
 
             $("#btnSaveChanges").click(function() {
-                $.ajax({
-                  url:"<?php echo base_url(); ?>index.php/Operator/UpdateOperator",
-                  type:"POST",
-                  data:{
-                    'Firstname': $("#txtFirstname").val(),
-                    'Lastname': $("#txtLastname").val(),
-                    'GcashNumber': $("#txtGcashNumber").val(),
-                    'GcashName': $("#txtGcashname").val(),
-                    'FacebookLink': $("#txtFbLink").val(),
-                    'OperatorID':$("#txtOperatorID").val()
-                  },
-                  dataType:"json",
-                  success:function(result) {
-                    if(result.success){
-                      alert("Success Updated");
+              $.ajax({
+                url: "<?php echo base_url(); ?>index.php/Agent/UpdateAgent",
+                type: "POST",
+                data:{
+                  'Firstname': $('#txtFirstname').val(),
+                  'Lastname': $('#txtLastname').val(),
+                  'GcashNumber': $('#txtGcashNumber').val(),
+                  'GcashName': $('#txtGcashname').val(),
+                  'FacebookLink': $('#txtFBLink').val(),
+                  'AgentID':$("#txtAgentID").val()
+                },
+                dataType:"json",
+                success: function(response){
+                    if(response.success){
+                      alert("Agent Info Successfully Updated");
                       location.reload();
                     }
-                  }
-                });
+                }
+              });
             });
         })
     </script>

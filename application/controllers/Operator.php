@@ -19,6 +19,7 @@ class Operator extends CI_Controller {
 			'Lastname' => $this->input->post('Lastname'),
 			'GcashNumber' => $this->input->post('GcashNumber'),
 			'GcashName' => $this->input->post('GcashName'),
+			'FacebookLink' => $this->input->post('FacebookLink'),
 			'UserID'=>$lastid
 		);
 		$insertoperator=$this->OperatorModel->AddOperator($operatordata);
@@ -41,6 +42,7 @@ class Operator extends CI_Controller {
 			'Firstname' => $this->input->post('Firstname'),
 			'Lastname' => $this->input->post('Lastname'),
 			'GcashNumber' => $this->input->post('GcashNumber'),
+			'FacebookLink' => $this->input->post('FacebookLink'),
 			'GcashName' => $this->input->post('GcashName')
 		);
 		$where = array('OperatorID' => $this->input->post('OperatorID') );
@@ -48,5 +50,9 @@ class Operator extends CI_Controller {
 			$return['success']=true;
 			echo json_encode($return);
 		}
+	}
+	public function Dashboard()
+	{
+		
 	}
 }

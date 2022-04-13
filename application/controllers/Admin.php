@@ -46,4 +46,17 @@ class Admin extends CI_Controller {
 			header("Location:".site_url()."/Welcome");
 		}
 	}
+	public function AgentList()
+	{
+		$this->load->view('admin/template/header_template_view.php');
+		$this->load->view('admin/agent_list_view');
+		$this->load->view('admin/template/footer_template_view.php');
+	}
+	public function AgentInfo($id)
+	{
+		$agentinfo['info']=$this->AgentModel->GetAgentInfo($id);
+		$this->load->view('admin/template/header_template_view.php');
+		$this->load->view('admin/agent_info_view',$agentinfo);
+		$this->load->view('admin/template/footer_template_view.php');
+	}
 }

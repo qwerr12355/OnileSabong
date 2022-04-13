@@ -55,7 +55,7 @@ class Player extends CI_Controller{
     $data = array(
 			'Firstname' => $this->input->post('Firstname'),
 			'Lastname' => $this->input->post('Lastname'),
-			'GcashNumber' => $this->input->post('GcashNumber'),
+			'Gcashnumber' => $this->input->post('Gcashnumber'),
 			'GcashName' => $this->input->post('GcashName')
 		);
     $updatePlayer=$this->PlayerModel->updatePlayer($where,$data);

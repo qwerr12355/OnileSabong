@@ -25,3 +25,15 @@ CREATE TABLE UserPlayerRecruit(
     FOREIGN KEY (UserID) REFERENCES users(UserID),
     FOREIGN KEY (PlayerID) REFERENCES player(PlayerID)
 )
+
+CREATE TABLE agent(
+    AgentID int PRIMARY KEY AUTO_INCREMENT,
+    Firstname varchar(255) NOT NULL,
+    Lastname varchar(255) NOT NULL,
+    Gcashnumber varchar(255) NOT NULL,
+    GcashName varchar(55) NOT NULL,
+    FacebookLink varchar(255) NOT NULL,
+    DateCreated datetime DEFAULT CURRENT_TIMESTAMP(),
+    UserID int,
+    FOREIGN KEY (UserID) REFERENCES users(UserID)
+)
