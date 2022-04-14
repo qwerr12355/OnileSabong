@@ -32,6 +32,7 @@
                                               <th>Gcash number</th>
                                               <th>Gcash name</th>
                                               <th>Username</th>
+                                              <th>Wallet Balance</th>
                                               <th>Date joined</th>
                                               <th>Action</th>
                                           </tr>
@@ -168,8 +169,9 @@
                         +'<td>'+ playerData[i].Gcashnumber +'</td>'
                         +'<td>'+ playerData[i].GcashName +'</td>'
                         +'<td>'+ playerData[i].Username +'</td>'
+                        +'<td> ₱ '+ playerData[i].WalletBalance +'</td>'
                         +'<td>'+ playerData[i].DateCreated +'</td>'
-                        +'<td><a href="<?php echo base_url(); ?>index.php/Admin/PlayerInfo/'+playerData[i].UserID+'" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</a></td>'
+                        +'<td><a href="<?php echo base_url(); ?>index.php/Admin/PlayerInfo/'+playerData[i].PlayerID+'/'+playerData[i].UserID+'" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</a></td>'
                   +'</tr>';
 
           }

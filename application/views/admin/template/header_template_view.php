@@ -201,8 +201,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li>
                     <ul class="collapsible p-t-30">
                          <li>
-                            <a href="javascript:void(0)" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Dashboard</span></a>
+                            <a href="<?php echo site_url('Admin/Dashboard'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Dashboard</span></a>
                         </li>
+                        <li>
+                           <a href="<?php echo site_url('Admin/Events'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Events</span></a>
+                       </li>
                         <li>
                             <a class="collapsible-header has-arrow"><i class="material-icons">clear_all</i><span class="hide-menu">User</span></a>
                             <div class="collapsible-body">

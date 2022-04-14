@@ -34,10 +34,11 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/player_list_view.php');
 		$this->load->view('admin/template/footer_template_view.php');
 	}
-	public function PlayerInfo($id)
+	public function PlayerInfo($playerid,$userid)
 	{
-		$info["info"]=$this->PlayerModel->getInfoByID($id);
-		$info["accountinfo"]=$this->UserModel->getUser($id);
+		$info['pwallettransaction']=$this->PlayerWalletTransactionModel->getPlayerTransaction($playerid);
+		$info["info"]=$this->PlayerModel->getInfoByID($playerid);
+		$info["accountinfo"]=$this->UserModel->getUser($userid);
 		if($_SESSION['UserTypeID']==1){
 			$this->load->view('admin/template/header_template_view.php',$info);
 			$this->load->view('admin/player_info_view.php');
@@ -48,15 +49,73 @@ class Admin extends CI_Controller {
 	}
 	public function AgentList()
 	{
-		$this->load->view('admin/template/header_template_view.php');
-		$this->load->view('admin/agent_list_view');
-		$this->load->view('admin/template/footer_template_view.php');
+		if($_SESSION['UserTypeID']==1){
+			$this->load->view('admin/template/header_template_view.php');
+			$this->load->view('admin/agent_list_view');
+			$this->load->view('admin/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+		}
 	}
 	public function AgentInfo($id)
 	{
-		$agentinfo['info']=$this->AgentModel->GetAgentInfo($id);
-		$this->load->view('admin/template/header_template_view.php');
-		$this->load->view('admin/agent_info_view',$agentinfo);
-		$this->load->view('admin/template/footer_template_view.php');
+		if($_SESSION['UserTypeID']==1){
+			$agentinfo['info']=$this->AgentModel->GetAgentInfo($id);
+			$this->load->view('admin/template/header_template_view.php');
+			$this->load->view('admin/agent_info_view',$agentinfo);
+			$this->load->view('admin/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+
+		}
+
+	}
+	public function Dashboard()
+	{
+		if($_SESSION['UserTypeID']==1){
+			$this->load->view('admin/template/header_template_view.php');
+			$this->load->view('admin/admin_dashboard_view');
+			$this->load->view('admin/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+
+		}
+
+	}
+	public function Events()
+	{
+		if($_SESSION['UserTypeID']==1){
+			$this->load->view('admin/template/header_template_view.php');
+			$this->load->view('admin/event_list_view');
+			$this->load->view('admin/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+
+		}
+
+	}
+	public function EventInfo($eventid)
+	{
+		$data['eventinfo']=$this->EventModel->GetEventByID($eventid);
+		if($_SESSION['UserTypeID']==1){
+			$this->load->view('admin/template/header_template_view.php');
+			$this->load->view('admin/event_info_view',$data);
+			$this->load->view('admin/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+
+		}
+
+	}
+	public function EventControls($id)
+	{
+		$data['EventID']=$id;
+		if($_SESSION['UserTypeID']==1){
+			$this->load->view('admin/template/controls_header_view.php');
+			$this->load->view('admin/event_controls_view',$data);
+			$this->load->view('admin/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+		}
 	}
 }

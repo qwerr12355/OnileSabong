@@ -7945,7 +7945,7 @@ input[type=range]::-ms-thumb {
     border-radius: 50%;
     padding: 0; }
     .datepicker-table td.is-today {
-      color: #5e35b1; }
+      color: #FFFFFF; }
     .datepicker-table td.is-selected {
       background-color: #5e35b1;
       color: #fff; }
@@ -7978,11 +7978,11 @@ input[type=range]::-ms-thumb {
 .datepicker-clear,
 .datepicker-today,
 .datepicker-done {
-  color: #5e35b1;
+  color: #FFFFFF;
   padding: 0 1rem; }
 
 .datepicker-clear {
-  color: #F44336; }
+  color: #FFFFFF; }
 
 /* Media Queries */
 @media only screen and (min-width: 601px) {

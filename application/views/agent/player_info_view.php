@@ -135,22 +135,25 @@
                         </thead>
                         <tbody>
                           <?php
-                              foreach ($pwallettransaction as $pwt) {
-                                if($pwt->TransactionType=="Cash in"){
-                                  echo "<tr>"
-                                            ."<td><span class='label label-success bold'>".$pwt->TransactionType."</span></td>"
-                                            ."<td> ₱".$pwt->Amount."</td>"
-                                            ."<td>".$pwt->DateCreated."</td>"
-                                      ."</tr>";
-                                }else{
-                                  echo "<tr>"
-                                            ."<td><span class='badge red'>".$pwt->TransactionType."</span></td>"
-                                            ."<td> ₱".$pwt->Amount."</td>"
-                                            ."<td>".$pwt->DateCreated."</td>"
-                                      ."</tr>";
-                                }
+                                if($pwallettransaction){
 
-                              }
+                                  foreach ($pwallettransaction as $pwt) {
+                                    if($pwt->TransactionType=="Cash in"){
+                                      echo "<tr>"
+                                                ."<td><span class='label label-success bold'>".$pwt->TransactionType."</span></td>"
+                                                ."<td> ₱".$pwt->Amount."</td>"
+                                                ."<td>".$pwt->DateCreated."</td>"
+                                          ."</tr>";
+                                    }else{
+                                      echo "<tr>"
+                                                ."<td><span class='label label-danger bold'>".$pwt->TransactionType."</span></td>"
+                                                ."<td> ₱".$pwt->Amount."</td>"
+                                                ."<td>".$pwt->DateCreated."</td>"
+                                          ."</tr>";
+                                    }
+
+                                  }
+                                }
 
                            ?>
                         </tbody>

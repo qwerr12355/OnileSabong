@@ -4,31 +4,17 @@
             <!-- ============================================================== -->
             <div class="page-titles">
                 <div class="d-flex align-items-center">
-                    <h5 class="font-medium m-b-0">Agent Dashboard</h5>
+                    <h5 class="font-medium m-b-0">Admin Dashboard</h5>
                     <div class="custom-breadcrumb ml-auto">
-                        <a href="#!" class="breadcrumb">Agent Dashboard</a>
+                        <a href="#!" class="breadcrumb">Home</a>
+                        <a href="#!" class="breadcrumb">Admin Dashboard</a>
                     </div>
                 </div>
             </div>
               <div class="container-fluid">
                 <div class="card">
                     <div class="card-content">
-                        <div class="table-resposive">
-                            <table id="tblEvents" class="table centered table-bordered nowrap display">
-                                <thead>
-                                    <tr>
-                                      <th>Event Name</th>
-                                      <th>Event Desciption</th>
-                                      <th>Start Date</th>
-                                      <th>End Date</th>
-                                      <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  
-                                </tbody>
-                            </table>
-                        </div>
+                        <h5>Admin Dashboard</h5>
                     </div>
                 </div>
               </div>
