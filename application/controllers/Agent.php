@@ -77,6 +77,7 @@ class Agent extends CI_Controller{
   }
   public function PlayerInfo($playerid,$userid)
   {
+    $info['pwallettransaction']=$this->PlayerWalletTransactionModel->getPlayerTransaction($playerid);
     $info["info"]=$this->PlayerModel->getInfoByID($playerid);
 		$info["accountinfo"]=$this->UserModel->getUser($userid);
 		if($_SESSION['UserTypeID']==3){

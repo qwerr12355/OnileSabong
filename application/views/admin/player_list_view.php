@@ -25,7 +25,6 @@
                                       <a class="waves-effect waves-light btn modal-trigger" href="#modal2">Add new player</a>
                                   </div>
                               </div>
-                              <div class="table-responsive">
                                   <table id="tblPlayer" class="table centered table-bordered nowrap display">
                                       <thead>
                                           <tr>
@@ -40,7 +39,6 @@
                                       <tbody>
                                       </tbody>
                                   </table>
-                              </div>
                             </div>
                         </div>
                         <!-- Create Modal Structure -->

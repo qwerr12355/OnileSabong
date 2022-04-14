@@ -22,7 +22,7 @@
                         <h6 class="card-subtitle">Date Joined: <?php echo $info->DateCreated; ?> </h6>
                         <div class="center-align">
                             <div>
-                                <a href="javascript:void(0)" class="m-r-40"> <font class="font-medium"> Wallet balance: ₱ <?php echo $info->WalletBalance; ?></font></a>
+                                <a href="javascript:void(0)" class="m-r-40"> <p> Wallet balance: <span class="label label-info">₱<?php echo $info->WalletBalance; ?></span></p></a>
                             </div>
                         </div>
                     </div>
@@ -42,15 +42,9 @@
                 <div class="row">
                     <div class="col s12">
                         <ul class="tabs">
-                            <li class="tab col s3"><a href="#transaction">Transaction</a></li>
                             <li class="tab col s3"><a href="#profile">Edit Profile</a></li>
                             <li class="tab col s3"><a href="#account">Edit Account</a></li>
                         </ul>
-                    </div>
-                    <div class="col 12" id="transaction">
-                      <div class="card-content">
-
-                      </div>
                     </div>
                       <div id="profile" class="col s12">
                           <div class="card-content">
@@ -128,6 +122,59 @@
                       </div>
                   </div>
                   </div>
+                  <div class="card">
+                    <div class="card-content">
+                      <p class="card-title"><span class="label label-info">Wallet Transaction</span></p>
+                      <table id="tblTransaction" class="table dataTable centered table-bordered nowrap display">
+                        <thead>
+                          <tr class="grey lighten-4">
+                            <th>Type of transaction</th>
+                            <th>Amount</th>
+                            <th>Date of transaction</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                              foreach ($pwallettransaction as $pwt) {
+                                if($pwt->TransactionType=="Cash in"){
+                                  echo "<tr>"
+                                            ."<td><span class='label label-success bold'>".$pwt->TransactionType."</span></td>"
+                                            ."<td> ₱".$pwt->Amount."</td>"
+                                            ."<td>".$pwt->DateCreated."</td>"
+                                      ."</tr>";
+                                }else{
+                                  echo "<tr>"
+                                            ."<td><span class='badge red'>".$pwt->TransactionType."</span></td>"
+                                            ."<td> ₱".$pwt->Amount."</td>"
+                                            ."<td>".$pwt->DateCreated."</td>"
+                                      ."</tr>";
+                                }
+
+                              }
+
+                           ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-content">
+                      <p class="card-title"><span class="label label-info">Betting History</span></p>
+                      <table id="tblTransaction" class="table dataTable centered table-bordered nowrap display">
+                        <thead>
+                          <tr class="grey lighten-4">
+                            <th>Date</th>
+                            <th>Bet Amount</th>
+                            <th>Choice</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                   </div>
                   </div>
                   </div>
@@ -149,8 +196,16 @@
 
                   <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
                   <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
+
                   <script type="text/javascript">
                       $(document).ready(function() {
+                          $('#tblTransaction').DataTable({
+                            "bLengthChange": false,
+                            "bFilter": true,
+                            "searching": false,
+                            "bInfo": false,
+                            "bAutoWidth": false
+                          });
                           $("#btnUpdateAccount").click(function() {
                             $.ajax({
                               url: "<?php echo base_url(); ?>index.php/User/UpdateUser",

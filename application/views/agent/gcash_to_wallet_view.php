@@ -37,7 +37,7 @@
                                       <label for="txtPassword">Enter your password</label>
                                     </div>
                                   </div>
-                                  <button class="modal-trigger btn right m-b-15">Cash In</button>
+                                  <button id="btnCashIn" class="btn right m-b-15">Cash In</button>
                                 </div>
                                 <div class="col l4 m12 s12 ml-auto">
                                     <h4 class="card-title m-t-30">Player Info</h4>
@@ -115,7 +115,7 @@
                             $("#pGcashNumber").html("Gcash Number : "+response.Gcashnumber);
                             $("#pGcashName").html("Gcash Name : "+response.GcashName);
                             $("#pUsername").html("Username : "+response.Username);
-                            $("#pWalletBalance").html("Wallet Ballance: ₱"+response.WalletBalance);
+                            $("#pWalletBalance").html("Wallet Ballance: <span class='label label-info'>₱"+response.WalletBalance+"</span>");
                             $("#pDateJoined").html("Ddate joined : "+response.DateCreated);
                           }
                         });
@@ -128,6 +128,27 @@
                     var elems = document.querySelectorAll('select');
                     instances = M.FormSelect.init(elems, playerData);
                 });
+                $("#btnCashIn").click(function() {
+                  $.ajax({
+                          url: "<?php echo base_url(); ?>index.php/PlayerWalletTransaction/AddTransaction",
+                          type: "POST",
+                          dataType:"json",
+                          data:{
+                            'PlayerID':$("#selectPlayer").val(),
+                            'Amount':$("#txtAmount").val(),
+                            'TransactionType':'Cash in',
+                            'Password':$("#txtPassword").val()
+                          },
+                          success: function(response){
+                            if(response.error==""){
+                              alert("Successfully cash in!");
+                              location.reload();
+                            }else{
+                              alert(response.error);
+                            }
+                          }
+                        });
+                })
             });
 
 

@@ -24,7 +24,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       .light-blue.lighten-2, .left-sidebar .sidenav ul > li.active > .collapsible-header, .left-sidebar .sidenav ul > li.active a.collapsible-hdeader {
           background-color: #000000 !important;
         }
-
     </style>
 </head>
 
@@ -207,19 +206,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <a href="<?php echo site_url('Agent/Players'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">My Players</span></a>
                         </li>
                         <li>
-                            <a class="collapsible-header has-arrow" href="#"><i class="material-icons">repeat</i><span class="hide-menu">Transaction</span></a>
+                            <a class="collapsible-header has-arrow" href="#"><i class="material-icons">repeat</i><span class="hide-menu">Wallet Transaction</span></a>
                             <div class="collapsible-body">
                                 <ul class="collapsible" data-collapsible="accordion">
                                     <li>
                                         <a href="<?php echo site_url('Agent/GcashToWallet'); ?>">
                                             <i class="material-icons">grade</i>
-                                            <span class="hide-menu">GCASH to Wallet</span>
+                                            <span class="hide-menu">Wallet Deposit</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="<?php echo site_url('Agent/AgentList'); ?>">
                                             <i class="material-icons">grade</i>
-                                            <span class="hide-menu">Wallet to GCASH</span>
+                                            <span class="hide-menu">Wallet Widthdrawal</span>
                                         </a>
                                     </li>
                                 </ul>

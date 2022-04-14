@@ -14,6 +14,8 @@
 <script src="<?php echo base_url(); ?>assets/dist/js/custom.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/dist/js/pages/datatable/datatable-advanced.init.js"></script>
 
+
+
 <!-- ============================================================== -->
 <!-- This page plugin js -->
 <!-- ============================================================== -->

@@ -63,7 +63,8 @@ class User extends CI_Controller{
         $sessiondata = array(
           'UserID' => $users->UserID,
           'Username' => $users->Username,
-          'UserTypeID' => $users->UserTypeID
+          'UserTypeID' => $users->UserTypeID,
+          'Password' => $users->Password
         );
         $this->session->set_userdata($sessiondata);
       }else{
