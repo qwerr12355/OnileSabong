@@ -40,7 +40,7 @@
                   <div class="col s12 m12 l4">
                     <div class="card">
                         <div class="card-content">
-                          <?php if($eventinfo->Status=="TBD")
+                          <?php if($eventinfo->Status=="TBD"){
                               echo
                                     "<p>Status: TBD</p>".
                                     "<p>Total Fights : TBD</p>".
@@ -49,8 +49,29 @@
                                     "<p>Wala Wins : <span class='label label-info'>TBD</span></p>".
                                     "<p>Draws : <span class='label label-success'>TBD</span></p>".
                                     "<div class='row'>".
-                                    "<a href='".site_url("Admin/EventControls/").$eventinfo->EventID."' class='btn col s12'>OPEN EVENT</a>".
-                                    "</div>"
+                                    "<button id='btnOpenEvent' class='btn green col s12'>OPEN EVENT</button>".
+                                    "</div>";
+                            }else if($eventinfo->Status=="Open"){
+                              echo
+                                    "<p>Status: ".$eventinfo->Status." </p>".
+                                    "<p>Total Fights : TBD</p>".
+                                    "<p>Total Fights : TBD x</p>".
+                                    "<p>Meron Wins : <span class='label label-danger'>TBD</span></p>".
+                                    "<p>Wala Wins : <span class='label label-info'>TBD</span></p>".
+                                    "<p>Draws : <span class='label label-success'>TBD</span></p>".
+                                    "<div class='row'>".
+                                    "<a  href='".base_url()."index.php/Admin/EventControls/".$eventinfo->EventID."' class='btn col s12'>OPEN CONTROLS</a>".
+                                    "</div>";
+                            }else{
+                              echo
+                                    "<p>Status: ".$eventinfo->Status." </p>".
+                                    "<p>Total Fights : TBD</p>".
+                                    "<p>Total Fights : TBD x</p>".
+                                    "<p>Meron Wins : <span class='label label-danger'>TBD</span></p>".
+                                    "<p>Wala Wins : <span class='label label-info'>TBD</span></p>".
+                                    "<p>Draws : <span class='label label-success'>TBD</span></p>";
+                            }
+
 
                            ?>
                         </div>
@@ -83,6 +104,61 @@
 
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script type="text/javascript">
+      $(document).ready(function() {
+        $("#btnOpenEvent").click(function() {
+          Swal.fire({
+                title: 'Are you sure you want to open this event?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, open it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                  $.ajax({
+                    url:"<?php echo base_url() ?>index.php/Event/OpenEvent",
+                    type:"POST",
+                    data:{
+                      "EventID":$("#txtEventID").val()
+                    },
+                    dataType:"json",
+                    success: function(response) {
+                      if(response.success){
+                        location.replace("<?php echo site_url('Admin/EventControls/') ?>"+$("#txtEventID").val());
+                      }
+                    }
+                  })
+                }
+            })
+        });
+
+        $("#btnUpdateInfo").click(function() {
+            $.ajax({
+              url:"<?php echo base_url() ?>index.php/Event/UpdateEventInfo",
+              type:"POST",
+              data:{
+                "EventID":$("#txtEventID").val(),
+                "EventName":$("#txtEventName").val(),
+                "EventDescription":$("#txtDescription").val(),
+                "Iframe":$("#txtIframe").val()
+              },
+              dataType:"json",
+              success: function(response) {
+                if(response.success){
+                  Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Successfully updated',
+                      showConfirmButton: false,
+                      timer: 1500
+                    })
+                }
+              }
+            })
+        });
+      });
 
     </script>

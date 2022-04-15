@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>assets/assets/images/favicon.png">
     <title>Master - Material Design Demo</title>
     <link href="<?php echo base_url(); ?>assets/dist/css/style.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/dist/css/pages/data-table.css" rel="stylesheet">
     <!-- This page CSS -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

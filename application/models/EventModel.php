@@ -17,6 +17,16 @@ class EventModel extends CI_Model{
       return false;
     }
   }
+  public function Update($where,$data)
+  {
+    $this->db->where($where);
+    $this->db->update('events', $data);
+    if($this->db->affected_rows()>0){
+      return true;
+    }else{
+      return false;
+    }
+  }
   public function Add($data)
   {
     $this->db->insert('events',$data);

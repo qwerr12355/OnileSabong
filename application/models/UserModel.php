@@ -56,9 +56,9 @@ class UserModel extends CI_Model{
       return false;
     }
   }
-  public function CheckUsernameExistince($username)
+  public function CheckUsernameExistince($username,$userid)
   {
-    $where = array('Username' => $username );
+    $where = array('Username' => $username ,'UserID!='=>$userid);
     $this->db->where($where);
     $query=$this->db->get('users');
     if($query->num_rows()>0){

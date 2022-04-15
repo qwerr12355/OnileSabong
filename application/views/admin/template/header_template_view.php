@@ -13,6 +13,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <title>Admin - Material Design Demo</title>
     <link href="<?php echo base_url(); ?>assets/dist/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/dist/css/pages/data-table.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+
     <!-- This page CSS -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,7 +26,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       .light-blue.lighten-2, .left-sidebar .sidenav ul > li.active > .collapsible-header, .left-sidebar .sidenav ul > li.active a.collapsible-hdeader {
           background-color: #000000 !important;
         }
+        background-color: #000000 !important;
+      }
+      @media screen and (min-width: 850px) {
+        .twitch {
+          position: relative;
+        }
 
+        .twitch .twitch-video {
+          width: 75%;
+          padding-top: 42.1875%;
+        }
+
+        .twitch .twitch-chat {
+          width: 25%;
+          height: auto;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+        }
+      }
+      .twitch .twitch-video {
+        padding-top: 56.25%;
+        position: relative;
+        height: 0;
+      }
+
+      .twitch .twitch-video iframe {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+      }
+      .twitch .twitch-chat {
+          height: 400px;
+        }
+
+        .twitch .twitch-chat iframe {
+          width: 100%;
+          height: 100%;
+        }
     </style>
 </head>
 

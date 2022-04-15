@@ -31,4 +31,35 @@ class Event extends CI_Controller{
       echo json_encode($response);
     }
   }
+  public function OpenEvent()
+  {
+    $where = array('EventID' => $this->input->post('EventID') );
+    $data = array('Status' => 'Open' );
+    if($this->EventModel->Update($where,$data)){
+      $response['success']=true;
+      echo json_encode($response);
+    }
+  }
+  public function CloseEvent()
+  {
+    $where = array('EventID' => $this->input->post('EventID') );
+    $data = array('Status' => 'Closed' );
+    if($this->EventModel->Update($where,$data)){
+      $response['success']=true;
+      echo json_encode($response);
+    }
+  }
+  public function UpdateEventInfo()
+  {
+    $where = array('EventID' => $this->input->post('EventID') );
+    $data = array(
+      'EventName' => $this->input->post('EventName'),
+      'EventDescription' => $this->input->post('EventDescription'),
+      'iframe' =>  $this->input->post('Iframe')
+    );
+    if($this->EventModel->Update($where,$data)){
+      $response['success']=true;
+      echo json_encode($response);
+    }
+  }
 }

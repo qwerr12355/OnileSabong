@@ -76,6 +76,7 @@
 
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
 
+    <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/formsearchcustom.js"></script>
     <script type="text/javascript">
@@ -141,10 +142,20 @@
                           },
                           success: function(response){
                             if(response.error==""){
-                              alert("Successfully cash in!");
-                              location.reload();
+                              loadPlayerInfo();
+                              Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully cash in.',
+                                showConfirmButton: false,
+                                timer: 1500
+                              })
                             }else{
-                              alert(response.error);
+                              Swal.fire({
+                                icon: 'warning',
+                                title: response.error,
+                                showConfirmButton: false,
+                                timer: 1500
+                              });
                             }
                           }
                         });

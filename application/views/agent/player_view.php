@@ -13,7 +13,7 @@
                     <div class="d-flex no-block align-items-center">
                         <h5 class="card-title">My players</h5>
                         <div class="ml-auto">
-                            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add new player</a>
+                            <a class="waves-effect waves-light btn modal-trigger" href="#AddPlayerModal">Add new player</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -21,8 +21,6 @@
                           <thead>
                               <tr class="grey lighten-4">
                                   <th>Name</th>
-                                  <th>Gcash number</th>
-                                  <th>Gcash name</th>
                                   <th>Username</th>
                                   <th>Wallet Balance</th>
                                   <th>Date joined</th>
@@ -36,7 +34,7 @@
                   </div>
                 </div>
               </div>
-              <div id="modal1" class="modal">
+              <div id="AddPlayerModal" class="modal">
                 <div class="modal-content">
                   <h5>Add new player</h5>
                   <div class="row">
@@ -56,7 +54,7 @@
                       <input type="text" name="" value="" id="txtGcashName">
                       <label for="txtGcashName">Gcash Name</label>
                     </div>
-                    <div class="input-field col s8">
+                    <div class="input-field col s12">
                       <input type="text" name="" value="" id="txtFBLink">
                       <label for="txtFBLink">Facebook Link</label>
                     </div>
@@ -74,7 +72,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button class="modal-close btn" id="btnAdd" type="button" name="button">Add</button>
+                  <button class="btn" id="btnAdd" type="button" name="button">Add</button>
                 </div>
               </div>
             </div>
@@ -99,6 +97,7 @@
     <script src="<?php echo base_url(); ?>assets/assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
 
+    <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
@@ -116,15 +115,28 @@
               'GcashName': $("#txtGcashName").val(),
               'FacebookLink': $("#txtFBLink").val(),
               'Username': $("#txtUsername").val(),
-              'Password': $("#txtPassword").val()
+              'Password': $("#txtPassword").val(),
+              'Cpass': $("#txtCpass").val()
+
             },
             dataType:"json",
             success: function(response) {
               if(response.error==""){
-                alert("success");
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Player successfully added',
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+                $("#AddPlayerModal").modal('close');
                 loadPlayer();
               }else{
-                alert(response.error);
+                Swal.fire({
+                  icon: 'warning',
+                  title: response.error,
+                  showConfirmButton: false,
+                  timer: 3000
+                })
               }
             }
           })
@@ -145,8 +157,6 @@
           for (var i = 0; i < playerData.length; i++) {
             _html+='<tr>'
                         +'<td>'+ playerData[i].Firstname+' '+playerData[i].Lastname +'</td>'
-                        +'<td>'+ playerData[i].Gcashnumber +'</td>'
-                        +'<td>'+ playerData[i].GcashName +'</td>'
                         +'<td>'+ playerData[i].Username +'</td>'
                         +'<td> ₱ '+ playerData[i].WalletBalance +'</td>'
                         +'<td>'+ playerData[i].DateCreated +'</td>'

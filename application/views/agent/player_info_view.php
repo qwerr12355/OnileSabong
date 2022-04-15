@@ -43,7 +43,7 @@
                     <div class="col s12">
                         <ul class="tabs">
                             <li class="tab col s3"><a href="#profile">Edit Profile</a></li>
-                            <li class="tab col s3"><a href="#account">Edit Account</a></li>
+                            <li class="tab col s3"><a href="#account">Change Password</a></li>
                         </ul>
                     </div>
                       <div id="profile" class="col s12">
@@ -80,6 +80,13 @@
                                       </div>
                                   </div>
                                   <div class="row">
+                                    <input type="hidden" id="txtUserID" value="<?php echo $accountinfo->UserID; ?>">
+                                      <div class="input-field col s12">
+                                          <input id="txtUsername" type="text" value="<?php echo $accountinfo->Username; ?>">
+                                          <label for="txtUsername">Username</label>
+                                      </div>
+                                  </div>
+                                  <div class="row">
                                       <div class="input-field col s12">
                                         <button class="btn waves-effect waves-light right" id="btnUpdateProfile" name="action">Update Profile</button>
                                       </div>
@@ -89,21 +96,14 @@
                       <div id="account" class="col s12">
                           <div class="card-content">
                                   <div class="row">
-                                    <input type="hidden" id="txtUserID" value="<?php echo $accountinfo->UserID; ?>">
                                       <div class="input-field col s12">
-                                          <input id="txtUsername" type="text" value="<?php echo $accountinfo->Username; ?>">
-                                          <label for="txtUsername">Username</label>
-                                      </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="input-field col s12">
-                                          <input id="txtNewPassword" type="password" value="<?php echo $accountinfo->Password; ?>">
+                                          <input id="txtNewPassword" type="password" value="">
                                           <label for="txtNewPassword">New Password</label>
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="input-field col s12">
-                                          <input id="txtCPass" type="password" value="<?php echo $accountinfo->Password; ?>">
+                                          <input id="txtCPass" type="password" value="">
                                           <label for="txtCpass">Confirm Password</label>
                                       </div>
                                   </div>
@@ -125,39 +125,42 @@
                   <div class="card">
                     <div class="card-content">
                       <p class="card-title"><span class="label label-info">Wallet Transaction</span></p>
-                      <table id="tblTransaction" class="table dataTable centered table-bordered nowrap display">
-                        <thead>
-                          <tr class="grey lighten-4">
-                            <th>Type of transaction</th>
-                            <th>Amount</th>
-                            <th>Date of transaction</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php
-                                if($pwallettransaction){
+                      <div class="table-responsive">
+                        <table id="tblTransaction" class="table dataTable centered table-bordered nowrap display">
+                          <thead>
+                            <tr class="grey lighten-4">
+                              <th>Type of transaction</th>
+                              <th>Amount</th>
+                              <th>Date of transaction</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                                  if($pwallettransaction){
 
-                                  foreach ($pwallettransaction as $pwt) {
-                                    if($pwt->TransactionType=="Cash in"){
-                                      echo "<tr>"
-                                                ."<td><span class='label label-success bold'>".$pwt->TransactionType."</span></td>"
-                                                ."<td> ₱".$pwt->Amount."</td>"
-                                                ."<td>".$pwt->DateCreated."</td>"
-                                          ."</tr>";
-                                    }else{
-                                      echo "<tr>"
-                                                ."<td><span class='label label-danger bold'>".$pwt->TransactionType."</span></td>"
-                                                ."<td> ₱".$pwt->Amount."</td>"
-                                                ."<td>".$pwt->DateCreated."</td>"
-                                          ."</tr>";
+                                    foreach ($pwallettransaction as $pwt) {
+                                      if($pwt->TransactionType=="Cash in"){
+                                        echo "<tr>"
+                                                  ."<td><span class='label label-success bold'>".$pwt->TransactionType."</span></td>"
+                                                  ."<td> ₱".$pwt->Amount."</td>"
+                                                  ."<td>".$pwt->DateCreated."</td>"
+                                            ."</tr>";
+                                      }else{
+                                        echo "<tr>"
+                                                  ."<td><span class='label label-danger bold'>".$pwt->TransactionType."</span></td>"
+                                                  ."<td> ₱".$pwt->Amount."</td>"
+                                                  ."<td>".$pwt->DateCreated."</td>"
+                                            ."</tr>";
+                                      }
+
                                     }
-
                                   }
-                                }
 
-                           ?>
-                        </tbody>
-                      </table>
+                             ?>
+                          </tbody>
+                        </table>
+                      </div>
+
                     </div>
                   </div>
                   <div class="card">
@@ -198,6 +201,7 @@
                   <script src="<?php echo base_url(); ?>assets/assets/libs/jquery/dist/jquery.min.js"></script>
 
                   <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
+                  <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
                   <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
 
                   <script type="text/javascript">
@@ -211,25 +215,33 @@
                           });
                           $("#btnUpdateAccount").click(function() {
                             $.ajax({
-                              url: "<?php echo base_url(); ?>index.php/User/UpdateUser",
+                              url: "<?php echo base_url(); ?>index.php/User/ChangePassword",
                               type: "POST",
                               data:{
                                 'UserID': $('#txtUserID').val(),
-                                'Username': $('#txtUsername').val(),
                                 'Password': $('#txtNewPassword').val(),
+                                'CPass': $('#txtCPass').val(),
                                 'OldPass': $('#txtOldPass').val()
                               },
                               dataType:"json",
-                              success: function(result){
-                                  if(result.UsernameExist){
-                                    alert("Username already exist");
-                                  }
-                                  if(result.OldPasswordIncorrect){
-                                    alert("Old password was incorrect");
-                                  }
-                                  if(result.success){
-                                    alert("success");
-                                    location.reload();
+                              success: function(response){
+                                  if(response.success){
+                                    Swal.fire({
+                                      icon: 'success',
+                                      title: 'Password succesfully changed!',
+                                      showConfirmButton: false,
+                                      timer: 2000
+                                    });
+                                    $("#txtNewPassword").val("");
+                                    $("#txtOldPass").val("");
+                                    $("#txtCPass").val("");
+                                  }else{
+                                    Swal.fire({
+                                      icon: 'warning',
+                                      title: response.error+" ",
+                                      showConfirmButton: false,
+                                      timer: 5000
+                                    })
                                   }
                               }
                             });
@@ -245,15 +257,29 @@
                                 'Gcashnumber': $('#txtGcashNumber').val(),
                                 'GcashName': $('#txtGcashName').val(),
                                 'FacebookLink': $('#txtFacebookLink').val(),
-                                'PlayerID':$("#txtPlayerID").val()
+                                'PlayerID':$("#txtPlayerID").val(),
+                                'UserID':$("#txtUserID").val(),
+                                'Username':$("#txtUsername").val(),
                               },
                               dataType:"json",
                               success: function(response){
                                   if(response.success){
-                                    alert("Player Info Successfully Updated");
-                                    location.reload();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: "Succeffully Updated",
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                      })
+                                  }else if(response.error!=""){
+
+                                      Swal.fire({
+                                          icon: 'warning',
+                                          title: response.error,
+                                          showConfirmButton: false,
+                                          timer: 3000
+                                        })
                                   }
-                              }
+                                }
                             });
                           });
                       })

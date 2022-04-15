@@ -1,16 +1,29 @@
-
+            <div class="page-titles">
+                <div class="d-flex align-items-center">
+                    <h5 class="font-medium m-b-0">Event Control</h5>
+                    <div class="custom-breadcrumb ml-auto">
+                        <a href="#!" class="breadcrumb">Event</a>
+                        <a href="#!" class="breadcrumb">Controls</a>
+                    </div>
+                </div>
+            </div>
               <div class="container-fluid">
                   <div class="row">
                     <div class="card">
                         <div class="card-content">
                             <div class="row">
                               <div class="card col s12 l8">
-                                <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FNarpimTV%2Fvideos%2F386073806677008%2F&width=800&show_text=false&height=413&appId" col s12 width="280px" height="280px" style="border:none;overflow:hidden"></iframe>
+                                <div class="twitch">
+                                    <div class="twitch-video">
+                                          <?php echo $eventinfo->iframe; ?>
+                                    </div>
+                                </div>
                               </div>
                               <div class="card col s12 l4">
                                 <div class="card-content">
                                     <div class="row">
-
+                                      <span id="lblOpen" class="label label-success">BETTING IS NOW OPEN</span>
+                                      <span id="lblClose" class="label label-danger">BETTING IS CLOSED</span>
                                       <input type="hidden" value="<?php echo $EventID; ?>" readonly id="txtEventID">
                                       <input type="hidden" readonly id="txtCockFightID">
                                       <div class="input-field col s12">
@@ -19,7 +32,13 @@
                                       </div>
                                     </div>
                                     <div class="row">
-                                      <button type="button" id="btnOpenBet" class="btn col s12">OPEN BET</button>
+                                      <button type="button" id="btnOpenBet" class="btn col green s12">OPEN BET</button>
+                                    </div>
+                                    <div class="row">
+                                      <button type="button" id="btnCloseBet" class="btn col red s12">CLOSE BET</button>
+                                    </div>
+                                    <div class="row">
+                                      <a href="#WinnerModal" type="button" id="btnChooseWinner" class="btn col s12 modal-trigger">CHOOSE WINNER</a>
                                     </div>
                                     <div class="row">
                                       <div class="input-field col s12">
@@ -39,11 +58,11 @@
                                           <label for="txtTotalDraw">Total draw bets</label>
                                       </div>
                                     </div>
-                                    <div class="row">
-                                      <a href="#WinnerModal" type="button" id="btnChooseWinner" class="btn col s12 modal-trigger">CHOOSE WINNER</a>
-                                    </div>
                                 </div>
                               </div>
+                            </div>
+                            <div class="row">
+                                <button type="button" id="btnEndEvent" class="btn red right">END EVENT</button>
                             </div>
                         </div>
                     </div>
@@ -84,193 +103,295 @@
 
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#WinnerModal').modal();
+            $("#btnOpenBet").hide();
+            $("#btnCloseBet").hide();
+            $("#btnChooseWinner").hide();
+            $("#lblOpen").hide();
+            $("#lblClose").hide();
             loadLastCockFight();
-            function loadLastCockFight() {
+            function loadLastCockFight(){
               $.ajax({
-                url: "<?php echo base_url(); ?>index.php/Cockfight/GetLastCockfight",
-                type: "POST",
-                data:{
-                  'EventID': $('#txtEventID').val()
-                },
-                async:false,
-                dataType:"json",
-                success: function(result){
-                    if(result.FightNumber==""){
-                      $("#txtFightNumber").val("");
-                      M.updateTextFields();
+                  url:"<?php echo base_url(); ?>index.php/Cockfight/GetLastCockfight",
+                  type:"POST",
+                  dataType:"json",
+                  data:{
+                    "EventID":$("#txtEventID").val()
+                  },
+                  success: function(response){
 
-                    }else{
-                      if(result.GetLastCockfight.Winner==null){
-                        $("#btnChooseWinner").show();
+                      if(response.FightNumber==""){
+                        $("#btnOpenBet").show();
                       }else{
-                        $("#btnChooseWinner").hide();
+                        $("#txtCockFightID").val(response.GetLastCockfight.CockfightID);
+                        $("#txtFightNumber").val(parseInt(response.GetLastCockfight.FightNumber)+1);
                       }
-                      $("#txtFightNumber").val(parseInt(result.GetLastCockfight.FightNumber)+1);
-                      $("#txtCockFightID").val(result.GetLastCockfight.CockfightID);
+                      if(response.GetLastCockfight.Status=="Closed"){
+                        $("#btnOpenBet").hide();
+                        $("#txtCockFightID").val(response.GetLastCockfight.CockfightID);
+                        $("#lblClose").show();
+                        $("#lblOpen").hide();
+
+                        $("#btnChooseWinner").show();
+                        $("#btnCloseBet").hide();
+                      }
+                      if(response.GetLastCockfight.Status=="Open"){
+                        $("#btnOpenBet").hide();
+                        $("#lblOpen").show();
+                        $("#lblClose").hide();
+
+                        $("#btnCloseBet").show();
+                        $("#txtCockFightID").val(response.GetLastCockfight.CockfightID);
+
+                      }
+                      if(response.GetLastCockfight.Winner!=null){
+                        $("#btnOpenBet").show();
+                        $("#lblOpen").hide();
+                        $("#lblClose").hide();
+                        $("#btnChooseWinner").hide();
+
+                      }
                       M.updateTextFields();
-                    }
-                }
+                  }
+
               });
             }
             $("#btnOpenBet").click(function() {
-                if($("#btnOpenBet").text()=="OPEN BET"){
-                  if($("#txtCockFightID").val()!=""){
+              Swal.fire({
+                  title: 'Are you sure you want to open a new bet?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, open!'
+                  }).then((result) => {
+                  if (result.isConfirmed) {
                     $.ajax({
-                      url: "<?php echo base_url(); ?>index.php/Cockfight/GetLastCockfight",
-                      type: "POST",
-                      data:{
-                        'EventID': $('#txtEventID').val()
-                      },
-                      async:false,
-                      dataType:"json",
-                      success: function(result){
-                          if(result.GetLastCockfight.Winner==null){
-                            $('#WinnerModal').modal('open');
-                          }else{
-                            $.ajax({
-                              url: "<?php echo base_url(); ?>index.php/Cockfight/Add",
-                              type: "POST",
-                              data:{
-                                'EventID': $('#txtEventID').val(),
-                                'FightNumber': $('#txtFightNumber').val()
-                              },
-                              dataType:"json",
-                              async:false,
-                              success: function(result){
-                                  if(result.success){
-                                    $("#btnOpenBet").text("CLOSE BET");
-                                    $("#txtCockFightID").val(result.CockFightID);
-                                  }
-                              }
-                            });
-                          }
-                      }
-                    });
-                  }else{
-                    $.ajax({
-                      url: "<?php echo base_url(); ?>index.php/Cockfight/Add",
-                      type: "POST",
-                      data:{
-                        'EventID': $('#txtEventID').val(),
-                        'FightNumber': $('#txtFightNumber').val()
-                      },
-                      dataType:"json",
-                      async:false,
-                      success: function(result){
-                          if(result.success){
-                            $("#btnOpenBet").text("CLOSE BET");
-                            $("#txtCockFightID").val(result.CockFightID);
-                          }
-                      }
-                    });
-                  }
-                }else{
-                  $.ajax({
-                    url: "<?php echo base_url(); ?>index.php/Cockfight/UpdateStatus",
-                    type: "POST",
-                    data:{
-                      'CockFightID': $('#txtCockFightID').val()
-                    },
-                    dataType:"json",
-                    async:false,
-                    success: function(result){
-                        if(result.success){
-                          $("#btnOpenBet").text("CLOSE BET");
-                          $("#txtCockFightID").val(result.CockFightID);
-                          loadLastCockFight();
-                          $("#btnOpenBet").text("OPEN BET");
+                        url:"<?php echo base_url(); ?>index.php/Cockfight/Add",
+                        type:"POST",
+                        data:{
+                          "EventID":$("#txtEventID").val(),
+                          "CockfightID":$("#txtCockFightID").val(),
+                          "FightNumber":$("#txtFightNumber").val()
+                        },
+                        dataType:"json",
+                        success: function(response){
+                            if(response.success){
+                              Swal.fire(
+                                'Betting is now open .',
+                                '',
+                                'success'
+                              );
+                              loadLastCockFight();
+                            }
                         }
-                    }
-                  });
 
-                }
+                    });
+
+                  }
+                })
+            });
+            $("#btnCloseBet").click(function() {
+              Swal.fire({
+                  title: 'Are you sure you want to close bet?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, close!'
+                  }).then((result) => {
+                  if (result.isConfirmed) {
+                    $.ajax({
+                        url:"<?php echo base_url(); ?>index.php/Cockfight/UpdateStatus",
+                        type:"POST",
+                        data:{
+                          "CockFightID":$("#txtCockFightID").val()
+                        },
+                        dataType:"json",
+                        success: function(response){
+                            if(response.success){
+                              Swal.fire(
+                                'Betting was closed .',
+                                '',
+                                'success'
+                              );
+                              loadLastCockFight();
+                            }
+                        }
+
+                    });
+
+                  }
+                })
             });
             $("#btnMeronWins").click(function() {
-              $.ajax({
-                url: "<?php echo base_url(); ?>index.php/Cockfight/UpdateWinner",
-                type: "POST",
-                data:{
-                  'CockFightID': $('#txtCockFightID').val(),
-                  'Winner':'Meron'
-                },
-                dataType:"json",
-                async:false,
-                success: function(result){
-                    if(result.success){
-                      $("#txtCockFightID").val(result.CockFightID);
-                      loadLastCockFight();
-                      $('#WinnerModal').modal('close');
+              Swal.fire({
+                  title: 'Are you sure?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes!'
+                  }).then((result) => {
+                  if (result.isConfirmed) {
+                    $.ajax({
+                        url:"<?php echo base_url(); ?>index.php/Cockfight/UpdateWinner",
+                        type:"POST",
+                        data:{
+                          "CockFightID":$("#txtCockFightID").val(),
+                          'Winner':'Meron'
+                        },
+                        dataType:"json",
+                        success: function(response){
+                            if(response.success){
+                              Swal.fire(
+                                'Meron wins .',
+                                '',
+                                'success'
+                              );
+                              loadLastCockFight();
+                              $("#WinnerModal").modal('close');
+                            }
+                        }
 
-                      alert("Meron Wins");
-                    }
-                }
-              });
+                    });
+
+                  }
+                })
             });
             $("#btnWalaWins").click(function() {
-              $.ajax({
-                url: "<?php echo base_url(); ?>index.php/Cockfight/UpdateWinner",
-                type: "POST",
-                data:{
-                  'CockFightID': $('#txtCockFightID').val(),
-                  'Winner':'Wala'
-                },
-                dataType:"json",
-                async:false,
-                success: function(result){
-                    if(result.success){
-                      $("#txtCockFightID").val(result.CockFightID);
-                      loadLastCockFight();
-                      $('#WinnerModal').modal('close');
+              Swal.fire({
+                  title: 'Are you sure?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes!'
+                  }).then((result) => {
+                  if (result.isConfirmed) {
+                    $.ajax({
+                        url:"<?php echo base_url(); ?>index.php/Cockfight/UpdateWinner",
+                        type:"POST",
+                        data:{
+                          "CockFightID":$("#txtCockFightID").val(),
+                          'Winner':'Wala'
+                        },
+                        dataType:"json",
+                        success: function(response){
+                            if(response.success){
+                              Swal.fire(
+                                'Wala wins .',
+                                '',
+                                'success'
+                              );
+                              loadLastCockFight();
+                              $("#WinnerModal").modal('close');
+                            }
+                        }
 
-                      alert("Wala Wins");
-                    }
-                }
-              });
+                    });
+
+                  }
+                })
             });
             $("#btnDraw").click(function() {
-              $.ajax({
-                url: "<?php echo base_url(); ?>index.php/Cockfight/UpdateWinner",
-                type: "POST",
-                data:{
-                  'CockFightID': $('#txtCockFightID').val(),
-                  'Winner':'Draw'
-                },
-                dataType:"json",
-                async:false,
-                success: function(result){
-                    if(result.success){
-                      $("#txtCockFightID").val(result.CockFightID);
-                      loadLastCockFight();
-                      $('#WinnerModal').modal('close');
+              Swal.fire({
+                  title: 'Are you sure?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes!'
+                  }).then((result) => {
+                  if (result.isConfirmed) {
+                    $.ajax({
+                        url:"<?php echo base_url(); ?>index.php/Cockfight/UpdateWinner",
+                        type:"POST",
+                        data:{
+                          "CockFightID":$("#txtCockFightID").val(),
+                          'Winner':'Draw'
+                        },
+                        dataType:"json",
+                        success: function(response){
+                            if(response.success){
+                              Swal.fire(
+                                'Bet was draw .',
+                                '',
+                                'success'
+                              );
+                              loadLastCockFight();
+                              $("#WinnerModal").modal('close');
+                            }
+                        }
 
-                      alert("Draw");
-                    }
-                }
-              });
+                    });
+
+                  }
+                })
             });
             $("#btnCancel").click(function() {
-              $.ajax({
-                url: "<?php echo base_url(); ?>index.php/Cockfight/UpdateWinner",
-                type: "POST",
-                data:{
-                  'CockFightID': $('#txtCockFightID').val(),
-                  'Winner':'Cancel'
-                },
-                dataType:"json",
-                async:false,
-                success: function(result){
-                    if(result.success){
-                      $("#txtCockFightID").val(result.CockFightID);
-                      loadLastCockFight();
-                      $('#WinnerModal').modal('close');
+              Swal.fire({
+                  title: 'Are you sure you want to cancel?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes!'
+                  }).then((result) => {
+                  if (result.isConfirmed) {
+                    $.ajax({
+                        url:"<?php echo base_url(); ?>index.php/Cockfight/UpdateWinner",
+                        type:"POST",
+                        data:{
+                          "CockFightID":$("#txtCockFightID").val(),
+                          'Winner':'Cancelled'
+                        },
+                        dataType:"json",
+                        success: function(response){
+                            if(response.success){
+                              Swal.fire(
+                                'Bet was cancelled.',
+                                '',
+                                'success'
+                              );
+                              loadLastCockFight();
+                              $("#WinnerModal").modal('close');
+                            }
+                        }
 
-                      alert("Canceled");
+                    });
+
+                  }
+                })
+            });
+            $("#btnEndEvent").click(function() {
+              Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, end it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                  $.ajax({
+                    url:"<?php echo base_url() ?>index.php/Event/CloseEvent",
+                    type:"POST",
+                    data:{
+                      "EventID":$("#txtEventID").val()
+                    },
+                    dataType:"json",
+                    success: function(response) {
+                      if(response.success){
+                        location.replace("<?php echo site_url('Admin/Events') ?>");
+                      }
                     }
+                  });
                 }
-              });
+                })
             });
         });
 

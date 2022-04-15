@@ -21,30 +21,34 @@ class User extends CI_Controller{
     );
     return $query;
   }
-  public function UpdateUser()
+  public function ChangePassword()
   {
     $where = array('UserID' => $this->input->post('UserID'));
     $data = array(
-      'Username' => $this->input->post('Username'),
       'Password' => $this->input->post('Password')
     );
-    $datas["UsernameExist"]=false;
-    $datas["OldPasswordIncorrect"]=false;
-    $IsUsernameExisted=$this->UserModel->CheckUsernameExistince($this->input->post('Username'));
-    if($IsUsernameExisted){
-      $datas["UsernameExist"]=true;
-    }
-
-    $whereoldpass = array('Password' => $this->input->post('OldPass'), 'UserID'=>$this->input->post('UserID') );
-    if($this->UserModel->getOldPassword($whereoldpass)==false){
-      $datas["OldPasswordIncorrect"]=true;
-    }
-    if($IsUsernameExisted||$datas["OldPasswordIncorrect"]){
-
+    $datas['error']="";
+    if($this->input->post('Password')==""||$this->input->post('CPass')==""||$this->input->post('OldPass')==""){
+      $datas['error']="Please fill out all fields";
     }else{
-      $updatequery=$this->UserModel->UpdateUser($where,$data);
-      if($updatequery){
-        $datas["success"]=true;
+      if($this->input->post('Password')==$this->input->post('CPass')){
+
+        $datas["OldPasswordIncorrect"]=false;
+
+        $whereoldpass = array('Password' => $this->input->post('OldPass'), 'UserID'=>$this->input->post('UserID') );
+        if($this->UserModel->getOldPassword($whereoldpass)==false){
+          $datas["OldPasswordIncorrect"]=true;
+        }
+        if($datas["OldPasswordIncorrect"]){
+          $datas['error']="Old Password is not correct.";
+        }else{
+          $updatequery=$this->UserModel->UpdateUser($where,$data);
+          if($updatequery){
+            $datas["success"]=true;
+          }
+        }
+      }else{
+        $datas['error']="New password and confirm password dont match.";
       }
     }
     echo json_encode($datas);

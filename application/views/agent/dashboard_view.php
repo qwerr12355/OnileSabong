@@ -13,22 +13,6 @@
               <div class="container-fluid">
                 <div class="card">
                     <div class="card-content">
-                        <div class="table-resposive">
-                            <table id="tblEvents" class="table centered table-bordered nowrap display">
-                                <thead>
-                                    <tr>
-                                      <th>Event Name</th>
-                                      <th>Event Desciption</th>
-                                      <th>Start Date</th>
-                                      <th>End Date</th>
-                                      <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
               </div>

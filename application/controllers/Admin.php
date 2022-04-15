@@ -110,8 +110,9 @@ class Admin extends CI_Controller {
 	public function EventControls($id)
 	{
 		$data['EventID']=$id;
+		$data['eventinfo']=$this->EventModel->GetEventByID($id);
 		if($_SESSION['UserTypeID']==1){
-			$this->load->view('admin/template/controls_header_view.php');
+			$this->load->view('admin/template/header_template_view.php');
 			$this->load->view('admin/event_controls_view',$data);
 			$this->load->view('admin/template/footer_template_view.php');
 		}else{

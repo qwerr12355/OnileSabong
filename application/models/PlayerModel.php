@@ -31,7 +31,7 @@ class PlayerModel extends CI_Model{
   }
   public function getPlayerByUserRecruit($id)
   {
-    $this->db->select('*');
+    $this->db->select('player.Firstname,player.Lastname,player.WalletBalance,player.DateCreated,player.PlayerID,users.UserID,users.Username');
     $this->db->from('users');
     $this->db->join('player', 'player.UserID = users.UserID');
     $this->db->join('userplayerrecruit', 'userplayerrecruit.PlayerID = player.PlayerID');
