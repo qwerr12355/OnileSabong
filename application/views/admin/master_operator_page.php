@@ -30,10 +30,8 @@
                                       <thead>
                                           <tr>
                                               <th>Name</th>
-                                              <th>Gcash number</th>
-                                              <th>Gcash name</th>
                                               <th>Username</th>
-                                              <th>Date joined</th>
+                                              <th>Wallet Balance</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -95,7 +93,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="modal-action modal-close waves-effect waves-green btn white-text" id="btnAddNewOperator"><i class="far fa-save m-r-10"></i> Add</a>
+                                <button class="modal-action waves-effect waves-green btn white-text" id="btnAddNewOperator"><i class="far fa-save m-r-10"></i> Add</a>
                             </div>
                         </div>
                     </div>
@@ -121,6 +119,7 @@
     <!-- All Required js -->
 
     <script src="<?php echo base_url(); ?>assets/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
@@ -131,17 +130,34 @@
                 $.ajax({
                   type: "POST",
                   url: "<?php echo base_url(); ?>index.php/Operator/AddNewOperator",
+                  dataType:"json",
                   data: {
                     "Username":$("#username").val(),
                     "Password":$("#password").val(),
+                    "Cpass":$("#cpassword").val(),
                     "Firstname":$("#fname").val(),
                     "Lastname":$("#lname").val(),
                     "GcashNumber":$("#gcashnumber").val(),
                     "FacebookLink":$("#facebooklink").val(),
                     "GcashName":$("#gcashname").val(),
                   },
-                  success: function(result){
+                  success: function(response){
+                    if(response.success){
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully added.',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
                       loadOperator();
+                    }else{
+                      Swal.fire({
+                        icon: 'warning',
+                        title: response.error,
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                    }
                   }
                 });
             });
@@ -161,11 +177,9 @@
               for (var i = 0; i < operatorArray.length; i++) {
                 _html+='<tr>'
                             +'<td>'+ operatorArray[i].Firstname+' '+operatorArray[i].Lastname +'</td>'
-                            +'<td>'+ operatorArray[i].GcashNumber +'</td>'
-                            +'<td>'+ operatorArray[i].GcashName +'</td>'
                             +'<td>'+ operatorArray[i].Username +'</td>'
-                            +'<td>'+ operatorArray[i].DateCreated +'</td>'
-                            +'<td><a href="<?php echo base_url(); ?>index.php/Admin/OperatorInfo/'+operatorArray[i].UserID+'" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</a></td>'
+                            +'<td> ₱ '+ operatorArray[i].WalletBalance +'</td>'
+                            +'<td><a href="<?php echo base_url(); ?>index.php/Admin/OperatorInfo/'+operatorArray[i].OperatorID+'" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete">MORE INFO</a></td>'
                       +'</tr>';
 
               }

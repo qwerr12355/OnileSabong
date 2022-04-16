@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?php echo base_url(); ?>assets/dist/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/dist/css/pages/data-table.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- This page CSS -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -93,6 +93,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <!-- ============================================================== -->
                     <!-- Logo you can find that scss in header.scss -->
                     <!-- ============================================================== -->
+                    <a href="javascript:void(0)" class="brand-logo">
+                        <span class="icon">
+                            <img class="light-logo" src="<?php echo base_url(); ?>assets/assets/images/logo-light-icon.png">
+                            <img class="dark-logo" src="<?php echo base_url(); ?>assets/assets/images/logo-icon.png">
+                        </span>
+                        <span class="text">
+                            <img class="light-logo" src="<?php echo base_url(); ?>assets/assets/images/logo-light-text.png">
+                            <img class="dark-logo" src="<?php echo base_url(); ?>assets/assets/images/logo-text.png">
+                        </span>
+                    </a>
+
                     <ul class="left">
                         <li class="hide-on-med-and-down">
                             <a href="javascript: void(0);" class="nav-toggle">
@@ -109,11 +120,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </a>
                         </li>
                     </ul>
-                    <a href="javascript:void(0)" class="brand-logo">
-                        <div class="row">
-                            <h5>My Logo</h5>
-                        </div>
-                    </a>
                     <!-- ============================================================== -->
                     <!-- Logo you can find that scss in header.scss -->
                     <!-- ============================================================== -->
@@ -193,8 +199,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <li>
                                     <div class="dw-user-box">
                                         <div class="u-text">
-                                            <h4><?php echo $_SESSION['Username']; ?>(Admin)</h4>
-                                            <p>steve@gmail.com</p>
+                                            <h4><?php echo $_SESSION['Username']; ?></h4>
+                                            <h4>(Admin)</h4>
                                             <a class="waves-effect waves-light btn-small red white-text">View Profile</a>
                                         </div>
                                     </div>
@@ -268,6 +274,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <a href="<?php echo site_url('Admin/PlayerList'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Player</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="collapsible-header has-arrow"><i class="material-icons">clear_all</i><span class="hide-menu">Wallet Transaction</span></a>
+                            <div class="collapsible-body">
+                                <ul class="collapsible" data-collapsible="accordion">
+                                    <li>
+                                        <a href="<?php echo site_url('Admin/WalletDeposit'); ?>">
+                                            <i class="material-icons">grade</i>
+                                            <span class="hide-menu">Wallet Deposit</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="material-icons">grade</i>
+                                            <span class="hide-menu">Wallet Widthdrawal</span>
                                         </a>
                                     </li>
                                 </ul>

@@ -20,19 +20,21 @@
                           </div>
                         </div>
                         <div class="row">
-                          <table id="tblEvents" class="table centered resposive table-bordered nowrap display">
-                              <thead>
-                                  <tr class="grey lighten-4">
-                                    <th>Event Name</th>
-                                    <th>Event Desciption</th>
-                                    <th>Date created</th>
-                                    <th>Action</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
+                          <div class="table-responsive">
+                            <table id="tblEvents" class="table centered resposive table-bordered nowrap display">
+                                <thead>
+                                    <tr class="grey lighten-4">
+                                      <th>Event Name</th>
+                                      <th>Event Desciption</th>
+                                      <th>Date created</th>
+                                      <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                              </tbody>
-                          </table>
+                                </tbody>
+                            </table>
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -77,6 +79,7 @@
     <!-- ============================================================== -->
     <script src="<?php echo base_url(); ?>assets/assets/libs/jquery/dist/jquery.min.js"></script>
 
+    <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
     <script type="text/javascript">
@@ -98,10 +101,20 @@
                 dataType:"json",
                 success: function(response) {
                   if(response.success){
-                    alert("success");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully updated',
+                        showConfirmButton: false,
+                        timer: 3000
+                      })
                     loadEvents();
                   }else{
-                    alert(response.error);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: response.error,
+                        showConfirmButton: false,
+                        timer: 3000
+                      })
                   }
                 }
               });

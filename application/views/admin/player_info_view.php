@@ -48,37 +48,32 @@
                     </div>
                       <div id="profile" class="col s12">
                           <div class="card-content">
-                                  <div class="row">
                                     <input type="hidden" id="txtPlayerID" value="<?php echo $info->PlayerID; ?>">
-                                      <div class="input-field col s12">
+                                      <div class="input-field col s12 l6">
                                           <input id="txtFirstname" type="text" value="<?php echo $info->Firstname; ?>">
                                           <label for="txtFirstname">Firstname</label>
                                       </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="input-field col s12">
+                                      <div class="input-field col s12 l6">
                                           <input id="txtLastname" type="text" value="<?php echo $info->Lastname; ?>">
                                           <label for="txtLastname">Lastname</label>
                                       </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="input-field col s12">
+                                      <div class="input-field col s12 l6">
                                           <input id="txtGcashNumber" type="number" value="<?php echo $info->Gcashnumber; ?>">
                                           <label for="txtGcashNumber">Gcash Number</label>
                                       </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="input-field col s12">
+                                      <div class="input-field col s12 l6">
                                           <input id="txtGcashName" type="text" value="<?php echo $info->GcashName; ?>">
                                           <label for="txtGcashName">Gcash Name</label>
                                       </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="input-field col s12">
+                                      <div class="input-field col s12 l6">
                                           <input id="txtFacebookLink" type="text" value="<?php echo $info->FacebookLink; ?>">
                                           <label for="txtFacebookLink">Facebook Link</label>
                                       </div>
-                                  </div>
+                                      <div class="input-field col s12 l6">
+                                          <input id="txtUsername" type="text" value="<?php echo $accountinfo->Username; ?>">
+                                          <label for="txtUsername">Username</label>
+                                      </div>
+
                                   <div class="row">
                                       <div class="input-field col s12">
                                         <button class="btn waves-effect waves-light right" id="btnUpdateProfile" name="action">Update Profile</button>
@@ -90,20 +85,17 @@
                           <div class="card-content">
                                   <div class="row">
                                     <input type="hidden" id="txtUserID" value="<?php echo $accountinfo->UserID; ?>">
-                                      <div class="input-field col s12">
-                                          <input id="txtUsername" type="text" value="<?php echo $accountinfo->Username; ?>">
-                                          <label for="txtUsername">Username</label>
-                                      </div>
+
                                   </div>
                                   <div class="row">
                                       <div class="input-field col s12">
-                                          <input id="txtNewPassword" type="password" value="<?php echo $accountinfo->Password; ?>">
+                                          <input id="txtNewPassword" type="password" value="">
                                           <label for="txtNewPassword">New Password</label>
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="input-field col s12">
-                                          <input id="txtCPass" type="password" value="<?php echo $accountinfo->Password; ?>">
+                                          <input id="txtCPass" type="password" value="">
                                           <label for="txtCpass">Confirm Password</label>
                                       </div>
                                   </div>
@@ -196,6 +188,7 @@
                   <!-- All Required js -->
                   <!-- ============================================================== -->
                   <script src="<?php echo base_url(); ?>assets/assets/libs/jquery/dist/jquery.min.js"></script>
+                  <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
                   <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
                   <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
@@ -211,25 +204,30 @@
                           });
                           $("#btnUpdateAccount").click(function() {
                             $.ajax({
-                              url: "<?php echo base_url(); ?>index.php/User/UpdateUser",
+                              url: "<?php echo base_url(); ?>index.php/User/ChangePassword",
                               type: "POST",
                               data:{
                                 'UserID': $('#txtUserID').val(),
-                                'Username': $('#txtUsername').val(),
+                                'CPass': $('#txtCPass').val(),
                                 'Password': $('#txtNewPassword').val(),
                                 'OldPass': $('#txtOldPass').val()
                               },
                               dataType:"json",
                               success: function(result){
-                                  if(result.UsernameExist){
-                                    alert("Username already exist");
-                                  }
-                                  if(result.OldPasswordIncorrect){
-                                    alert("Old password was incorrect");
-                                  }
                                   if(result.success){
-                                    alert("success");
-                                    location.reload();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Successfully updated',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                      })
+                                  }else{
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: result.error,
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                      })
                                   }
                               }
                             });
@@ -241,17 +239,37 @@
                               type: "POST",
                               data:{
                                 'Firstname': $('#txtFirstname').val(),
+                                'UserID': $('#txtUserID').val(),
                                 'Lastname': $('#txtLastname').val(),
                                 'Gcashnumber': $('#txtGcashNumber').val(),
                                 'GcashName': $('#txtGcashName').val(),
                                 'FacebookLink': $('#txtFacebookLink').val(),
+                                'Username': $('#txtUsername').val(),
                                 'PlayerID':$("#txtPlayerID").val()
                               },
                               dataType:"json",
                               success: function(response){
                                   if(response.success){
-                                    alert("Player Info Successfully Updated");
-                                    location.reload();
+                                    Swal.fire({
+                                      icon: 'success',
+                                      title: 'Your work has been saved',
+                                      showConfirmButton: false,
+                                      timer: 1500
+                                      })
+                                  }else if(response.error!=""){
+                                    Swal.fire({
+                                      icon: 'warning',
+                                      title: response.error,
+                                      showConfirmButton: false,
+                                      timer: 1500
+                                      })
+                                  }else{
+                                    Swal.fire({
+                                      icon: 'warning',
+                                      title: "You didn't changed anything.",
+                                      showConfirmButton: false,
+                                      timer: 1500
+                                      })
                                   }
                               }
                             });

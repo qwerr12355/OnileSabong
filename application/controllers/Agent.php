@@ -20,40 +20,71 @@ class Agent extends CI_Controller{
   }
   public function AddAgent()
   {
-    $userdata = array(
-      'Username' => $this->input->post('Username'),
-      'Password' => $this->input->post('Password'),
-      'UserTypeID' => 3
-    );
-    $lastuserid=$this->UserModel->AddUser($userdata);
-    $agentdata = array(
-      'Firstname' => $this->input->post('Firstname'),
-      'Lastname' => $this->input->post('Lastname'),
-      'Gcashnumber' => $this->input->post('GcashNumber'),
-      'GcashName' => $this->input->post('GcashName'),
-      'FacebookLink' => $this->input->post('FacebookLink'),
-      'UserID' => $lastuserid
-    );
+    $response['error']="";
+    if($this->input->post('Firstname')==""||$this->input->post('Lastname')==""||$this->input->post('GcashNumber')==""||$this->input->post('GcashName')=="")
+    {
+      $response['error']="Please fill out all the required fields";
+    }else{
+      if($this->input->post('Password')==$this->input->post('CPass')){
+        $IsUsernameExisted=$this->UserModel->CheckUsernameExistince($this->input->post('Username'),0);
+        if($IsUsernameExisted){
+          $response['error']="Username already existed";
+        }else{
+          $userdata = array(
+            'Username' => $this->input->post('Username'),
+            'Password' => $this->input->post('Password'),
+            'UserTypeID' => 3
+          );
+          $lastuserid=$this->UserModel->AddUser($userdata);
 
-    if($this->AgentModel->AddAgent($agentdata)){
-      $response["success"]=true;
-      echo json_encode($response);
+          $agentdata = array(
+            'Firstname' => $this->input->post('Firstname'),
+            'Lastname' => $this->input->post('Lastname'),
+            'Gcashnumber' => $this->input->post('GcashNumber'),
+            'GcashName' => $this->input->post('GcashName'),
+            'FacebookLink' => $this->input->post('FacebookLink'),
+            'UserID' => $lastuserid
+          );
+          if($this->AgentModel->AddAgent($agentdata)){
+            $response["success"]=true;
+
+          }
+        }
+      }else{
+        $response["error"]="Password and confirm password don't match.";
+
+      }
+
     }
+    echo json_encode($response);
   }
   public function UpdateAgent()
   {
-    $where = array('AgentID' => $this->input->post('AgentID') );
-    $data = array(
-      'Firstname' => $this->input->post('Firstname'),
-      'Lastname' => $this->input->post('Lastname'),
-      'Gcashnumber' => $this->input->post('GcashNumber'),
-      'GcashName' => $this->input->post('GcashName'),
-      'FacebookLink' => $this->input->post('FacebookLink')
-    );
-    if($this->AgentModel->UpdateAgent($where,$data)){
-      $response['success']=true;
-      echo json_encode($response);
+    $response['error']="";
+    if($this->input->post('Firstname')==""||$this->input->post('Lastname')==""||$this->input->post('GcashNumber')==""||$this->input->post('GcashName')==""||$this->input->post('Username')==""){
+      $response['error']="Please fill out all fields.";
+    }else{
+      $IsUsernameExisted=$this->UserModel->CheckUsernameExistince($this->input->post('Username'),$this->input->post('UserID'));
+      if($IsUsernameExisted){
+        $response['error']="Username already existed";
+      }else{
+        $where = array('AgentID' => $this->input->post('AgentID') );
+        $data = array(
+          'Firstname' => $this->input->post('Firstname'),
+          'Lastname' => $this->input->post('Lastname'),
+          'Gcashnumber' => $this->input->post('GcashNumber'),
+          'GcashName' => $this->input->post('GcashName'),
+          'FacebookLink' => $this->input->post('FacebookLink')
+        );
+        $userwhere = array('UserID' => $this->input->post('UserID'));
+        $userdata = array('Username' => $this->input->post('Username'));
+        if($this->AgentModel->UpdateAgent($where,$data)||$this->UserModel->UpdateUser($userwhere,$userdata)){
+          $response['success']=true;
+        }
+      }
+
     }
+    echo json_encode($response);
   }
   public function Players()
   {

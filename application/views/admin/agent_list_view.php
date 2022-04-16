@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="modal-action modal-close waves-effect waves-green btn-flat indigo white-text" id="btnAdd"><i class="far fa-save m-r-10"></i> Add</a>
+                                <button class="modal-action waves-effect waves-green btn-flat indigo white-text" id="btnAdd"><i class="far fa-save m-r-10"></i> Add</a>
                             </div>
                         </div>
                     </div>
@@ -121,6 +121,7 @@
     <!-- All Required js -->
 
     <script src="<?php echo base_url(); ?>assets/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
@@ -137,15 +138,27 @@
               'GcashName': $("#txtGcashname").val(),
               'FacebookLink': $("#txtFBLink").val(),
               'Username': $("#txtUsername").val(),
-              'Password': $("#txtPassword").val()
+              'Password': $("#txtPassword").val(),
+              'CPass': $("#cpassword").val()
             },
             dataType:"json",
             success: function(response) {
               if(response.success){
-                alert("success");
+                $("#modal2").modal('close');
+                Swal.fire({
+                  icon: 'success',
+                  title: "Successfully Added.",
+                  showConfirmButton: false,
+                  timer: 1500
+                })
                 loadAgent();
               }else{
-                alert(response.error);
+                Swal.fire({
+                  icon: 'warning',
+                  title: response.error,
+                  showConfirmButton: false,
+                  timer: 1500
+                })
               }
             }
           })
@@ -171,7 +184,7 @@
                         +'<td>'+ agentData[i].GcashName +'</td>'
                         +'<td>'+ agentData[i].Username +'</td>'
                         +'<td>'+ agentData[i].DateCreated +'</td>'
-                        +'<td><a href="<?php echo base_url(); ?>index.php/Admin/AgentInfo/'+agentData[i].UserID+'" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</a></td>'
+                        +'<td><a href="<?php echo base_url(); ?>index.php/Admin/AgentInfo/'+agentData[i].UserID+'"/"'+agentData[i].UserID+'" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete">MORE INFO</a></td>'
                   +'</tr>';
 
           }

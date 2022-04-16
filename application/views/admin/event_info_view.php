@@ -149,11 +149,24 @@
               success: function(response) {
                 if(response.success){
                   Swal.fire({
-                      position: 'top-end',
                       icon: 'success',
                       title: 'Successfully updated',
                       showConfirmButton: false,
-                      timer: 1500
+                      timer: 3000
+                    })
+                }else if(response.error!=""){
+                  Swal.fire({
+                      icon: 'warning',
+                      title: response.error,
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                }else{
+                  Swal.fire({
+                      icon: 'warning',
+                      title: "You didn't changed anything.",
+                      showConfirmButton: false,
+                      timer: 3000
                     })
                 }
               }

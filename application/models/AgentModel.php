@@ -20,7 +20,7 @@ class AgentModel extends CI_Model{
       return false;
     }
   }
-  
+
   public function AddAgent($data)
   {
     $this->db->insert('agent',$data);

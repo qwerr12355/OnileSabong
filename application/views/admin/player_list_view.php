@@ -25,21 +25,20 @@
                                       <a class="waves-effect waves-light btn modal-trigger" href="#modal2">Add new player</a>
                                   </div>
                               </div>
-                                  <table id="tblPlayer" class="table centered table-bordered nowrap display">
-                                      <thead>
-                                          <tr>
-                                              <th>Name</th>
-                                              <th>Gcash number</th>
-                                              <th>Gcash name</th>
-                                              <th>Username</th>
-                                              <th>Wallet Balance</th>
-                                              <th>Date joined</th>
-                                              <th>Action</th>
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                      </tbody>
-                                  </table>
+                              <div class="table-responsive">
+                                <table id="tblPlayer" class="table centered table-bordered nowrap display">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Wallet Balance</th>
+                                            <th>Username</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                              </div>
                             </div>
                         </div>
                         <!-- Create Modal Structure -->
@@ -94,7 +93,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="modal-action modal-close waves-effect waves-green btn-flat indigo white-text" id="btnAdd"><i class="far fa-save m-r-10"></i> Add</a>
+                                <button class="modal-action waves-effect waves-green btn-flat indigo white-text" id="btnAdd"><i class="far fa-save m-r-10"></i> Add</a>
                             </div>
                         </div>
                     </div>
@@ -120,6 +119,7 @@
     <!-- All Required js -->
 
     <script src="<?php echo base_url(); ?>assets/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
@@ -136,15 +136,27 @@
               'GcashName': $("#txtGcashname").val(),
               'FacebookLink': $("#txtFBLink").val(),
               'Username': $("#txtUsername").val(),
+              'Cpass': $("#cpassword").val(),
               'Password': $("#txtPassword").val()
             },
             dataType:"json",
             success: function(response) {
               if(response.error==""){
-                alert("success");
+                $("#modal2").modal('close');
+                Swal.fire({
+                    icon: 'success',
+                    title: "Successfully Added.",
+                    showConfirmButton: false,
+                    timer: 3000
+                  })
                 loadPlayer();
               }else{
-                alert(response.error);
+                Swal.fire({
+                    icon: 'warning',
+                    title: response.error,
+                    showConfirmButton: false,
+                    timer: 3000
+                  })
               }
             }
           })
@@ -166,12 +178,9 @@
           for (var i = 0; i < playerData.length; i++) {
             _html+='<tr>'
                         +'<td>'+ playerData[i].Firstname+' '+playerData[i].Lastname +'</td>'
-                        +'<td>'+ playerData[i].Gcashnumber +'</td>'
-                        +'<td>'+ playerData[i].GcashName +'</td>'
-                        +'<td>'+ playerData[i].Username +'</td>'
                         +'<td> ₱ '+ playerData[i].WalletBalance +'</td>'
-                        +'<td>'+ playerData[i].DateCreated +'</td>'
-                        +'<td><a href="<?php echo base_url(); ?>index.php/Admin/PlayerInfo/'+playerData[i].PlayerID+'/'+playerData[i].UserID+'" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-info" aria-hidden="true"></i>More info</a></td>'
+                        +'<td>'+ playerData[i].Username +'</td>'
+                        +'<td><a href="<?php echo base_url(); ?>index.php/Admin/PlayerInfo/'+playerData[i].PlayerID+'/'+playerData[i].UserID+'" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete">MORE INFO</a></td>'
                   +'</tr>';
 
           }

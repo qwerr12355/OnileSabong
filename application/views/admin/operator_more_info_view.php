@@ -13,38 +13,123 @@
             </div>
             <div class="container-fluid">
               <div class="row">
-                <div class="col s12">
-                    <div class="card">
-                        <div class="card-content">
-                                  <h5 class="card-title">Personal Information</h5>
-                                  <input type="hidden" id="txtOperatorID" value="<?php echo $info->OperatorID; ?>">
-                                  <div class="row">
-                                      <div class="input-field col s12 l6">
-                                          <input id="txtFirstname" type="text" value="<?php echo $info->Firstname; ?>">
-                                          <label for="txtFirstname">First Name :</label>
+                  <div class="col s12 m12 l3">
+                      <div class="card">
+                          <div class="card-content">
+                              <div class="center-align m-t-30">
+                                  <h4 class="card-title m-t-10"><?php echo $info->Firstname." ".$info->Lastname ?></h4>
+                                  <h6 class="card-subtitle">Date Joined: <?php echo $info->DateCreated; ?> </h6>
+                                  <div class="center-align">
+                                      <div>
+                                          <a href="javascript:void(0)" class="m-r-40"> <p> Wallet balance: <span class="label label-info">₱ <?php echo $info->WalletBalance ?></span></p></a>
                                       </div>
-                                      <div class="input-field col s12 l6">
-                                          <input id="txtLastname" type="text" value="<?php echo $info->Lastname; ?>">
-                                          <label for="txtLastname" class="">Last Name :</label>
-                                      </div>
-                                      <div class="input-field col s12 l6">
-                                          <input id="txtGcashNumber" type="number" value="<?php echo $info->GcashNumber; ?>">
-                                          <label for="txtGcashNumber" class="">GCASH Number :</label>
-                                      </div>
-                                      <div class="input-field col s12 l6">
-                                          <input id="txtGcashname" type="text" value="<?php echo $info->GcashName; ?>">
-                                          <label for="txtGcashname" class="">GCASH Name :</label>
-                                      </div>
-                                      <div class="input-field col s12 l6">
-                                          <input id="txtFbLink" type="text" value="<?php echo $info->FacebookLink; ?>">
-                                          <label for="txtFbLink" class="">Facebook Link :</label>
-                                      </div>
-                                      <div class="input-field col l6 s12 right">
-                                        <button class="btn modal-trigger col s12 m6" href="#modal1">CHANGE ACCOUNT INFO</button>
-                                        <button class="btn info col s12 m6" id="btnSaveChanges">SAVE CHANGES</button>
-                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <hr>
+                          <div class="card-content">
+                              <small>Gcash Number </small>
+                              <h6><?php echo $info->GcashNumber; ?></h6>
+                              <small>Gcash Name</small>
+                              <h6><?php echo $info->GcashName; ?></h6>
+                              <a href="<?php echo $info->FacebookLink; ?>" class="btn-floating indigo darken-2 m-t-10"><i class="fab fa-facebook"></i></a>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col s12 m12 l9">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col s12">
+                                    <ul class="tabs">
+                                        <li class="tab col s3"><a href="#profile">Edit Profile</a></li>
+                                        <li class="tab col s3"><a href="#account">Edit Account</a></li>
+                                    </ul>
                                 </div>
-                            </div>
+                                  <div id="profile" class="col s12">
+                                      <div class="card-content">
+                                                <input type="hidden" id="txtOperatorID" value="<?php echo $info->OperatorID; ?>">
+                                                  <div class="input-field col s12 l6">
+                                                      <input id="txtFirstname" type="text" value="<?php echo $info->Firstname; ?>">
+                                                      <label for="txtFirstname">Firstname</label>
+                                                  </div>
+                                                  <div class="input-field col s12 l6">
+                                                      <input id="txtLastname" type="text" value="<?php echo $info->Lastname; ?>">
+                                                      <label for="txtLastname">Lastname</label>
+                                                  </div>
+                                                  <div class="input-field col s12 l6">
+                                                      <input id="txtGcashNumber" type="number" value="<?php echo $info->GcashNumber; ?>">
+                                                      <label for="txtGcashNumber">Gcash Number</label>
+                                                  </div>
+                                                  <div class="input-field col s12 l6">
+                                                      <input id="txtGcashname" type="text" value="<?php echo $info->GcashName; ?>">
+                                                      <label for="txtGcashname">Gcash Name</label>
+                                                  </div>
+                                                  <div class="input-field col s12 l6">
+                                                      <input id="txtFacebookLink" type="text" value="<?php echo $info->FacebookLink; ?>">
+                                                      <label for="txtFacebookLink">Facebook Link</label>
+                                                  </div>
+                                                  <div class="input-field col s12 l6">
+                                                      <input id="txtUsername" type="text" value="<?php echo $info->Username; ?>">
+                                                      <label for="txtUsername">Username</label>
+                                                  </div>
+
+                                              <div class="row">
+                                                  <div class="input-field col s12">
+                                                    <button class="btn waves-effect right" id="btnUpdateProfile" name="action">Update Profile</button>
+                                                  </div>
+                                              </div>
+                                      </div>
+                                  </div>
+                                  <div id="account" class="col s12">
+                                      <div class="card-content">
+                                              <div class="row">
+                                                <input type="hidden" id="txtUserID" value="<?php echo $info->UserID; ?>">
+
+                                              </div>
+                                              <div class="row">
+                                                  <div class="input-field col s12">
+                                                      <input id="txtNewPassword" type="password" value="">
+                                                      <label for="txtNewPassword">New Password</label>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="input-field col s12">
+                                                      <input id="txtCPass" type="password" value="">
+                                                      <label for="txtCpass">Confirm Password</label>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="input-field col s12">
+                                                      <input id="txtOldPass" type="password">
+                                                      <label for="txtOldPass">Old Password</label>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="input-field col s12">
+                                                    <button class="btn waves-effect right" id="btnUpdateAccount" name="action">Update Account</button>
+                                                  </div>
+                                              </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-content">
+                                  <p class="card-title"><span class="label label-info">Betting History</span></p>
+                                  <table id="tblTransaction" class="table dataTable centered table-bordered nowrap display">
+                                    <thead>
+                                      <tr class="grey lighten-4">
+                                        <th>Date</th>
+                                        <th>Bet Amount</th>
+                                        <th>Choice</th>
+                                        <th>Status</th>
+                                      </tr>
+                                      </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -52,35 +137,6 @@
               <!-- Modal Trigger -->
 
 
-              <!-- Modal Structure -->
-              <div id="modal1" class="modal">
-              <div class="modal-content">
-                <h4>CHANGE ACCOUNT INFORMATION</h4>
-                <div class="row">
-                  <input type="hidden" name="" value="<?php echo $accountinfo->UserID; ?>" id="txtUserID">
-                  <div class="input-field col s12">
-                    <input type="text" name="" value="<?php echo $accountinfo->Username; ?>" id="txtUsername">
-                    <label for="txtUsername">Username</label>
-                  </div>
-                  <div class="input-field col s12">
-                    <input type="password" name="" value="<?php echo $accountinfo->Password; ?>" id="txtPassword">
-                    <label for="txtPassword">Password</label>
-                  </div>
-                  <div class="input-field col s12">
-                    <input type="password" name="" value="<?php echo $accountinfo->Password; ?>" id="txtConfirmPassword">
-                    <label for="txtConfirmPassword">Confirm Password</label>
-                  </div>
-                  <div class="input-field col s12">
-                    <input type="password" name="" value="" id="txtOldPass">
-                    <label for="txtOldPass">Please provide your old password</label>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <a href="#!" class="waves-effect waves-blue btn red modal-close">Cancel</a>
-                <button id="btnChangeAccountInfo" class="waves-effect waves-blue btn">Change</button>
-              </div>
-            </div>
             </div>
             <!-- ============================================================== -->
             <!-- Container fluid scss in scafholding.scss -->
@@ -101,53 +157,81 @@
     <!-- All Required js -->
     <!-- ============================================================== -->
     <script src="<?php echo base_url(); ?>assets/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#btnChangeAccountInfo").click(function() {
+            $("#btnUpdateAccount").click(function() {
               $.ajax({
-                url: "<?php echo base_url(); ?>index.php/User/UpdateUser",
+                url: "<?php echo base_url(); ?>index.php/User/ChangePassword",
                 type: "POST",
                 data:{
                   'UserID': $('#txtUserID').val(),
-                  'Username': $('#txtUsername').val(),
-                  'Password': $('#txtPassword').val(),
-                  'OldPass': $('#txtOldPass').val()
+                  'Password': $('#txtNewPassword').val(),
+                  'OldPass': $('#txtOldPass').val(),
+                  'CPass': $('#txtCPass').val()
+
                 },
                 dataType:"json",
                 success: function(result){
-                    if(result.UsernameExist){
-                      alert("Username already exist");
-                    }
-                    if(result.OldPasswordIncorrect){
-                      alert("Old password was incorrect");
-                    }
                     if(result.success){
-                      alert("success");
-                      location.reload();
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Password successfully changed.',
+                        showConfirmButton: false,
+                        timer: 3000
+                      })
+                    }else if(result.error!=""){
+                      Swal.fire({
+                        icon: 'warning',
+                        title: result.error,
+                        showConfirmButton: false,
+                        timer: 3000
+                      })
                     }
                 }
               });
             });
 
-            $("#btnSaveChanges").click(function() {
+            $("#btnUpdateProfile").click(function() {
                 $.ajax({
                   url:"<?php echo base_url(); ?>index.php/Operator/UpdateOperator",
                   type:"POST",
                   data:{
                     'Firstname': $("#txtFirstname").val(),
+                    'UserID': $("#txtUserID").val(),
                     'Lastname': $("#txtLastname").val(),
                     'GcashNumber': $("#txtGcashNumber").val(),
                     'GcashName': $("#txtGcashname").val(),
-                    'FacebookLink': $("#txtFbLink").val(),
+                    'GcashName': $("#txtGcashname").val(),
+                    'FacebookLink': $("#txtFacebookLink").val(),
+                    'Username':$("#txtUsername").val(),
                     'OperatorID':$("#txtOperatorID").val()
                   },
                   dataType:"json",
                   success:function(result) {
                     if(result.success){
-                      alert("Success Updated");
-                      location.reload();
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'successfully updated.',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                    }else if(result.error!=""){
+                      Swal.fire({
+                        icon: 'warning',
+                        title: result.error,
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                    }else{
+                      Swal.fire({
+                        icon: 'warning',
+                        title: "You haven't changed anything.",
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
                     }
                   }
                 });

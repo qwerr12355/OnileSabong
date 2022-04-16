@@ -16,10 +16,9 @@ class Admin extends CI_Controller {
 			header("Location:".site_url()."/Welcome");
 		}
   }
-	public function OperatorInfo($id)
+	public function OperatorInfo($operatorid)
 	{
-		$info["info"]=$this->OperatorModel->getInfoByID($id);
-		$info["accountinfo"]=$this->UserModel->getUser($id);
+		$info["info"]=$this->OperatorModel->getInfoByID($operatorid);
 		if($_SESSION['UserTypeID']==1){
 			$this->load->view('admin/template/header_template_view.php',$info);
 			$this->load->view('admin/operator_more_info_view.php');
@@ -57,10 +56,10 @@ class Admin extends CI_Controller {
 			header("Location:".site_url()."/Welcome");
 		}
 	}
-	public function AgentInfo($id)
+	public function AgentInfo($playerid)
 	{
 		if($_SESSION['UserTypeID']==1){
-			$agentinfo['info']=$this->AgentModel->GetAgentInfo($id);
+			$agentinfo['info']=$this->AgentModel->GetAgentInfo($playerid);
 			$this->load->view('admin/template/header_template_view.php');
 			$this->load->view('admin/agent_info_view',$agentinfo);
 			$this->load->view('admin/template/footer_template_view.php');
@@ -114,6 +113,16 @@ class Admin extends CI_Controller {
 		if($_SESSION['UserTypeID']==1){
 			$this->load->view('admin/template/header_template_view.php');
 			$this->load->view('admin/event_controls_view',$data);
+			$this->load->view('admin/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+		}
+	}
+	public function WalletDeposit()
+	{
+		if($_SESSION['UserTypeID']==1){
+			$this->load->view('admin/template/header_template_view.php');
+			$this->load->view('admin/wallet_deposit_view');
 			$this->load->view('admin/template/footer_template_view.php');
 		}else{
 			header("Location:".site_url()."/Welcome");

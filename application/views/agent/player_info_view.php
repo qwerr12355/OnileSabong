@@ -48,49 +48,36 @@
                     </div>
                       <div id="profile" class="col s12">
                           <div class="card-content">
-                                  <div class="row">
                                     <input type="hidden" id="txtPlayerID" value="<?php echo $info->PlayerID; ?>">
-                                      <div class="input-field col s12">
+                                      <div class="input-field col s12 l6">
                                           <input id="txtFirstname" type="text" value="<?php echo $info->Firstname; ?>">
                                           <label for="txtFirstname">Firstname</label>
                                       </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="input-field col s12">
+
+                                      <div class="input-field col s12 l6">
                                           <input id="txtLastname" type="text" value="<?php echo $info->Lastname; ?>">
                                           <label for="txtLastname">Lastname</label>
                                       </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="input-field col s12">
+                                      <div class="input-field col s12 l6">
                                           <input id="txtGcashNumber" type="number" value="<?php echo $info->Gcashnumber; ?>">
                                           <label for="txtGcashNumber">Gcash Number</label>
                                       </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="input-field col s12">
+                                      <div class="input-field col s12 l6">
                                           <input id="txtGcashName" type="text" value="<?php echo $info->GcashName; ?>">
                                           <label for="txtGcashName">Gcash Name</label>
                                       </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="input-field col s12">
+                                      <div class="input-field col s12 l6">
                                           <input id="txtFacebookLink" type="text" value="<?php echo $info->FacebookLink; ?>">
                                           <label for="txtFacebookLink">Facebook Link</label>
                                       </div>
-                                  </div>
-                                  <div class="row">
-                                    <input type="hidden" id="txtUserID" value="<?php echo $accountinfo->UserID; ?>">
-                                      <div class="input-field col s12">
+                                      <input type="hidden" id="txtUserID" value="<?php echo $accountinfo->UserID; ?>">
+                                      <div class="input-field col s12 l6">
                                           <input id="txtUsername" type="text" value="<?php echo $accountinfo->Username; ?>">
                                           <label for="txtUsername">Username</label>
                                       </div>
-                                  </div>
-                                  <div class="row">
                                       <div class="input-field col s12">
                                         <button class="btn waves-effect waves-light right" id="btnUpdateProfile" name="action">Update Profile</button>
                                       </div>
-                                  </div>
                           </div>
                       </div>
                       <div id="account" class="col s12">

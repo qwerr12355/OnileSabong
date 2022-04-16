@@ -4,25 +4,36 @@
             <!-- ============================================================== -->
             <div class="page-titles">
                 <div class="d-flex align-items-center">
-                    <h5 class="font-medium m-b-0">GCASH to Wallet</h5>
+                    <h5 class="font-medium m-b-0">Wallet Transaction</h5>
                     <div class="custom-breadcrumb ml-auto">
-                      <a href="#!" class="breadcrumb">Transaction</a>
-                        <a href="#!" class="breadcrumb">GCASH to Wallet</a>
+                      <a href="#!" class="breadcrumb">Wallet Transaction</a>
+                      <a href="#!" class="breadcrumb">Wallet Deposit</a>
                     </div>
                 </div>
             </div>
               <div class="container-fluid">
                   <div class="card">
                       <div class="card-content">
-                        <h5 class="card-title">Cash In</h5>
+                        <h5 class="card-title">Wallet Deposit</h5>
                             <div class="row">
                                 <div class="col l7 m12 s12">
                                   <div class="row">
                                     <div class="input-field col s12">
-                                      <select searchable='Search' id="selectPlayer">
+                                      <select id="selectUserType" class="js-data-example-ajax" tabindex="-1">
+                                          <option value="">Choose Usertype</option>
+                                          <option value="Operator">Operator</option>
+                                          <option value="Master Agent">Master Agent</option>
+                                          <option value="Player">Player</option>
+                                      </select>
+                                      <label for="selectUserType">Type of user</label>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="input-field col s12">
+                                      <select searchable='Search' id="selectUser">
 
                                       </select>
-                                      <label for="selectPlayer">Select Player</label>
+                                      <label for="selectUser">Select Player</label>
                                     </div>
                                   </div>
                                   <div class="row">
@@ -78,38 +89,48 @@
 
     <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/formsearchcustom.js"></script>
     <script type="text/javascript">
 
             $(document).ready(function() {
-                loadAgentPlayer();
-                var playerData=[];
-                function loadAgentPlayer() {
-                  $.ajax({
-                          url: "<?php echo base_url(); ?>index.php/Agent/GetMyPlayers",
-                          type: "POST",
-                          dataType:"json",
-                          async:false,
-                          success: function(result){
-                              playerData=result;
-                          }
-                        });
-                        var _html='';
-                        for (var i = 0; i < playerData.length; i++) {
-                          _html+='<option value="'+playerData[i].PlayerID+'">'+ playerData[i].Firstname+' '+playerData[i].Lastname +'</option>'
+                var _selectData=[];
+                $("#selectUserType").change(function() {
+                  if($(this).val()=="Operator"){
+                    $.ajax({
+                      url:"<?php echo base_url(); ?>index.php/Operator/GetAllOperator",
+                      type: "POST",
+                      dataType: "json",
+                      async:false,
+                      success: function(result) {
+                        _selectData=result;
+                      }
+                    });
+                    $("#selectUser").html(_html);
+                    var _html='';
+                    for (var i = 0; i < _selectData.length; i++) {
+                      _html+='<option value="'+_selectData[i].OperatorID+'">'+ _selectData[i].Firstname+' '+_selectData[i].Lastname +'</option>'
 
-                        }
+                    }
+                    $("#selectUser").html(_html);
+                    var instances;
+                        var elems = document.querySelectorAll('select');
+                        instances = M.FormSelect.init(elems, _selectData);
 
-                        $("#selectPlayer").html(_html);
-                }
-                loadPlayerInfo();
+
+
+                  }else{
+
+                  }
+                });
+
                 function loadPlayerInfo() {
                   $.ajax({
                           url: "<?php echo base_url(); ?>index.php/Player/GetInfoByID",
                           type: "POST",
                           dataType:"json",
                           data:{
-                            'PlayerID':$("#selectPlayer").val()
+                            'ID':$("#selectPlayer").val()
                           },
                           success: function(response){
                             $("#pName").html("Name : "+response.Firstname+" "+response.Lastname);
@@ -121,14 +142,7 @@
                           }
                         });
                 }
-                $("#selectPlayer").change(function() {
-                  loadPlayerInfo();
-                });
-                var instances;
-                document.addEventListener('DOMContentLoaded', function() {
-                    var elems = document.querySelectorAll('select');
-                    instances = M.FormSelect.init(elems, playerData);
-                });
+
                 $("#btnCashIn").click(function() {
                   $.ajax({
                           url: "<?php echo base_url(); ?>index.php/PlayerWalletTransaction/AddTransaction",
@@ -143,7 +157,6 @@
                           success: function(response){
                             if(response.error==""){
                               loadPlayerInfo();
-                              $("#selectPlayer").val("");
                               Swal.fire({
                                 icon: 'success',
                                 title: 'Successfully cash in.',
