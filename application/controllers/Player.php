@@ -11,8 +11,26 @@ class Player extends CI_Controller{
 
   function index()
   {
-    $this->load->model("PlayerModel");
-    $this->load->model("PlayerUserRecruit");
+    if($_SESSION['UserTypeID']==4){
+      $this->load->view('player/template/header_template_view');
+      $this->load->view('player/player_dashboard_view');
+      $this->load->view('player/template/footer_template_view');
+		}else{
+			header("Location:".site_url()."/Welcome");
+		}
+
+  }
+  public function Event($id)
+  {
+    $data['EventID']=$id;
+    $data['eventinfo']=$this->EventModel->GetEventByID($id);
+    if($_SESSION['UserTypeID']==4){
+      $this->load->view('player/template/header_template_view.php');
+      $this->load->view('player/join_event_view',$data);
+      $this->load->view('player/template/footer_template_view.php');
+    }else{
+      header("Location:".site_url()."/Welcome");
+    }
   }
   public function Add()
   {
@@ -99,5 +117,14 @@ class Player extends CI_Controller{
   {
     $playerdata=$this->PlayerModel->getInfoByID($this->input->post('PlayerID'));
     echo json_encode($playerdata);
+  }
+  public function GetCockFightTotalMeronBet()
+  {
+    $query=$this->PlayerBetModel->GetCockFightTotalMeronBet($this->input->post('CockFightID'));
+    $response['totalmeronbet']=0;
+    if($query){
+      $response['totalmeronbet']=$query;
+    }
+    echo json_encode($response);
   }
 }

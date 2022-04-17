@@ -27,6 +27,8 @@ class Welcome extends CI_Controller {
 					$this->session->sess_destroy();
 				}else if($_SESSION['UserTypeID']==3){
 					header("Location:".site_url()."/Agent/Dashboard");
+				}else if($_SESSION['UserTypeID']==4){
+					header("Location:".site_url()."/Player");
 				}
 			}else{
 				$this->load->view('login_view');

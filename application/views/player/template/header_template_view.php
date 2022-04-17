@@ -25,6 +25,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       .light-blue.lighten-2, .left-sidebar .sidenav ul > li.active > .collapsible-header, .left-sidebar .sidenav ul > li.active a.collapsible-hdeader {
           background-color: #000000 !important;
         }
+        @media screen and (min-width: 850px) {
+          .twitch {
+            position: relative;
+          }
+
+          .twitch .twitch-video {
+            width: 75%;
+            padding-top: 42.1875%;
+          }
+
+          .twitch .twitch-chat {
+            width: 25%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+          }
+        }
+        .twitch .twitch-video {
+          padding-top: 56.25%;
+          position: relative;
+          height: 0;
+        }
+
+        .twitch .twitch-video iframe {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+        }
+        .twitch .twitch-chat {
+            height: 400px;
+          }
+
+          .twitch .twitch-chat iframe {
+            width: 100%;
+            height: 100%;
+          }
     </style>
 </head>
 
@@ -61,7 +100,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <img class="dark-logo" src="<?php echo base_url(); ?>assets/assets/images/logo-text.png">
                         </span>
                     </a>
-
                     <ul class="left">
                         <li class="hide-on-med-and-down">
                             <a href="javascript: void(0);" class="nav-toggle">
@@ -157,8 +195,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <li>
                                     <div class="dw-user-box">
                                         <div class="u-text">
-                                            <h4><?php echo $_SESSION['Username']; ?>(Agent)</h4>
-                                            <p>steve@gmail.com</p>
+                                            <h4><?php echo $_SESSION['Username']; ?></h4>
+                                            <p>PLAYER</p>
                                             <a class="waves-effect waves-light btn-small red white-text">View Profile</a>
                                         </div>
                                     </div>
@@ -207,30 +245,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li>
                     <ul class="collapsible p-t-30">
                          <li>
-                            <a href="<?php echo site_url('Agent/Dashboard'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Dashboard</span></a>
+                            <a href="<?php echo site_url('Agent/Dashboard'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Betting</span></a>
                         </li>
-                        <li>
-                            <a href="<?php echo site_url('Agent/Players'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">My Players</span></a>
-                        </li>
-                        <li>
-                            <a class="collapsible-header has-arrow" href="#"><i class="material-icons">repeat</i><span class="hide-menu">Wallet Transaction</span></a>
-                            <div class="collapsible-body">
-                                <ul class="collapsible" data-collapsible="accordion">
-                                    <li>
-                                        <a href="<?php echo site_url('Agent/GcashToWallet'); ?>">
-                                            <i class="material-icons">grade</i>
-                                            <span class="hide-menu">Wallet Deposit</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo site_url('Agent/AgentList'); ?>">
-                                            <i class="material-icons">grade</i>
-                                            <span class="hide-menu">Wallet Widthdrawal</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+
                     </ul>
                 </li>
             </ul>
