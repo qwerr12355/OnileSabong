@@ -160,7 +160,7 @@
                  e.preventDefault();
                  $.ajax({
                    type: "POST",
-                   url: "<?php echo base_url(); ?>index.php/Admin/AddNewPlayer",
+                   url: "<?php echo base_url(); ?>index.php/Operator/AddNewPlayer",
                    dataType:"json",
                    data:
                     $("#frmOperator").serialize(),
@@ -197,7 +197,7 @@
             loadOperator();
             function loadOperator() {
               $.ajax({
-                url: "<?php echo base_url(); ?>index.php/Admin/GetAllPlayer",
+                url: "<?php echo base_url(); ?>index.php/Operator/GetPlayerUserRecruits",
                 type: "POST",
                 dataType:"json",
                 async:false,
@@ -218,7 +218,7 @@
                           +'<td>'+userArray[i].CurrentCommission+'</td>'
                           +'<td>'+userArray[i].TotalCommission+'</td>'
                           +'<td>'+datejoined.toLocaleDateString()+'</td>'
-                          +'<td><a href="<?php echo base_url(); ?>index.php/Admin/PlayerInfo/'+userArray[i].UserID+'" class="btn"><i class="material-icons">edit</i></button></a>'
+                          +'<td><a href="<?php echo base_url(); ?>index.php/Operator/PlayerInfo/'+userArray[i].UserID+'" class="btn"><i class="material-icons">edit</i></button></a>'
                       +'</tr>';
 
               }

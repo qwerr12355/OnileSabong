@@ -126,14 +126,14 @@
                         $("#btnOpenBet").show();
                       }else{
                         $("#txtCockFightID").val(response.GetLastCockfight.CockfightID);
-                        $("#txtFightNumber").val(parseInt(response.GetLastCockfight.FightNumber)+1);
                       }
                       if(response.GetLastCockfight.Status=="Closed"){
                         $("#btnOpenBet").hide();
                         $("#txtCockFightID").val(response.GetLastCockfight.CockfightID);
                         $("#lblClose").show();
-                        $("#lblOpen").hide();
+                        $("#txtFightNumber").val(parseInt(response.GetLastCockfight.FightNumber));
 
+                        $("#lblOpen").hide();
                         $("#btnChooseWinner").show();
                         $("#btnCloseBet").hide();
                       }
@@ -141,6 +141,7 @@
                         $("#btnOpenBet").hide();
                         $("#lblOpen").show();
                         $("#lblClose").hide();
+                        $("#txtFightNumber").val(parseInt(response.GetLastCockfight.FightNumber));
 
                         $("#btnCloseBet").show();
                         $("#txtCockFightID").val(response.GetLastCockfight.CockfightID);
@@ -151,6 +152,7 @@
                         $("#lblOpen").hide();
                         $("#lblClose").hide();
                         $("#btnChooseWinner").hide();
+                        $("#txtFightNumber").val(parseInt(response.GetLastCockfight.FightNumber)+1);
 
                       }
                       M.updateTextFields();

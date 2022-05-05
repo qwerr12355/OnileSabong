@@ -4,10 +4,10 @@
             <!-- ============================================================== -->
             <div class="page-titles">
                 <div class="d-flex align-items-center">
-                    <h5 class="font-medium m-b-0">Player</h5>
+                    <h5 class="font-medium m-b-0">Mater Agent</h5>
                     <div class="custom-breadcrumb ml-auto">
                         <a href="#!" class="breadcrumb">User</a>
-                        <a href="#!" class="breadcrumb">Player</a>
+                        <a href="#!" class="breadcrumb">Agent</a>
                     </div>
                 </div>
             </div>
@@ -20,9 +20,9 @@
                         <div class="card">
                             <div class="card-content">
                               <div class="d-flex no-block align-items-center">
-                                  <h5 class="card-title">All player</h5>
+                                  <h5 class="card-title">All master agents</h5>
                                   <div class="ml-auto">
-                                      <a class="waves-effect waves-light btn modal-trigger" href="#modal2">ADD NEW PLAYER</a>
+                                      <a class="waves-effect waves-light btn modal-trigger" href="#modal2">ADD NEW MASTER AGENT</a>
                                   </div>
                               </div>
                               <div class="table-responsive">
@@ -49,7 +49,7 @@
                         <div id="modal2" class="modal">
                             <form id="frmOperator" class="col s12">
                             <div class="modal-content">
-                                <h5 class="card-title"> <i class="fas fa-phone-square m-r-10"></i>New player</h5>
+                                <h5 class="card-title"> <i class="fas fa-phone-square m-r-10"></i>New master agent</h5>
                                 <div class="row">
                                         <div class="row">
                                             <div class="input-field col s12 l4">
@@ -160,7 +160,7 @@
                  e.preventDefault();
                  $.ajax({
                    type: "POST",
-                   url: "<?php echo base_url(); ?>index.php/Admin/AddNewPlayer",
+                   url: "<?php echo base_url(); ?>index.php/Admin/AddNewOperator",
                    dataType:"json",
                    data:
                     $("#frmOperator").serialize(),
@@ -197,7 +197,7 @@
             loadOperator();
             function loadOperator() {
               $.ajax({
-                url: "<?php echo base_url(); ?>index.php/Admin/GetAllPlayer",
+                url: "<?php echo base_url(); ?>index.php/Admin/GetAllMasterAgent",
                 type: "POST",
                 dataType:"json",
                 async:false,
@@ -218,7 +218,7 @@
                           +'<td>'+userArray[i].CurrentCommission+'</td>'
                           +'<td>'+userArray[i].TotalCommission+'</td>'
                           +'<td>'+datejoined.toLocaleDateString()+'</td>'
-                          +'<td><a href="<?php echo base_url(); ?>index.php/Admin/PlayerInfo/'+userArray[i].UserID+'" class="btn"><i class="material-icons">edit</i></button></a>'
+                          +'<td><a href="<?php echo base_url(); ?>index.php/Admin/MasterAgentInfo/'+userArray[i].UserID+'" class="btn"><i class="material-icons">edit</i></button></a>'
                       +'</tr>';
 
               }

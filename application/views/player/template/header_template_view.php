@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       .light-blue.lighten-2, .left-sidebar .sidenav ul > li.active > .collapsible-header, .left-sidebar .sidenav ul > li.active a.collapsible-hdeader {
           background-color: #000000 !important;
         }
-        @media screen and (min-width: 850px) {
+        @media screen and (min-width: 3000px) {
           .twitch {
             position: relative;
           }
@@ -195,15 +195,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <li>
                                     <div class="dw-user-box">
                                         <div class="u-text">
-                                            <h4><?php echo $_SESSION['Username']; ?></h4>
-                                            <p>PLAYER</p>
-                                            <a class="waves-effect waves-light btn-small red white-text">View Profile</a>
+                                            <h4><?php echo $_SESSION['Firstname'].' '.$_SESSION['Lastname']; ?></h4>
+                                            <p><?php echo $_SESSION['Username']; ?></p>
                                         </div>
                                     </div>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#"><i class="material-icons">account_circle</i> My Profile</a></li>
-                                <li><a href="#"><i class="material-icons">account_balance_wallet</i> My Balance</a></li>
+                                <li><a href="#"><i class="material-icons">account_balance_wallet</i> My Balance : (₱ <span id="lblProfileWalletProfile" class="label label-info"><?php echo $_SESSION['WalletBalance'] ?></span>)</a> </li>
                                 <li><a href="#"><i class="material-icons">inbox</i> Inbox</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#"><i class="material-icons">settings</i> Account Setting</a></li>

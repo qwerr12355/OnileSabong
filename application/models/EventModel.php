@@ -47,4 +47,15 @@ class EventModel extends CI_Model{
       return false;
     }
   }
+  public function GetOpenEvent()
+  {
+    $where = array('Status' => 'Open' );
+    $this->db->where($where);
+    $query=$this->db->get('events');
+    if($query->num_rows()>0){
+      return $query->result();
+    }else{
+      return false;
+    }
+  }
 }

@@ -157,15 +157,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <li>
                                     <div class="dw-user-box">
                                         <div class="u-text">
-                                            <h4><?php echo $_SESSION['Username']; ?>(Agent)</h4>
-                                            <p>steve@gmail.com</p>
+                                            <h4><?php echo $_SESSION['Firstname'].' '.$_SESSION['Lastname']; ?>(Agent)</h4>
+                                            <p><?php echo $_SESSION['Username']; ?></p>
                                             <a class="waves-effect waves-light btn-small red white-text">View Profile</a>
                                         </div>
                                     </div>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#"><i class="material-icons">account_circle</i> My Profile</a></li>
-                                <li><a href="#"><i class="material-icons">account_balance_wallet</i> My Balance</a></li>
+                                <li><a href="#"><i class="material-icons">account_balance_wallet</i> My Wallet <span class="label label-info>"<?php echo $_SESSION['WalletBalance']; ?></span></a></li>
                                 <li><a href="#"><i class="material-icons">inbox</i> Inbox</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#"><i class="material-icons">settings</i> Account Setting</a></li>
@@ -195,7 +195,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <ul id='dropdownuser' class='dropdown-content'>
                             <li><a href="#"><i class="material-icons">account_circle</i> My Profile</a></li>
-                            <li><a href="#"><i class="material-icons">account_balance_wallet</i> My Balance</a></li>
+                            <li><a href="#"><i class="material-icons">account_balance_wallet</i> My Wallet <span class="label label-info>"<?php echo $_SESSION['WalletBalance']; ?></span></a></li>
                             <li><a href="#"><i class="material-icons">inbox</i> Inbox</a></li>
                             <li role="separator" class="divider m-t-0"></li>
                             <li><a href="#"><i class="material-icons">settings</i> Account Setting</a></li>

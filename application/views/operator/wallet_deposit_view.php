@@ -21,7 +21,6 @@
                                       <div class="input-field col s12 l6">
                                         <select id="selectUserType" class="js-data-example-ajax">
                                             <option value="">SELECT TYPE OF USER</option>
-                                            <option value="2">Operator</option>
                                             <option value="3">Sub-operator</option>
                                             <option value="4">Master Agent</option>
                                             <option value="5">Sub-agent</option>
@@ -106,7 +105,7 @@
                         )
                     }else{
                       $.ajax({
-                              url: "<?php echo base_url(); ?>index.php/Admin/DepositWallet",
+                              url: "<?php echo base_url(); ?>index.php/Operator/DepositWallet",
                               type: "POST",
                               dataType:"json",
                               data:$("#frmWalletDeposit").serialize(),
@@ -145,7 +144,7 @@
                 });
                 function loadUser() {
                   $.ajax({
-                          url: "<?php echo base_url(); ?>index.php/Admin/GetUserByUserTypeID",
+                          url: "<?php echo base_url(); ?>index.php/Operator/GetUserByUserTypeID",
                           type: "POST",
                           dataType:"json",
                           data:{"UserTypeID":$("#selectUserType").val()},

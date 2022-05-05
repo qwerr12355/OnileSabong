@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class PlayerUserRecruit extends CI_Model{
+class UserRecruiterModel extends CI_Model{
 
   public function __construct()
   {
@@ -10,8 +10,8 @@ class PlayerUserRecruit extends CI_Model{
   }
   public function Add($data)
   {
-    $this->db->insert('userplayerrecruit',$data);
-    if($this->db->affected_rows()){
+    $this->db->insert('userrecruiter', $data);
+    if($this->db->affected_rows()>0){
       return true;
     }else{
       return false;

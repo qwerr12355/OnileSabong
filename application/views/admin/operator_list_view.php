@@ -4,10 +4,10 @@
             <!-- ============================================================== -->
             <div class="page-titles">
                 <div class="d-flex align-items-center">
-                    <h5 class="font-medium m-b-0">Player</h5>
+                    <h5 class="font-medium m-b-0">Operator</h5>
                     <div class="custom-breadcrumb ml-auto">
                         <a href="#!" class="breadcrumb">User</a>
-                        <a href="#!" class="breadcrumb">Player</a>
+                        <a href="#!" class="breadcrumb">Operator</a>
                     </div>
                 </div>
             </div>
@@ -20,9 +20,9 @@
                         <div class="card">
                             <div class="card-content">
                               <div class="d-flex no-block align-items-center">
-                                  <h5 class="card-title">All player</h5>
+                                  <h5 class="card-title">All operators</h5>
                                   <div class="ml-auto">
-                                      <a class="waves-effect waves-light btn modal-trigger" href="#modal2">ADD NEW PLAYER</a>
+                                      <a class="waves-effect waves-light btn modal-trigger" href="#modal2">Add new operator</a>
                                   </div>
                               </div>
                               <div class="table-responsive">
@@ -49,7 +49,7 @@
                         <div id="modal2" class="modal">
                             <form id="frmOperator" class="col s12">
                             <div class="modal-content">
-                                <h5 class="card-title"> <i class="fas fa-phone-square m-r-10"></i>New player</h5>
+                                <h5 class="card-title"> <i class="fas fa-phone-square m-r-10"></i>New operator</h5>
                                 <div class="row">
                                         <div class="row">
                                             <div class="input-field col s12 l4">
@@ -160,7 +160,7 @@
                  e.preventDefault();
                  $.ajax({
                    type: "POST",
-                   url: "<?php echo base_url(); ?>index.php/Admin/AddNewPlayer",
+                   url: "<?php echo base_url(); ?>index.php/Admin/AddNewOperator",
                    dataType:"json",
                    data:
                     $("#frmOperator").serialize(),
@@ -193,32 +193,32 @@
                    }
                  });
               });
-            var userArray=[];
+            var operatorArray=[];
             loadOperator();
             function loadOperator() {
               $.ajax({
-                url: "<?php echo base_url(); ?>index.php/Admin/GetAllPlayer",
+                url: "<?php echo base_url(); ?>index.php/Admin/GetAllOperator",
                 type: "POST",
                 dataType:"json",
                 async:false,
                 success: function(result){
-                    userArray=result;
+                    operatorArray=result;
                 }
               });
               var _html='';
               $('#tblOperator').dataTable().fnClearTable();
               $('#tblOperator').dataTable().fnDestroy();
-              for (var i = 0; i < userArray.length; i++) {
-                var datejoined=new Date(userArray[i].DateCreated);
+              for (var i = 0; i < operatorArray.length; i++) {
+                var datejoined=new Date(operatorArray[i].DateCreated);
                 _html+='<tr>'
                           +'<td>'+(i+1)+'</td>'
-                          +'<td>'+userArray[i].Lastname+", "+userArray[i].Firstname+'</td>'
-                          +'<td>'+userArray[i].Username+'</td>'
-                          +'<td>'+userArray[i].WalletBalance+'</td>'
-                          +'<td>'+userArray[i].CurrentCommission+'</td>'
-                          +'<td>'+userArray[i].TotalCommission+'</td>'
+                          +'<td>'+operatorArray[i].Lastname+", "+operatorArray[i].Firstname+'</td>'
+                          +'<td>'+operatorArray[i].Username+'</td>'
+                          +'<td>'+operatorArray[i].WalletBalance+'</td>'
+                          +'<td>'+operatorArray[i].CurrentCommission+'</td>'
+                          +'<td>'+operatorArray[i].TotalCommission+'</td>'
                           +'<td>'+datejoined.toLocaleDateString()+'</td>'
-                          +'<td><a href="<?php echo base_url(); ?>index.php/Admin/PlayerInfo/'+userArray[i].UserID+'" class="btn"><i class="material-icons">edit</i></button></a>'
+                          +'<td><a href="<?php echo base_url(); ?>index.php/Admin/OperatorInfo/'+operatorArray[i].UserID+'" class="btn"><i class="material-icons">edit</i></button></a>'
                       +'</tr>';
 
               }

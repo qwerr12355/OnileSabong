@@ -10,6 +10,8 @@
         <link href="<?php echo base_url(); ?>assets/dist/css/style.css" rel="stylesheet">
         <!-- This page CSS -->
         <link href="<?php echo base_url(); ?>assets/dist/css/pages/authentication.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+
         <!-- This page CSS -->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,7 +38,7 @@
             <!-- Login box.scss -->
             <!-- ============================================================== -->
             <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(<?php echo base_url(); ?>assets/assets/images/big/auth-bg.jpg) no-repeat center center;">
-                <div class="auth-box grey darken-4">
+                <div class="auth-box">
                     <div id="loginform">
                         <div class="logo">
                             <h5 class="font-medium m-b-20">Sign In to lowbettalpakan.com</h5>
@@ -93,6 +95,8 @@
         <!-- ============================================================== -->
         <script src="<?php echo base_url(); ?>assets/assets/libs/jquery/dist/jquery.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/dist/js/materialize.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
         <!-- ============================================================== -->
         <!-- This page plugin js -->
         <!-- ============================================================== -->
@@ -122,7 +126,11 @@
                         if(result.error==""){
                           location.reload();
                         }else{
-                          alert(result.error);
+                          Swal.fire(
+                            result.error,
+                            '',
+                            'warning'
+                          )
                         }
                       }
                     });

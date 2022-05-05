@@ -21,6 +21,10 @@ class User extends CI_Controller{
     );
     return $query;
   }
+  public function GetUserWallet()
+  {
+
+  }
   public function ChangePassword()
   {
     $where = array('UserID' => $this->input->post('UserID'));
@@ -63,19 +67,24 @@ class User extends CI_Controller{
     $users=$this->UserModel->authentication($where);
     if($users){
       if($users->Username==$this->input->post('Username')&&$users->Password==$this->input->post('Password')){
-        $result['UserTypeID']=$users->UserTypeID;
-        $sessiondata = array(
-          'UserID' => $users->UserID,
-          'Username' => $users->Username,
-          'UserTypeID' => $users->UserTypeID,
-          'Password' => $users->Password
-        );
-        $this->session->set_userdata($sessiondata);
+          $sessiondata = array(
+            'UserID' => $users->UserID,
+            'UserTypeID' => $users->UserTypeID,
+            'Username' => $users->Username,
+            'Password' => $users->Password,
+            'DateCreated' => $users->DateCreated,
+            'Firstname' => $users->Firstname,
+            'Lastname' => $users->Lastname,
+            'GcashNumber' => $users->GcashName,
+            'GcashName' => $users->GcashName,
+            'FBLink' => $users->FBLink
+          );
+          $this->session->set_userdata($sessiondata);
       }else{
-        $result['error']="Invalid Username. Check capslock.";
+        $result['error']="Invalid username and password. Check capslock.";
       }
     }else{
-      $result['error']="Invalid Username";
+      $result['error']="Invalid Username and password.";
     }
     echo json_encode($result);
   }

@@ -11,9 +11,10 @@ class Player extends CI_Controller{
 
   function index()
   {
+    $data['openevents']=$this->EventModel->GetOpenEvent();
     if($_SESSION['UserTypeID']==4){
       $this->load->view('player/template/header_template_view');
-      $this->load->view('player/player_dashboard_view');
+      $this->load->view('player/player_dashboard_view',$data);
       $this->load->view('player/template/footer_template_view');
 		}else{
 			header("Location:".site_url()."/Welcome");
@@ -118,12 +119,151 @@ class Player extends CI_Controller{
     $playerdata=$this->PlayerModel->getInfoByID($this->input->post('PlayerID'));
     echo json_encode($playerdata);
   }
-  public function GetCockFightTotalMeronBet()
+  public function GetInfoUserID()
   {
-    $query=$this->PlayerBetModel->GetCockFightTotalMeronBet($this->input->post('CockFightID'));
+    $playerdata=$this->PlayerModel->getInfoByUserID($this->input->post('UserID'));
+    echo json_encode($playerdata);
+  }
+  public function GetPlayerConsole()
+  {
+    $query=$this->CockfightModel->GetLastCockfight($this->input->post('EventID'));
+    $response['success']=false;
+    $response['meronwinningprice']=0;
+    $response['walawinningprice']=0;
+
+    $response['totalwalabet']=0;
     $response['totalmeronbet']=0;
+    $pinfo=$this->PlayerModel->getInfoByID($_SESSION['PlayerID']);
+    $response['PlayerWallet']=$pinfo->WalletBalance;
+
     if($query){
-      $response['totalmeronbet']=$query;
+
+      $response['GetLastCockfight']=$query;
+      $response['success']=true;
+      $response['playertotalbet']=0;
+      $response['GetLastCockfight']=$query;
+      $meronbet=$this->PlayerBetModel->GetCockFightTotalMeronBet($query->CockfightID);
+
+      $specificplayerbet=$this->PlayerBetModel->GetSpecificPlayerBet($_SESSION['PlayerID'],$query->CockfightID);
+      if($specificplayerbet){
+        $response['CurrentPlayerBet']=$specificplayerbet;
+      }
+      if($meronbet){
+        $response['totalmeronbet']=$meronbet->total;
+      }
+      $playertotalbet=$this->PlayerBetModel->GetSpecificPlayerBetTotal($_SESSION['PlayerID'],$query->CockfightID);
+      if($playertotalbet){
+        $response['playertotalbet']=$playertotalbet->total;
+
+      }
+      $walabet=$this->PlayerBetModel->GetCockFightTotalWalaBet($query->CockfightID);
+      if($walabet){
+        $response['totalwalabet']=$walabet->total;
+      }
+      if($meronbet&&$walabet){
+        if($meronbet->total!=0&&$walabet->total!=0){
+          $walaprice=((($meronbet->total/$walabet->total)*100)+100);
+          $meronprice=((($walabet->total/$meronbet->total)*100)+100);
+          $meronprice=$meronprice-($meronprice*.06);
+          $walaprice=$walaprice-($walaprice*.06);
+          $response['meronwinningprice']=$meronprice;
+          $response['walawinningprice']=$walaprice;
+          $response['meronodds']=$walabet->total/$meronbet->total;
+          $response['walaodds']=$meronbet->total/$walabet->total;
+          $response['totalwalabet']=$walabet->total*1;
+          $response['totalmeronbet']=$meronbet->total*1;
+
+        }
+      }
+
+    }
+    echo json_encode($response);
+  }
+  public function GetCockFightTotal()
+  {
+    $meronbet=$this->PlayerBetModel->GetCockFightTotalMeronBet($this->input->post('CockFightID'));
+    $response['totalmeronbet']=0;
+    $response['meronwinningprice']=0;
+    $response['walawinningprice']=0;
+    if($meronbet){
+      $response['totalmeronbet']=$meronbet;
+    }
+    $walabet=$this->PlayerBetModel->GetCockFightTotalWalaBet($this->input->post('CockFightID'));
+    $response['totalwalabet']=0;
+    if($walabet){
+      $response['totalwalabet']=$walabet;
+    }
+    if($meronbet->total!=0&&$walabet->total!=0){
+        $walaprice=((($meronbet->total/$walabet->total)*100)+100);
+        $meronprice=((($walabet->total/$meronbet->total)*100)+100);
+        $meronprice=$meronprice-($meronprice*.06);
+        $walaprice=$walaprice-($walaprice*.06);
+        $response['meronwinningprice']=$meronprice;
+        $response['walawinningprice']=$walaprice;
+
+        $response['totalwalabet']=$walabet->total*1;
+        $response['totalmeronbet']=$meronbet->total*1;
+
+    }
+    echo json_encode($response);
+  }
+  public function BetMeron()
+  {
+    $response['error']="";
+    if($this->input->post('BetAmount')==""||$this->input->post('BetAmount')<=0 ||$this->input->post('CockFightID')==""){
+      $response['error']="Please check your amount!";
+    }else{
+      $pinfo=$this->PlayerModel->getInfoByID($_SESSION['PlayerID']);
+      if($this->input->post('BetAmount')>$pinfo->WalletBalance){
+        $response['error']="Wallet balance is not enough. Please cash in to your operator/agent!";
+      }else{
+        $data = array(
+          'BetAmount' => $this->input->post('BetAmount'),
+          'Choice' => "Meron",
+          'CockFightID'=> $this->input->post('CockFightID'),
+          'PlayerID'=>$_SESSION['PlayerID']
+        );
+        if($this->PlayerBetModel->Add($data)){
+          $pwallet=$pinfo->WalletBalance;
+          $pbetamount=$this->input->post('BetAmount');
+          $pwallet=$pwallet-$pbetamount;
+          $pwalletinsertwhere = array('PlayerID' => $_SESSION['PlayerID'] );
+          $pwalletinsertdata = array('WalletBalance' => $pwallet );
+          $this->PlayerModel->updatePlayer($pwalletinsertwhere,$pwalletinsertdata);
+        }
+        $response['success']=true;
+      }
+
+    }
+    echo json_encode($response);
+  }
+  public function BetWala()
+  {
+    $response['error']="";
+    if($this->input->post('BetAmount')==""||$this->input->post('BetAmount')<=0 ||$this->input->post('CockFightID')==""){
+      $response['error']="Please check your amount!";
+    }else{
+      $pinfo=$this->PlayerModel->getInfoByID($_SESSION['PlayerID']);
+      if($this->input->post('BetAmount')>$pinfo->WalletBalance){
+        $response['error']="Wallet balance is not enough. Please cash in to your operator/agent!";
+      }else{
+        $data = array(
+          'BetAmount' => $this->input->post('BetAmount'),
+          'Choice' => "Wala",
+          'CockFightID'=> $this->input->post('CockFightID'),
+          'PlayerID'=>$_SESSION['PlayerID']
+        );
+        if($this->PlayerBetModel->Add($data)){
+          $pwallet=$pinfo->WalletBalance;
+          $pbetamount=$this->input->post('BetAmount');
+          $pwallet=$pwallet-$pbetamount;
+          $pwalletinsertwhere = array('PlayerID' => $_SESSION['PlayerID'] );
+          $pwalletinsertdata = array('WalletBalance' => $pwallet );
+          $this->PlayerModel->updatePlayer($pwalletinsertwhere,$pwalletinsertdata);
+        }
+        $response['success']=true;
+      }
+
     }
     echo json_encode($response);
   }

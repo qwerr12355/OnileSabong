@@ -4,10 +4,11 @@
             <!-- ============================================================== -->
             <div class="page-titles">
                 <div class="d-flex align-items-center">
-                    <h5 class="font-medium m-b-0">Operator Information</h5>
+                    <h5 class="font-medium m-b-0">Sub-operator Information</h5>
                     <div class="custom-breadcrumb ml-auto">
-                        <a href="#!" class="breadcrumb">Operator</a>
-                        <a href="#!" class="breadcrumb">Operator Information</a>
+                        <a href="#!" class="breadcrumb">User</a>
+                        <a href="#!" class="breadcrumb">Sub-operator</a>
+                        <a href="#!" class="breadcrumb">Information</a>
                     </div>
                 </div>
             </div>
@@ -68,7 +69,7 @@
                                               </div>
                                               <div>
                                                 <span class="white-text">Current Commission</span>
-                                                <h5 class="font-medium m-b-0"><?php echo $info->CurrentCommission ?></h5>
+                                                <h5 class="font-medium m-b-0"><?php echo $info->WalletBalance ?></h5>
                                               </div>
                                             </div>
                                           </div>
@@ -83,7 +84,7 @@
                                               </div>
                                               <div>
                                                 <span class="white-text">Total Commission</span>
-                                                <h5 class="font-medium m-b-0"><?php echo $info->TotalCommission ?></h5>
+                                                <h5 class="font-medium m-b-0"><?php echo $info->WalletBalance ?></h5>
                                               </div>
                                             </div>
                                           </div>
@@ -167,24 +168,6 @@
                                                   }
                                                 }
                                              ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                              </div>
-                              <div class="card">
-                                <div class="card-content">
-                                  <p class="card-title">Sub-operator(s)</p>
-                                  <table id="tblSubOperator" class="table dataTable centered table-bordered nowrap display">
-                                    <thead>
-                                      <tr class="grey lighten-4">
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Date Joined</th>
-                                        <th>Action</th>
-                                      </tr>
-                                      </thead>
-                                        <tbody>
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -275,11 +258,10 @@
     <script src="<?php echo base_url(); ?>assets/assets/extra-libs/DataTables/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-          $("#tblSubOperator").DataTable();
+          $("#tblWalletLogs").DataTable();
           $("#tblMasterAgents").DataTable();
           $("#tblSubAgents").DataTable();
           $("#tblPlayers").DataTable();
-          $("#tblWalletLogs").DataTable();
           $('.name').on('keydown', function(event) {
               if (this.selectionStart == 0 && event.keyCode >= 65 && event.keyCode <= 90 && !(event.shiftKey) && !(event.ctrlKey) && !(event.metaKey) && !(event.altKey)) {
                  var $t = $(this);

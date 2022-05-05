@@ -19,21 +19,43 @@ class UserModel extends CI_Model{
   }
   public function authentication($where)
   {
+    $this->db->select("*");
+    $this->db->from("users");
+    $this->db->join("userinfo","userinfo.UserID=users.UserID");
     $this->db->where($where);
-    $query=$this->db->get('users');
+    $query=$this->db->get();
     if($query->num_rows()>0){
       return $query->row();
     }else{
       return false;
     }
   }
-  public function getUser($id)
+  public function GetUsersByUserType($where)
   {
-    $where = array('UserID' => $id );
+    $this->db->select("*");
+    $this->db->from("users");
+    $this->db->join("userinfo","userinfo.UserID=users.UserID");
+    $this->db->join("userrecruiter","userrecruiter.UserID=userinfo.UserID");
     $this->db->where($where);
-    $query=$this->db->get('users');
-    if(isset($query)){
-      return $query->row();
+    $query=$this->db->get();
+    if($query->num_rows()>0){
+      return $query->result_array();
+    }else{
+      return false;
+    }
+  }
+  public function GetUserRecruits($where)
+  {
+    $this->db->select("*");
+    $this->db->from("users");
+    $this->db->join("userinfo","userinfo.UserID=users.UserID");
+    $this->db->join("userrecruiter","userrecruiter.UserID=userinfo.UserID");
+    $this->db->where($where);
+    $query=$this->db->get();
+    if($query->num_rows()>0){
+      return $query->result_array();
+    }else{
+      return false;
     }
   }
   public function getOldPassword($where)

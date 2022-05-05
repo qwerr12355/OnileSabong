@@ -24,9 +24,9 @@ class Welcome extends CI_Controller {
 				if($_SESSION['UserTypeID']==1){
 					header("Location:".site_url()."/Admin/OperatorList");
 				}else if(	$_SESSION['UserTypeID']==2){
-					$this->session->sess_destroy();
+					header("Location:".site_url()."/Operator/Dashboard");
 				}else if($_SESSION['UserTypeID']==3){
-					header("Location:".site_url()."/Agent/Dashboard");
+					header("Location:".site_url()."/SubOperator/Dashboard");
 				}else if($_SESSION['UserTypeID']==4){
 					header("Location:".site_url()."/Player");
 				}
