@@ -5,6 +5,12 @@ class Operator extends CI_Controller {
 	{
 
 	}
+	public function __construct()
+  {
+    parent::__construct();
+    //Codeigniter : Write Less Do More
+  }
+
 	public function UpdateOperator()
 	{
 		$response['error']="";
@@ -273,8 +279,34 @@ class Operator extends CI_Controller {
 	public function WalletDeposit()
 	{
 		if($_SESSION['UserTypeID']==2){
-			$this->load->view('operator/template/header_template_view.php');
+			$where = array('users.UserID' => $_SESSION['UserID'] );
+			$query=$this->UserModel->authentication($where);
+			$balance=$query->WalletBalance;
+
+			$currentuser['balance']=$this->numberFormat($balance, 2);
+			$this->load->view('operator/template/header_template_view.php',$currentuser);
 			$this->load->view('operator/wallet_deposit_view');
+			$this->load->view('operator/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+		}
+	}
+	function numberFormat($number, $decimals = 0, $decPoint = '.' , $thousandsSep = ',')
+	{
+	    $negation = ($number < 0) ? (-1) : 1;
+	    $coefficient = 10 ** $decimals;
+	    $number = $negation * floor((string)(abs($number) * $coefficient)) / $coefficient;
+	    return number_format($number, $decimals, $decPoint, $thousandsSep);
+	}
+	public function WalletWithdrawal()
+	{
+		if($_SESSION['UserTypeID']==2){
+			$where = array('users.UserID' => $_SESSION['UserID'] );
+			$query=$this->UserModel->authentication($where);
+			$balance=$query->WalletBalance;
+			$currentuser['balance']=number_format($balance, 2);
+			$this->load->view('operator/template/header_template_view.php',$currentuser);
+			$this->load->view('operator/wallet_withdrawal_view');
 			$this->load->view('operator/template/footer_template_view.php');
 		}else{
 			header("Location:".site_url()."/Welcome");
@@ -295,10 +327,15 @@ class Operator extends CI_Controller {
 	}
 	public function DepositWallet()
 	{
+    $result['success']=false;
 		$debitquery=$this->UserWalletTransactionModel->GetUserTotalDebit($this->input->post('UserID'));
 		$creditquery=$this->UserWalletTransactionModel->GetUserTotalCredit($this->input->post('UserID'));
 		$debit=0;
 		$credit=0;
+    $currentuserdebitquery=$this->UserWalletTransactionModel->GetUserTotalDebit($_SESSION['UserID']);
+    $currentusercreditquery=$this->UserWalletTransactionModel->GetUserTotalCredit($_SESSION['UserID']);
+    $currentuserdebit=0;
+    $currentusercredit=0;
 		if($debitquery){
 			$debit=$debitquery->total;
 		}
@@ -306,44 +343,60 @@ class Operator extends CI_Controller {
 			$credit=$creditquery->total;
 		}
 		$lastbalance=$debit-$credit;
-		$newbalance=$lastbalance+$this->input->post('Amount');
-		$data = array(
-			'Amount' => $this->input->post('Amount'),
-			'LastBalance' => $lastbalance,
-			'NewBalance' => $newbalance,
-			'Amount' => $this->input->post('Amount'),
-			'UserID' => $this->input->post('UserID'),
-			'ProccessedBy' => $_SESSION['UserID'],
-			'Details' => $this->input->post('Details'),
-			'Description' => "Operator deposit",
-			'Type' => "Debit"
-		);
-
-		$result['success']=false;
-		$result['lastbalance']=$lastbalance;
-		$result['newbalance']=$newbalance;
-		if($_SESSION['Password']==$this->input->post('Password')){
-			if($this->UserWalletTransactionModel->Add($data)){
-				$result['success']=true;
-				$userdata = array('WalletBalance' => $newbalance );
-				$whereuser = array('UserID' => $this->input->post('UserID') );
-				$this->UserModel->UpdateUser($whereuser,$userdata);
-			}
-		}else{
-			$result['error']="Password was incorrect!";
+    if($currentuserdebitquery){
+			$currentuserdebit=$currentuserdebitquery->total;
 		}
+		if($currentusercreditquery){
+			$currentusercredit=$currentusercreditquery->total;
+		}
+		$currentuserlastbalance=$currentuserdebit-$currentusercredit;
+    if($currentuserlastbalance<$this->input->post('Amount')){
+      $result['error']="You dont have enought wallet to deposit!";
+    }else{
+      $newbalance=$lastbalance+floatval($this->input->post('Amount'));
+  		$depositdata = array(
+  			'Amount' => $this->input->post('Amount'),
+  			'LastBalance' => $lastbalance,
+  			'NewBalance' => $newbalance,
+  			'Amount' => $this->input->post('Amount'),
+  			'UserID' => $this->input->post('UserID'),
+  			'ProccessedBy' => $_SESSION['UserID'],
+  			'Details' => $this->input->post('Details'),
+  			'Description' => "Operator deposit",
+  			'Type' => "Debit"
+  		);
+      $currentusernewbalance=$currentuserlastbalance-floatval($this->input->post('Amount'));
+      $currentuserwalletdeductiondata = array(
+  			'Amount' => $this->input->post('Amount'),
+  			'LastBalance' => $currentuserlastbalance,
+  			'NewBalance' => $currentusernewbalance,
+  			'Amount' => $this->input->post('Amount'),
+  			'UserID' => $_SESSION['UserID'],
+  			'ProccessedBy' => $_SESSION['UserID'],
+  			'Details' => $this->input->post('Details'),
+  			'Description' => "Wallet deposit",
+  			'Type' => "Credit"
+  		);
+  		$result['currentusernewbalance']=$currentusernewbalance;
+  		if($_SESSION['Password']==$this->input->post('Password')){
+  			if($this->UserWalletTransactionModel->Add($currentuserwalletdeductiondata)){
+					$this->UserWalletTransactionModel->Add($depositdata);
+					$result['success']=true;
+  				$result['currentusernewbalance']=$currentusernewbalance;
+  				$userdata = array('WalletBalance' => $newbalance );
+  				$whereuser = array('UserID' => $this->input->post('UserID') );
+  				$this->UserModel->UpdateUser($whereuser,$userdata);
+
+					$userdata2 = array('WalletBalance' => $currentusernewbalance );
+  				$whereuser2 = array('UserID' => $_SESSION['UserID'] );
+  				$this->UserModel->UpdateUser($whereuser2,$userdata2);
+  			}
+  		}else{
+  			$result['error']="Password was incorrect!";
+  		}
+    }
+		$result['currentuserlastbalance']=$currentuserlastbalance;
 		echo json_encode($result);
-	}
-	public function SubOperatorList()
-	{
-		if($_SESSION['UserTypeID']==2){
-			$this->load->view('operator/template/header_template_view.php');
-			$this->load->view('operator/sub-operator_list_view');
-			$this->load->view('operator/template/footer_template_view.php');
-		}else{
-			header("Location:".site_url()."/Welcome");
-
-		}
 	}
 	public function SubOperatorInfo($id)
 	{
@@ -422,6 +475,17 @@ class Operator extends CI_Controller {
 		if($_SESSION['UserTypeID']==2){
 			$this->load->view('operator/template/header_template_view.php');
 			$this->load->view('operator/player_list_view');
+			$this->load->view('operator/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+
+		}
+	}
+	public function SubOperator()
+	{
+		if($_SESSION['UserTypeID']==2){
+			$this->load->view('operator/template/header_template_view.php');
+			$this->load->view('operator/sub-operator_list_view');
 			$this->load->view('operator/template/footer_template_view.php');
 		}else{
 			header("Location:".site_url()."/Welcome");

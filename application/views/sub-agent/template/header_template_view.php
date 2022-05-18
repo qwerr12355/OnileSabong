@@ -10,10 +10,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>assets/assets/images/favicon.png">
-    <title>Master - Material Design Demo</title>
+    <title>Sub-Agent</title>
     <link href="<?php echo base_url(); ?>assets/dist/css/style.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/dist/css/pages/data-table.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
     <!-- This page CSS -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,6 +24,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <style media="screen">
       .light-blue.lighten-2, .left-sidebar .sidenav ul > li.active > .collapsible-header, .left-sidebar .sidenav ul > li.active a.collapsible-hdeader {
           background-color: #000000 !important;
+        }
+      }
+      @media screen and (min-width: 850px) {
+        .twitch {
+          position: relative;
+        }
+
+        .twitch .twitch-video {
+          width: 75%;
+          padding-top: 42.1875%;
+        }
+
+        .twitch .twitch-chat {
+          width: 25%;
+          height: auto;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+        }
+      }
+      .twitch .twitch-video {
+        padding-top: 56.25%;
+        position: relative;
+        height: 0;
+      }
+
+      .twitch .twitch-video iframe {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+      }
+      .twitch .twitch-chat {
+          height: 400px;
+        }
+
+        .twitch .twitch-chat iframe {
+          width: 100%;
+          height: 100%;
         }
     </style>
 </head>
@@ -157,15 +197,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <li>
                                     <div class="dw-user-box">
                                         <div class="u-text">
-                                            <h4><?php echo $_SESSION['Firstname'].' '.$_SESSION['Lastname']; ?>(Agent)</h4>
-                                            <p><?php echo $_SESSION['Username']; ?></p>
+                                            <h4><?php echo $_SESSION['Username']; ?></h4>
+                                            <h4>(Sub-agent)</h4>
                                             <a class="waves-effect waves-light btn-small red white-text">View Profile</a>
                                         </div>
                                     </div>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#"><i class="material-icons">account_circle</i> My Profile</a></li>
-                                <li><a href="#"><i class="material-icons">account_balance_wallet</i> My Wallet <span class="label label-info>"<?php echo $_SESSION['WalletBalance']; ?></span></a></li>
+                                <li><a href="#"><i class="material-icons">account_balance_wallet</i> My Balance</a></li>
                                 <li><a href="#"><i class="material-icons">inbox</i> Inbox</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#"><i class="material-icons">settings</i> Account Setting</a></li>
@@ -191,11 +231,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li>
                     <div class="user-profile">
                         <div class="user-name dropdown-trigger" data-target='dropdownuser'>
-                            <h6 class="white-text name"><i class="material-icons m-r-10">account_circle</i> <span class="hidden"><?php echo $_SESSION['Username']; ?>(Agent)</span> <i class="material-icons ml-auto hidden">expand_more</i></h6>
+                            <h6 class="white-text name"><i class="material-icons m-r-10">account_circle</i> <span class="hidden"><?php echo $_SESSION['Username']; ?>(Sub-agent)</span> <i class="material-icons ml-auto hidden">expand_more</i></h6>
                         </div>
                         <ul id='dropdownuser' class='dropdown-content'>
                             <li><a href="#"><i class="material-icons">account_circle</i> My Profile</a></li>
-                            <li><a href="#"><i class="material-icons">account_balance_wallet</i> My Wallet <span class="label label-info>"<?php echo $_SESSION['WalletBalance']; ?></span></a></li>
+                            <li><a href="#"><i class="material-icons">account_balance_wallet</i> My Balance</a></li>
                             <li><a href="#"><i class="material-icons">inbox</i> Inbox</a></li>
                             <li role="separator" class="divider m-t-0"></li>
                             <li><a href="#"><i class="material-icons">settings</i> Account Setting</a></li>
@@ -207,29 +247,60 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li>
                     <ul class="collapsible p-t-30">
                          <li>
-                            <a href="<?php echo site_url('Agent/Dashboard'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Dashboard</span></a>
+                            <a href="<?php echo site_url('SubAgent/Dashboard'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Dashboard</span></a>
                         </li>
+                       <li>
+                          <a href="<?php echo site_url('SubAgent/Player'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Player</span></a>
+                      </li>
                         <li>
-                            <a href="<?php echo site_url('Agent/Players'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">My Players</span></a>
-                        </li>
-                        <li>
-                            <a class="collapsible-header has-arrow" href="#"><i class="material-icons">repeat</i><span class="hide-menu">Wallet Transaction</span></a>
+                            <a class="collapsible-header has-arrow"><i class="material-icons">clear_all</i><span class="hide-menu">Wallet Station</span></a>
                             <div class="collapsible-body">
                                 <ul class="collapsible" data-collapsible="accordion">
                                     <li>
-                                        <a href="<?php echo site_url('Agent/GcashToWallet'); ?>">
+                                        <a href="<?php echo site_url('SubAgent/WalletDeposit'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Wallet Deposit</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo site_url('Agent/AgentList'); ?>">
+                                        <a href="#">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Wallet Widthdrawal</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
+                        </li>
+                        <li>
+                            <a class="collapsible-header has-arrow"><i class="material-icons">clear_all</i><span class="hide-menu">Logs</span></a>
+                            <div class="collapsible-body">
+                                <ul class="collapsible" data-collapsible="accordion">
+                                    <li>
+                                        <a href="#">
+                                            <i class="material-icons">grade</i>
+                                            <span class="hide-menu">User Logs</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="material-icons">grade</i>
+                                            <span class="hide-menu">Wallet Logs</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="material-icons">grade</i>
+                                            <span class="hide-menu">Bet Logs</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="collapsible-header"><i class="material-icons">clear_all</i><span class="hide-menu">My Account</span></a>
+                        </li>
+                        <li>
+                            <a class="collapsible-header"><i class="material-icons">clear_all</i><span class="hide-menu">Logout</span></a>
                         </li>
                     </ul>
                 </li>

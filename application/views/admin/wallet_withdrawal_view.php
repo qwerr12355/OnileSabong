@@ -7,20 +7,21 @@
                     <h5 class="font-medium m-b-0">Wallet Station</h5>
                     <div class="custom-breadcrumb ml-auto">
                       <a href="#!" class="breadcrumb">Wallet Station</a>
-                      <a href="#!" class="breadcrumb">Wallet Deposit</a>
+                      <a href="#!" class="breadcrumb">Wallet Withdrawal</a>
                     </div>
                 </div>
             </div>
               <div class="container-fluid">
                   <div class="card">
                       <div class="card-content">
-                        <h5 class="card-title green-text">Wallet Deposit  <span id="lblMyCurrentBalance" class="label label-info">(My balance : <?php echo $balance; ?>)</h5>
+                        <h5 class="card-title red-text">Wallet Withdrawal</span></h5>
                             <div class="row">
                                 <div class="col l8 m6 s12">
-                                    <form id="frmWalletDeposit">
+                                    <form id="frmWalletWithdrawal">
                                       <div class="input-field col s12 l6">
                                         <select id="selectUserType" class="js-data-example-ajax">
                                             <option value="">SELECT TYPE OF USER</option>
+                                            <option value="2">Operator</option>
                                             <option value="3">Sub-operator</option>
                                             <option value="4">Master Agent</option>
                                             <option value="5">Sub-agent</option>
@@ -48,11 +49,11 @@
                                         <textarea id="txtDetails" name="Details" class="materialize-textarea"></textarea>
                                         <label for="txtAmount">Details</label>
                                       </div>
-                                      <button type="submit" id="btnCashIn" class="btn right m-b-15 green darken-4">DEPOSIT</button>
+                                      <button type="submit" id="btnWithdraw" class="btn right m-b-15 red">WITHDRAW</button>
                                     </form>
                                 </div>
-                                <div class="col l4 m6 s12 ml-auto green-text">
-                                    <h4 class="card-title m-t-30 green-text">User Info</h4>
+                                <div class="col l4 m6 s12 ml-auto red-text">
+                                    <h4 class="card-title m-t-30 red-text">User Info</h4>
                                     <p id="pName">Name :</p>
                                     <p id="pWalletBalance">Wallet Balance :</p>
                                     <p id=pGcashNumber>Gcash Number :</p>
@@ -95,7 +96,6 @@
 
             $(document).ready(function() {
                 var _selectData=[];
-                var _selectData=[];
                 const trauncateFractionAndFormat = (parts, digits) => {
                     return parts.map(({ type, value }) => {
                       if (type !== 'fraction' || !value || value.length < digits) {
@@ -122,7 +122,7 @@
                   //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
                   //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
                 });
-                $("#frmWalletDeposit").on("submit",function(e) {
+                $("#frmWalletWithdrawal").on("submit",function(e) {
                     e.preventDefault();
                     if($("#selectUser").val()==""){
                       Swal.fire(
@@ -132,28 +132,27 @@
                         )
                     }else{
                       $.ajax({
-                              url: "<?php echo base_url(); ?>index.php/Operator/DepositWallet",
+                              url: "<?php echo base_url(); ?>index.php/Admin/WithdrawWallet",
                               type: "POST",
                               dataType:"json",
-                              data:$("#frmWalletDeposit").serialize(),
+                              data:$("#frmWalletWithdrawal").serialize(),
                               success: function(result){
                                 if(result.success){
                                   var index = _selectData.findIndex(u => u.UserID === $("#selectUser").val());
-                                  var html='<pre><span class="row green-text">Name : '+_selectData[index].Firstname+" "+_selectData[index].Lastname+' </span>'
-                                            +'<span class="row greeen-text">Username : '+_selectData[index].Username+' </span>'
-                                            +'<span class="row green-text">Amount : '+trauncateFractionAndFormat(formatter.formatToParts($("#txtAmount").val()),1)+' </span></pre>';
+                                  var html='<pre><span class="row red-text">Name : '+_selectData[index].Firstname+" "+_selectData[index].Lastname+' </span>'
+                                            +'<span class="row red-text">Username : '+_selectData[index].Username+' </span>'
+                                            +'<span class="row red-text">Amount : '+trauncateFractionAndFormat(formatter.formatToParts($("#txtAmount").val()),1)+' </span></pre>';
                                   Swal.fire(
-                                      '<span class="row green-text">Wallet Deposit Successfull!</span>'+html,
+                                      '<span class="row red-text">Wallet Withdrawal Successfull!</span>'+html,
                                       "",
                                       'success'
                                     );
                                     loadUser();
-                                    $("#lblMyCurrentBalance").html("My balance: "+trauncateFractionAndFormat(formatter.formatToParts(result.currentusernewbalance),1))
                                     $("#pName").html("Name : ");
+                                    $("#pWalletBalance").html("Wallet Balance: ");
                                     $("#pGcashNumber").html("Gcash Number : ");
                                     $("#pGcashName").html("Gcash Name : ");
                                     $("#pUsername").html("Username : ");
-                                    $("#pWalletBalance").html("Wallet Balance: ");
                                     $("#pDateJoined").html("Date joined : ");
                                     $("#txtAmount").val("");
                                     $("#txtPassword").val("");
@@ -172,7 +171,7 @@
                 });
                 function loadUser() {
                   $.ajax({
-                          url: "<?php echo base_url(); ?>index.php/Operator/GetUserByUserTypeID",
+                          url: "<?php echo base_url(); ?>index.php/Admin/GetUserByUserTypeID",
                           type: "POST",
                           dataType:"json",
                           data:{"UserTypeID":$("#selectUserType").val()},
@@ -213,12 +212,13 @@
                         $("#pWalletBalance").html("Wallet Balance: ");
                         $("#pDateJoined").html("Date joined : ");
                       }else{
+
                         var index = _selectData.findIndex(u => u.UserID === $(this).val());
                         $("#pName").html("Name : "+_selectData[index].Firstname+" "+_selectData[index].Lastname);
                         $("#pGcashNumber").html("Gcash Number : "+_selectData[index].GcashNumber);
                         $("#pGcashName").html("Gcash Name : "+_selectData[index].GcashName);
                         $("#pUsername").html("Username : "+_selectData[index].Username);
-                        $("#pWalletBalance").html("Wallet Balance: <span class='label label-info'>"+formatter.format(_selectData[index].WalletBalance)+"</span>");
+                        $("#pWalletBalance").html("Wallet Balance: <span class='label label-info'>"+trauncateFractionAndFormat(formatter.formatToParts(_selectData[index].WalletBalance),1)+"</span>");
                         $("#pDateJoined").html("Date joined : "+_selectData[index].DateCreated);
                       }
                 });

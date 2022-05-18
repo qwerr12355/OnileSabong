@@ -4,10 +4,10 @@
             <!-- ============================================================== -->
             <div class="page-titles">
                 <div class="d-flex align-items-center">
-                    <h5 class="font-medium m-b-0">Master Agent Information</h5>
+                    <h5 class="font-medium m-b-0">Player Information</h5>
                     <div class="custom-breadcrumb ml-auto">
-                        <a href="#!" class="breadcrumb">User </a>
-                        <a href="#!" class="breadcrumb">Mater agent</a>
+                        <a href="#!" class="breadcrumb">User</a>
+                        <a href="#!" class="breadcrumb">Player</a>
                         <a href="#!" class="breadcrumb">Information</a>
                     </div>
                 </div>
@@ -146,27 +146,27 @@
                                       </thead>
                                         <tbody>
                                             <?php
-                                                if($walletlogs){
-                                                  foreach ($walletlogs as $wl) {
-                                                    if($wl['Type']=="Debit"){
-                                                      echo "<tr>"
-                                                                ."<td><span class='label label-success'>".$wl['Description']."</span></td>"
-                                                                ."<td>".$wl['Amount']."</td>"
-                                                                ."<td>".$wl['Date']."</td>"
-                                                                ."<td>".$wl['Firstname']." ".$wl['Lastname']."</td>"
-                                                                ."<td>".$wl['Details']."</td>"
-                                                           ."</tr>";
-                                                    }else{
-                                                      echo "<tr>"
-                                                                ."<td><span class='label label-danger'>".$wl['Description']."</span></td>"
-                                                                ."<td>".$wl['Amount']."</td>"
-                                                                ."<td>".$wl['Date']."</td>"
-                                                                ."<td>".$wl['Firstname']." ".$wl['Lastname']."</td>"
-                                                                ."<td>".$wl['Details']."</td>"
-                                                           ."</tr>";
-                                                    }
+                                              if($walletlogs){
+                                                foreach ($walletlogs as $wl) {
+                                                  if($wl['Type']=="Debit"){
+                                                    echo "<tr>"
+                                                              ."<td><span class='label label-success'>".$wl['Description']."</span></td>"
+                                                              ."<td>".$wl['Amount']."</td>"
+                                                              ."<td>".$wl['Date']."</td>"
+                                                              ."<td>".$wl['Firstname']." ".$wl['Lastname']."</td>"
+                                                              ."<td>".$wl['Details']."</td>"
+                                                         ."</tr>";
+                                                  }else{
+                                                    echo "<tr>"
+                                                              ."<td><span class='label label-danger'>".$wl['Description']."</span></td>"
+                                                              ."<td>".$wl['Amount']."</td>"
+                                                              ."<td>".$wl['Date']."</td>"
+                                                              ."<td>".$wl['Firstname']." ".$wl['Lastname']."</td>"
+                                                              ."<td>".$wl['Details']."</td>"
+                                                         ."</tr>";
                                                   }
                                                 }
+                                              }
                                              ?>
                                         </tbody>
                                     </table>
@@ -174,70 +174,18 @@
                               </div>
                               <div class="card">
                                 <div class="card-content">
-                                  <p class="card-title">Sub-agent(s)</p>
-                                  <table id="tblSubAgents" class="table dataTable centered table-bordered nowrap display">
+                                  <p class="card-title">Betting History</p>
+                                  <table id="tblBettingHistory" class="table dataTable centered table-bordered nowrap display">
                                     <thead>
                                       <tr class="grey lighten-4">
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Username</th>
-                                        <th>WalletBalance</th>
-                                        <th>CurrentCommission</th>
                                         <th>Date Joined</th>
+                                        <th>Action</th>
                                       </tr>
                                       </thead>
                                         <tbody>
-                                            <?php
-                                                $i=1;
-                                                if($subagent){
-                                                  foreach ($subagent as $sa) {
-                                                      echo "<tr>"
-                                                                ."<td>".$i."</td>"
-                                                                ."<td>".$sa['Lastname'].", ".$sa['Firstname']."</td>"
-                                                                ."<td>".$sa['Username']."</td>"
-                                                                ."<td>".$sa['WalletBalance']."</td>"
-                                                                ."<td>".$sa['CurrentCommission']."</td>"
-                                                                ."<td>".$sa['DateCreated']."</td>"
-                                                          ."</tr>";
-                                                          $i++;
-                                                  }
-                                                }
-                                             ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                              </div>
-                              <div class="card">
-                                <div class="card-content">
-                                  <p class="card-title">Players(s)</p>
-                                  <table id="tblPlayers" class="table dataTable centered table-bordered nowrap display">
-                                    <thead>
-                                      <tr class="grey lighten-4">
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Username</th>
-                                        <th>WalletBalance</th>
-                                        <th>CurrentCommission</th>
-                                        <th>Date Joined</th>
-                                      </tr>
-                                      </thead>
-                                        <tbody>
-                                            <?php
-                                                $i=1;
-                                                if($player){
-                                                  foreach ($player as $p) {
-                                                      echo "<tr>"
-                                                                ."<td>".$i."</td>"
-                                                                ."<td>".$p['Lastname'].", ".$p['Firstname']."</td>"
-                                                                ."<td>".$p['Username']."</td>"
-                                                                ."<td>".$p['WalletBalance']."</td>"
-                                                                ."<td>".$p['CurrentCommission']."</td>"
-                                                                ."<td>".$p['DateCreated']."</td>"
-                                                          ."</tr>";
-                                                          $i++;
-                                                  }
-                                                }
-                                             ?>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -275,8 +223,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
           $("#tblWalletLogs").DataTable();
-          $("#tblSubAgents").DataTable();
-          $("#tblPlayers").DataTable();
+          $("#tblBettingHistory").DataTable();
           $('.name').on('keydown', function(event) {
               if (this.selectionStart == 0 && event.keyCode >= 65 && event.keyCode <= 90 && !(event.shiftKey) && !(event.ctrlKey) && !(event.metaKey) && !(event.altKey)) {
                  var $t = $(this);

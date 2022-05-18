@@ -17,6 +17,8 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/assets/libs/jsgrid/dist/jsgrid.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/dist/js/pages/jsgrid/jsgrid-init.js"></script>
 
+
+
 <!-- ============================================================== -->
 <!-- This page plugin js -->
 <!-- ============================================================== -->

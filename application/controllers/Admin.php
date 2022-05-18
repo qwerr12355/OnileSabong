@@ -283,7 +283,54 @@ class Admin extends CI_Controller {
 			$credit=$creditquery->total;
 		}
 		$lastbalance=$debit-$credit;
-		$newbalance=$lastbalance+$this->input->post('Amount');
+
+
+		$result['success']=false;
+		if($_SESSION['Password']==$this->input->post('Password')){
+			if(ctype_digit($this->input->post('Amount')) && (float) $this->input->post('Amount') > 0){
+				$newbalance=$lastbalance+$this->input->post('Amount');
+				$data = array(
+					'Amount' => $this->input->post('Amount'),
+					'LastBalance' => $lastbalance,
+					'NewBalance' => $newbalance,
+					'Amount' => $this->input->post('Amount'),
+					'UserID' => $this->input->post('UserID'),
+					'ProccessedBy' => $_SESSION['UserID'],
+					'Details' => $this->input->post('Details'),
+					'Description' => "Admin deposit",
+					'Type' => "Debit"
+				);
+
+				$result['lastbalance']=$lastbalance;
+				$result['newbalance']=$newbalance;
+				if($this->UserWalletTransactionModel->Add($data)){
+					$result['success']=true;
+					$userdata = array('WalletBalance' => $newbalance );
+					$whereuser = array('UserID' => $this->input->post('UserID') );
+					$this->UserModel->UpdateUser($whereuser,$userdata);
+				}
+			}else{
+				$result['error']="Please enter a valid amount!";
+			}
+		}else{
+			$result['error']="Password was incorrect!";
+		}
+		echo json_encode($result);
+	}
+	public function WithdrawWallet()
+	{
+		$debitquery=$this->UserWalletTransactionModel->GetUserTotalDebit($this->input->post('UserID'));
+		$creditquery=$this->UserWalletTransactionModel->GetUserTotalCredit($this->input->post('UserID'));
+		$debit=0;
+		$credit=0;
+		if($debitquery){
+			$debit=$debitquery->total;
+		}
+		if($creditquery){
+			$credit=$creditquery->total;
+		}
+		$lastbalance=$debit-$credit;
+		$newbalance=$lastbalance-$this->input->post('Amount');
 		$data = array(
 			'Amount' => $this->input->post('Amount'),
 			'LastBalance' => $lastbalance,
@@ -293,18 +340,26 @@ class Admin extends CI_Controller {
 			'ProccessedBy' => $_SESSION['UserID'],
 			'Details' => $this->input->post('Details'),
 			'Description' => "Admin deposit",
-			'Type' => "Debit"
+			'Type' => "Credit"
 		);
 
 		$result['success']=false;
 		$result['lastbalance']=$lastbalance;
 		$result['newbalance']=$newbalance;
 		if($_SESSION['Password']==$this->input->post('Password')){
-			if($this->UserWalletTransactionModel->Add($data)){
-				$result['success']=true;
-				$userdata = array('WalletBalance' => $newbalance );
-				$whereuser = array('UserID' => $this->input->post('UserID') );
-				$this->UserModel->UpdateUser($whereuser,$userdata);
+			if($this->input->post('Amount')<=0){
+				$result['error']="Balance must be greater than zero!";
+			}else{
+				if($this->input->post('Amount')<=$lastbalance){
+					if($this->UserWalletTransactionModel->Add($data)){
+						$result['success']=true;
+						$userdata = array('WalletBalance' => $newbalance );
+						$whereuser = array('UserID' => $this->input->post('UserID') );
+						$this->UserModel->UpdateUser($whereuser,$userdata);
+					}
+				}else{
+					$result['error']="Balance is not enough!";
+				}
 			}
 		}else{
 			$result['error']="Password was incorrect!";
@@ -373,6 +428,10 @@ class Admin extends CI_Controller {
 	}
 	public function OperatorInfo($id)
 	{
+		$info['suboperator']=$this->UserModel->GetUsersByUserType($where = array('UserTypeID' => 3,'RecruiterID' => $id));
+		$info['masteragent']=$this->UserModel->GetUsersByUserType($where = array('UserTypeID' => 4,'RecruiterID' => $id));
+		$info['subagent']=$this->UserModel->GetUsersByUserType($where = array('UserTypeID' => 5,'RecruiterID' => $id));
+		$info['player']=$this->UserModel->GetUsersByUserType($where = array('UserTypeID' => 6,'RecruiterID' => $id));
 		$info["info"]=$this->UserInfoModel->GetUserInfoByUserID($id);
 		$info["walletlogs"]=$this->UserWalletTransactionModel->GetWalletLogs($id);
 		if($_SESSION['UserTypeID']==1){
@@ -385,6 +444,9 @@ class Admin extends CI_Controller {
 	}
 	public function SubOperatorInfo($id)
 	{
+		$info['masteragent']=$this->UserModel->GetUsersByUserType($where = array('UserTypeID' => 4,'RecruiterID' => $id));
+		$info['subagent']=$this->UserModel->GetUsersByUserType($where = array('UserTypeID' => 5,'RecruiterID' => $id));
+		$info['player']=$this->UserModel->GetUsersByUserType($where = array('UserTypeID' => 6,'RecruiterID' => $id));
 		$info["info"]=$this->UserInfoModel->GetUserInfoByUserID($id);
 		$info["walletlogs"]=$this->UserWalletTransactionModel->GetWalletLogs($id);
 
@@ -398,6 +460,8 @@ class Admin extends CI_Controller {
 	}
 	public function MasterAgentInfo($id)
 	{
+		$info['subagent']=$this->UserModel->GetUsersByUserType($where = array('UserTypeID' => 5,'RecruiterID' => $id));
+		$info['player']=$this->UserModel->GetUsersByUserType($where = array('UserTypeID' => 6,'RecruiterID' => $id));
 		$info["info"]=$this->UserInfoModel->GetUserInfoByUserID($id);
 		$info["walletlogs"]=$this->UserWalletTransactionModel->GetWalletLogs($id);
 
@@ -411,6 +475,7 @@ class Admin extends CI_Controller {
 	}
 	public function SubAgentInfo($id)
 	{
+		$info['player']=$this->UserModel->GetUsersByUserType($where = array('UserTypeID' => 6,'RecruiterID' => $id));
 		$info["info"]=$this->UserInfoModel->GetUserInfoByUserID($id);
 		$info["walletlogs"]=$this->UserWalletTransactionModel->GetWalletLogs($id);
 
@@ -449,20 +514,6 @@ class Admin extends CI_Controller {
 		}else{
 			header("Location:".site_url()."/Welcome");
 		}
-	}
-	public function AgentInfo($playerid)
-	{
-		if($_SESSION['UserTypeID']==1){
-			$agentinfo['info']=$this->AgentModel->GetAgentInfo($playerid);
-			$agentinfo["walletlogs"]=$this->UserWalletTransactionModel->GetWalletLogs($id);
-			$this->load->view('admin/template/header_template_view.php');
-			$this->load->view('admin/agent_info_view',$agentinfo);
-			$this->load->view('admin/template/footer_template_view.php');
-		}else{
-			header("Location:".site_url()."/Welcome");
-
-		}
-
 	}
 	public function Dashboard()
 	{
@@ -517,8 +568,20 @@ class Admin extends CI_Controller {
 	public function WalletDeposit()
 	{
 		if($_SESSION['UserTypeID']==1){
+
 			$this->load->view('admin/template/header_template_view.php');
 			$this->load->view('admin/wallet_deposit_view');
+			$this->load->view('admin/template/footer_template_view.php');
+		}else{
+			header("Location:".site_url()."/Welcome");
+		}
+	}
+	public function WalletWithdrawal()
+	{
+		if($_SESSION['UserTypeID']==1){
+
+			$this->load->view('admin/template/header_template_view.php');
+			$this->load->view('admin/wallet_withdrawal_view');
 			$this->load->view('admin/template/footer_template_view.php');
 		}else{
 			header("Location:".site_url()."/Welcome");

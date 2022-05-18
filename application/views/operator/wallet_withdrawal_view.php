@@ -7,17 +7,17 @@
                     <h5 class="font-medium m-b-0">Wallet Station</h5>
                     <div class="custom-breadcrumb ml-auto">
                       <a href="#!" class="breadcrumb">Wallet Station</a>
-                      <a href="#!" class="breadcrumb">Wallet Deposit</a>
+                      <a href="#!" class="breadcrumb">Wallet Withdrawal</a>
                     </div>
                 </div>
             </div>
               <div class="container-fluid">
                   <div class="card">
                       <div class="card-content">
-                        <h5 class="card-title green-text">Wallet Deposit  <span id="lblMyCurrentBalance" class="label label-info">(My balance : <?php echo $balance; ?>)</h5>
+                        <h5 class="card-title green-text">Wallet Withdrawal  <span id="lblMyCurrentBalance" class="label label-info">(My balance : <?php echo $balance; ?>)</h5>
                             <div class="row">
                                 <div class="col l8 m6 s12">
-                                    <form id="frmWalletDeposit">
+                                    <form id="frmWalletWithdrawal">
                                       <div class="input-field col s12 l6">
                                         <select id="selectUserType" class="js-data-example-ajax">
                                             <option value="">SELECT TYPE OF USER</option>
@@ -48,13 +48,13 @@
                                         <textarea id="txtDetails" name="Details" class="materialize-textarea"></textarea>
                                         <label for="txtAmount">Details</label>
                                       </div>
-                                      <button type="submit" id="btnCashIn" class="btn right m-b-15 green darken-4">DEPOSIT</button>
+                                      <button type="submit" id="btnCashIn" class="btn right m-b-15 green darken-4">WITHDRAW</button>
                                     </form>
                                 </div>
                                 <div class="col l4 m6 s12 ml-auto green-text">
                                     <h4 class="card-title m-t-30 green-text">User Info</h4>
-                                    <p id="pName">Name :</p>
                                     <p id="pWalletBalance">Wallet Balance :</p>
+                                    <p id="pName">Name :</p>
                                     <p id=pGcashNumber>Gcash Number :</p>
                                     <p id="pGcashName">Gcash Name :</p>
                                     <p id="pUsername">Username :</p>
@@ -122,7 +122,7 @@
                   //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
                   //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
                 });
-                $("#frmWalletDeposit").on("submit",function(e) {
+                $("#frmWalletWithdrawal").on("submit",function(e) {
                     e.preventDefault();
                     if($("#selectUser").val()==""){
                       Swal.fire(
@@ -135,12 +135,12 @@
                               url: "<?php echo base_url(); ?>index.php/Operator/DepositWallet",
                               type: "POST",
                               dataType:"json",
-                              data:$("#frmWalletDeposit").serialize(),
+                              data:$("#frmWalletWithdrawal").serialize(),
                               success: function(result){
                                 if(result.success){
                                   var index = _selectData.findIndex(u => u.UserID === $("#selectUser").val());
-                                  var html='<pre><span class="row green-text">Name : '+_selectData[index].Firstname+" "+_selectData[index].Lastname+' </span>'
-                                            +'<span class="row greeen-text">Username : '+_selectData[index].Username+' </span>'
+                                  var html='<pre><span class="row">Name : '+_selectData[index].Firstname+" "+_selectData[index].Lastname+' </span>'
+                                            +'<span class="row">Username : '+_selectData[index].Username+' </span>'
                                             +'<span class="row green-text">Amount : '+trauncateFractionAndFormat(formatter.formatToParts($("#txtAmount").val()),1)+' </span></pre>';
                                   Swal.fire(
                                       '<span class="row green-text">Wallet Deposit Successfull!</span>'+html,

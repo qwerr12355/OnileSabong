@@ -254,7 +254,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="collapsible-body">
                                 <ul class="collapsible" data-collapsible="accordion">
                                     <li>
-                                        <a href="<?php echo site_url('Operator/SubOperatorList'); ?>">
+                                        <a href="<?php echo site_url('Operator/SubOperator'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Sub-operator</span>
                                         </a>
@@ -291,7 +291,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="<?php echo site_url('Operator/WalletWithdrawal'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Wallet Widthdrawal</span>
                                         </a>

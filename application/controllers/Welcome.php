@@ -28,7 +28,9 @@ class Welcome extends CI_Controller {
 				}else if($_SESSION['UserTypeID']==3){
 					header("Location:".site_url()."/SubOperator/Dashboard");
 				}else if($_SESSION['UserTypeID']==4){
-					header("Location:".site_url()."/Player");
+					header("Location:".site_url()."/MasterAgent/Dashboard");
+				}else if($_SESSION['UserTypeID']==5){
+					header("Location:".site_url()."/SubAgent/Dashboard");
 				}
 			}else{
 				$this->load->view('login_view');

@@ -4,15 +4,17 @@
             <!-- ============================================================== -->
             <div class="page-titles">
                 <div class="d-flex align-items-center">
-                    <h5 class="font-medium m-b-0">Agent Dashboard</h5>
+                    <h5 class="font-medium m-b-0">Master Agent Dashboard</h5>
                     <div class="custom-breadcrumb ml-auto">
-                        <a href="#!" class="breadcrumb">Agent Dashboard</a>
+                        <a href="#!" class="breadcrumb">Home</a>
+                        <a href="#!" class="breadcrumb">Master Agent Dashboard</a>
                     </div>
                 </div>
             </div>
               <div class="container-fluid">
                 <div class="card">
                     <div class="card-content">
+                        <h5>Master Agent Dashboard</h5>
                     </div>
                 </div>
               </div>

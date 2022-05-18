@@ -179,12 +179,29 @@
                                       <tr class="grey lighten-4">
                                         <th>#</th>
                                         <th>Name</th>
+                                        <th>Username</th>
+                                        <th>WalletBalance</th>
+                                        <th>CurrentCommission</th>
                                         <th>Date Joined</th>
-                                        <th>Action</th>
                                       </tr>
                                       </thead>
                                         <tbody>
-
+                                            <?php
+                                                $i=1;
+                                                if($suboperator){
+                                                  foreach ($suboperator as $so) {
+                                                      echo "<tr>"
+                                                                ."<td>".$i."</td>"
+                                                                ."<td>".$so['Lastname'].", ".$so['Firstname']."</td>"
+                                                                ."<td>".$so['Username']."</td>"
+                                                                ."<td>".$so['WalletBalance']."</td>"
+                                                                ."<td>".$so['CurrentCommission']."</td>"
+                                                                ."<td>".$so['DateCreated']."</td>"
+                                                          ."</tr>";
+                                                          $i++;
+                                                  }
+                                                }
+                                             ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -197,12 +214,29 @@
                                       <tr class="grey lighten-4">
                                         <th>#</th>
                                         <th>Name</th>
+                                        <th>Username</th>
+                                        <th>WalletBalance</th>
+                                        <th>CurrentCommission</th>
                                         <th>Date Joined</th>
-                                        <th>Action</th>
                                       </tr>
                                       </thead>
                                         <tbody>
-
+                                            <?php
+                                                $i=1;
+                                                if($masteragent){
+                                                  foreach ($masteragent as $ma) {
+                                                      echo "<tr>"
+                                                                ."<td>".$i."</td>"
+                                                                ."<td>".$ma['Lastname'].", ".$ma['Firstname']."</td>"
+                                                                ."<td>".$ma['Username']."</td>"
+                                                                ."<td>".$ma['WalletBalance']."</td>"
+                                                                ."<td>".$ma['CurrentCommission']."</td>"
+                                                                ."<td>".$ma['DateCreated']."</td>"
+                                                          ."</tr>";
+                                                          $i++;
+                                                  }
+                                                }
+                                             ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -215,12 +249,29 @@
                                       <tr class="grey lighten-4">
                                         <th>#</th>
                                         <th>Name</th>
+                                        <th>Username</th>
+                                        <th>WalletBalance</th>
+                                        <th>CurrentCommission</th>
                                         <th>Date Joined</th>
-                                        <th>Action</th>
                                       </tr>
                                       </thead>
                                         <tbody>
-
+                                            <?php
+                                                $i=1;
+                                                if($subagent){
+                                                  foreach ($subagent as $sa) {
+                                                      echo "<tr>"
+                                                                ."<td>".$i."</td>"
+                                                                ."<td>".$sa['Lastname'].", ".$sa['Firstname']."</td>"
+                                                                ."<td>".$sa['Username']."</td>"
+                                                                ."<td>".$sa['WalletBalance']."</td>"
+                                                                ."<td>".$sa['CurrentCommission']."</td>"
+                                                                ."<td>".$sa['DateCreated']."</td>"
+                                                          ."</tr>";
+                                                          $i++;
+                                                  }
+                                                }
+                                             ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -233,12 +284,29 @@
                                       <tr class="grey lighten-4">
                                         <th>#</th>
                                         <th>Name</th>
+                                        <th>Username</th>
+                                        <th>WalletBalance</th>
+                                        <th>CurrentCommission</th>
                                         <th>Date Joined</th>
-                                        <th>Action</th>
                                       </tr>
                                       </thead>
                                         <tbody>
-
+                                            <?php
+                                                $i=1;
+                                                if($player){
+                                                  foreach ($player as $p) {
+                                                      echo "<tr>"
+                                                                ."<td>".$i."</td>"
+                                                                ."<td>".$p['Lastname'].", ".$p['Firstname']."</td>"
+                                                                ."<td>".$p['Username']."</td>"
+                                                                ."<td>".$p['WalletBalance']."</td>"
+                                                                ."<td>".$p['CurrentCommission']."</td>"
+                                                                ."<td>".$p['DateCreated']."</td>"
+                                                          ."</tr>";
+                                                          $i++;
+                                                  }
+                                                }
+                                             ?>
                                         </tbody>
                                     </table>
                                 </div>

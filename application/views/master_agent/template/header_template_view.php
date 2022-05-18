@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>assets/assets/images/favicon.png">
-    <title>Admin - Material Design Demo</title>
+    <title>Master Agent - Material Design Demo</title>
     <link href="<?php echo base_url(); ?>assets/dist/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/dist/css/pages/data-table.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
@@ -198,7 +198,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="dw-user-box">
                                         <div class="u-text">
                                             <h4><?php echo $_SESSION['Username']; ?></h4>
-                                            <h4>(Admin)</h4>
+                                            <h4>(Master Agent)</h4>
                                             <a class="waves-effect waves-light btn-small red white-text">View Profile</a>
                                         </div>
                                     </div>
@@ -231,7 +231,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li>
                     <div class="user-profile">
                         <div class="user-name dropdown-trigger" data-target='dropdownuser'>
-                            <h6 class="white-text name"><i class="material-icons m-r-10">account_circle</i> <span class="hidden"><?php echo $_SESSION['Username']; ?>(Admin)</span> <i class="material-icons ml-auto hidden">expand_more</i></h6>
+                            <h6 class="white-text name"><i class="material-icons m-r-10">account_circle</i> <span class="hidden"><?php echo $_SESSION['Username']; ?>(Master Agent)</span> <i class="material-icons ml-auto hidden">expand_more</i></h6>
                         </div>
                         <ul id='dropdownuser' class='dropdown-content'>
                             <li><a href="#"><i class="material-icons">account_circle</i> My Profile</a></li>
@@ -247,60 +247,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li>
                     <ul class="collapsible p-t-30">
                          <li>
-                            <a href="<?php echo site_url('Admin/Dashboard'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Dashboard</span></a>
+                            <a href="<?php echo site_url('MasterAgent/Dashboard'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Dashboard</span></a>
                         </li>
                         <li>
-                           <a href="<?php echo site_url('Admin/Events'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Events</span></a>
+                           <a href="<?php echo site_url('MasterAgent/SubAgent'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Sub-agent</span></a>
                        </li>
-                        <li>
-                            <a class="collapsible-header has-arrow"><i class="material-icons">clear_all</i><span class="hide-menu">User</span></a>
-                            <div class="collapsible-body">
-                                <ul class="collapsible" data-collapsible="accordion">
-                                    <li>
-                                        <a href="<?php echo site_url('Admin/OperatorList'); ?>">
-                                            <i class="material-icons">grade</i>
-                                            <span class="hide-menu">Operator</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo site_url('Admin/SubOperatorList'); ?>">
-                                            <i class="material-icons">grade</i>
-                                            <span class="hide-menu">Sub-operator</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo site_url('Admin/MasterAgentList'); ?>">
-                                            <i class="material-icons">grade</i>
-                                            <span class="hide-menu">Master Agent</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo site_url('Admin/SubAgentList'); ?>">
-                                            <i class="material-icons">grade</i>
-                                            <span class="hide-menu">Sub-Agent</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo site_url('Admin/PlayerList'); ?>">
-                                            <i class="material-icons">grade</i>
-                                            <span class="hide-menu">Player</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                       <li>
+                          <a href="<?php echo site_url('MasterAgent/Player'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Player</span></a>
+                      </li>
                         <li>
                             <a class="collapsible-header has-arrow"><i class="material-icons">clear_all</i><span class="hide-menu">Wallet Station</span></a>
                             <div class="collapsible-body">
                                 <ul class="collapsible" data-collapsible="accordion">
                                     <li>
-                                        <a href="<?php echo site_url('Admin/WalletDeposit'); ?>">
+                                        <a href="<?php echo site_url('MasterAgent/WalletDeposit'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Wallet Deposit</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo site_url('Admin/WalletWithdrawal'); ?>">
+                                        <a href="#">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Wallet Widthdrawal</span>
                                         </a>

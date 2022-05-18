@@ -247,26 +247,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li>
                     <ul class="collapsible p-t-30">
                          <li>
-                            <a href="<?php echo site_url('Operator/Dashboard'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Dashboard</span></a>
+                            <a href="<?php echo site_url('SubOperator/Dashboard'); ?>" class="collapsible-header"><i class="material-icons">repeat</i><span class="hide-menu">Dashboard</span></a>
                         </li>
                         <li>
                             <a class="collapsible-header has-arrow"><i class="material-icons">clear_all</i><span class="hide-menu">My recruits</span></a>
                             <div class="collapsible-body">
                                 <ul class="collapsible" data-collapsible="accordion">
                                     <li>
-                                        <a href="<?php echo site_url('Operator/MasterAgentList'); ?>">
+                                        <a href="<?php echo site_url('SubOperator/MasterAgent'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Master Agent</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo site_url('Operator/SubAgentList'); ?>">
+                                        <a href="<?php echo site_url('SubOperator/SubAgent'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Sub-Agent</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo site_url('Operator/PlayerList'); ?>">
+                                        <a href="<?php echo site_url('SubOperator/Player'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Player</span>
                                         </a>
@@ -279,7 +279,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="collapsible-body">
                                 <ul class="collapsible" data-collapsible="accordion">
                                     <li>
-                                        <a href="<?php echo site_url('Operator/WalletDeposit'); ?>">
+                                        <a href="<?php echo site_url('SubOperator/WalletDeposit'); ?>">
                                             <i class="material-icons">grade</i>
                                             <span class="hide-menu">Wallet Deposit</span>
                                         </a>
